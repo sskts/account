@@ -1,0 +1,59 @@
+.app {
+    padding-top: 44px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    .wrapper {
+        margin-top: 0;
+    }
+    .header {
+        position: fixed;
+        z-index: 20;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #000;
+        border-radius: 0;
+        border: none;
+        padding: 0;
+        .close {
+            a {
+                display: inline-block;
+                padding: 15px;
+                color: #FFF;
+            }
+        }
+    }
+    .footer {
+        display: none;
+    }
+    .site-seal {
+        display: none;
+    }
+    .prev-button, .next-button, .blue-button, .change-button {
+        button, a {
+            border-radius: 0;
+            box-shadow: none;
+        }
+        .icon-prev-white:before {
+            display: none;
+        } 
+        .icon-next-white:before {
+            display: none;
+        }
+    }
+
+    .loading {
+        width: 40px;
+        height: 20px;
+        margin-top: -10px;
+        margin-left: -20px;
+        div {
+            height: 20px;
+            width: 2px;
+            margin-right: 7px;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
