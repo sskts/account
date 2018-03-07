@@ -1,10 +1,11 @@
-import {Component} from "@angular/core";
-import {Router} from "@angular/router";
-import {UserRegistrationService} from "../../../service/user-registration.service";
-import {CognitoCallback} from "../../../service/cognito.service";
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
+import { UserRegistrationService } from "../../../service/user-registration.service";
+import { CognitoCallback } from "../../../service/cognito.service";
 
 export class RegistrationUser {
-    name: string;
+    given_name: string;
+    family_name: string;
     email: string;
     phone_number: string;
     password: string;
@@ -19,10 +20,11 @@ export class RegistrationUser {
 })
 export class RegisterComponent implements CognitoCallback {
     registrationUser: RegistrationUser;
-    router: Router;
-    errorMessage: string;
+    errorMessage: string | null;
 
-    constructor(public userRegistration: UserRegistrationService, router: Router) {
+    constructor(
+        public userRegistration: UserRegistrationService,
+        private router: Router) {
         this.router = router;
         this.onInit();
     }

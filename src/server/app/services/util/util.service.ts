@@ -37,13 +37,6 @@ export enum ENV {
 }
 
 /**
- * ムビチケ興行会社コード
- * @memberof services.util
- * @const MVTK_COMPANY_CODE
- */
-export const MVTK_COMPANY_CODE = 'SSK000';
-
-/**
  * 時間フォーマット
  * @memberof services.util
  * @function timeFormat

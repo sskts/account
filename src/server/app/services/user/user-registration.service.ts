@@ -1,8 +1,8 @@
 import {Inject, Injectable} from "@angular/core";
-import {CognitoCallback, CognitoUtil} from "./cognito.service";
+import {CognitoCallback, CognitoUtil} from "../cognito/cognito.service";
 import {AuthenticationDetails, CognitoUser, CognitoUserAttribute} from "amazon-cognito-identity-js";
-import {RegistrationUser} from "../public/auth/register/registration.component";
-import {NewPasswordUser} from "../public/auth/newpassword/newpassword.component";
+import {RegistrationUser} from "../../models/registrationUser/registration-user.model";
+import {NewPasswordUser} from "../../models/newPasswordUser/new-password-user.model";
 import * as AWS from "aws-sdk/global";
 
 @Injectable()
@@ -21,26 +21,18 @@ export class UserRegistrationService {
             Name: 'email',
             Value: user.email
         };
-        // let dataNickname = {
-        //     Name: 'nickname',
-        //     Value: user.name
-        // };
-        attributeList.push(new CognitoUserAttribute({
-            Name: 'family_name',
-            Value: user.family_name
-        }));
-        attributeList.push(new CognitoUserAttribute({
-            Name: 'given_name',
-            Value: user.given_name
-        }));
+        let dataNickname = {
+            Name: 'nickname',
+            Value: user.name
+        };
         attributeList.push(new CognitoUserAttribute(dataEmail));
-        // attributeList.push(new CognitoUserAttribute(dataNickname));
+        attributeList.push(new CognitoUserAttribute(dataNickname));
         attributeList.push(new CognitoUserAttribute({
             Name: 'phone_number',
             Value: user.phone_number
         }));
 
-        this.cognitoUtil.getUserPool().signUp(user.email, user.password, attributeList, null, function (err: any, result: any) {
+        this.cognitoUtil.getUserPool().signUp(user.email, user.password, attributeList, [], function (err, result) {
             if (err) {
                 callback.cognitoCallback(err.message, null);
             } else {

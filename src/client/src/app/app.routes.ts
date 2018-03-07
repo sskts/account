@@ -20,7 +20,6 @@ const homeRoutes: Routes = [
     },
     {
         path: 'home',
-        component: HomeComponent,
         children: [
             {path: 'about', component: AboutComponent},
             {path: 'login', component: LoginComponent},

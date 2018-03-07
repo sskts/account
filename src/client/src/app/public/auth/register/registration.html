@@ -1,37 +1,56 @@
-<form class="form-signin" method="POST" action="#" role="form">
-    <div class="form-group">
-        <h2>Create account</h2>
-    </div>
-    <div *ngIf="errorMessage!=null" class="alert alert-danger">
+<div class="contents">
+    <h1 class="mb-large large-text text-center">会員情報入力</h1>
+    <p class="mb-x-large text-center">
+        必須項目を入力し
+        <br>「次へ」ボタンを押してください。
+    </p>
+    <div *ngIf="errorMessage !== null" class="alert alert-danger mb-large">
         {{ errorMessage }}
     </div>
-    <div class="form-group">
-        <label class="control-label" for="signupName">Name</label>
-        <input id="signupName" type="text" maxlength="50" class="form-control"
-               [(ngModel)]="registrationUser.name" [ngModelOptions]="{standalone: true}">
+    <form class="mb-large" method="POST" action="#" role="form">
+        <dl class="mb-x-large">
+            <dt class="mb-small">
+                <strong>お名前</strong>
+            </dt>
+            <dd class="mb-small">
+                <input type="text" placeholder="せい" maxlength="50" [(ngModel)]="registrationUser.family_name" [ngModelOptions]="{standalone: true}">
+            </dd>
+            <dd>
+                <input type="text" placeholder="めい" maxlength="50" [(ngModel)]="registrationUser.given_name" [ngModelOptions]="{standalone: true}">
+            </dd>
+        </dl>
+        <dl class="mb-x-large">
+            <dt class="mb-small">
+                <strong>メールアドレス</strong>
+            </dt>
+            <dd>
+                <input type="email" placeholder="メールアドレス" maxlength="50" [(ngModel)]="registrationUser.email" [ngModelOptions]="{standalone: true}">
+            </dd>
+        </dl>
+        <dl class="mb-x-large">
+            <dt class="mb-small">
+                <strong>電話番号</strong>
+            </dt>
+            <dd>
+                <input type="text" placeholder="電話番号" maxlength="13" [(ngModel)]="registrationUser.phone_number" [ngModelOptions]="{standalone: true}">
+            </dd>
+        </dl>
+        <dl class="mb-x-large">
+            <dt class="mb-small">
+                <strong class="mb-xx-small d-ib">パスワード</strong>
+                <p class="small-text">ログインするためのパスワードを入力してください。</p>
+            </dt>
+            <dd>
+                <input type="password" placeholder="パスワード" maxlength="25" length="40" [(ngModel)]="registrationUser.password" [ngModelOptions]="{standalone: true}">
+            </dd>
+        </dl>
+        <div class="button blue-button">
+            <button (click)="onRegister()" id="signupSubmit" type="submit" class="btn btn-info btn-block">
+                次へ
+            </button>
+        </div>
+    </form>
+    <div class="text-center">
+        <a routerLink="/home/login">戻る</a>
     </div>
-    <div class="form-group">
-        <label class="control-label" for="signupEmail">Email</label>
-        <input id="signupEmail" type="email" maxlength="50" class="form-control"
-               [(ngModel)]="registrationUser.email" [ngModelOptions]="{standalone: true}">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="signupPhone">Phone number</label>
-        <input id="signupPhone" type="text" maxlength="13" class="form-control"
-               [(ngModel)]="registrationUser.phone_number" [ngModelOptions]="{standalone: true}">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="signupPassword">Password</label>
-        <input id="signupPassword" type="password" maxlength="25" class="form-control"
-               placeholder="at least 8 characters" length="40" [(ngModel)]="registrationUser.password"
-               [ngModelOptions]="{standalone: true}">
-    </div>
-    <div class="form-group">
-        <button (click)="onRegister()" id="signupSubmit" type="submit" class="btn btn-info btn-block">
-            Create your account
-        </button>
-    </div>
-    <hr>
-    <p>Already have an account? <a [routerLink]="['/home/login']"> <i class="fa fa-fw fa-lock"></i>Login</a></p>
-</form>
-
+</div>

@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { environment } from "../../environments/environment";
 import { CognitoUserPool } from "amazon-cognito-identity-js";
 import * as AWS from "aws-sdk/global";
 import * as awsservice from "aws-sdk/lib/service";
@@ -35,24 +34,21 @@ export interface Callback {
 @Injectable()
 export class CognitoUtil {
 
-    public static _REGION = environment.region;
+    public static REGION = <string>process.env.REGION;
 
-    public static _IDENTITY_POOL_ID = environment.identityPoolId;
-    public static _USER_POOL_ID = environment.userPoolId;
-    public static _CLIENT_ID = environment.clientId;
+    public static IDENTITY_POOL_ID = <string>process.env.IDENTITY_POOL_ID;
+    public static USER_POOL_ID = <string>process.env.USER_POOL_ID;
+    public static CLIENT_ID = <string>process.env.CLIENT_ID;
 
-    public static _POOL_DATA: any = {
-        UserPoolId: CognitoUtil._USER_POOL_ID,
-        ClientId: CognitoUtil._CLIENT_ID
+    public static POOL_DATA: any = {
+        UserPoolId: CognitoUtil.USER_POOL_ID,
+        ClientId: CognitoUtil.CLIENT_ID
     };
 
     public cognitoCreds: AWS.CognitoIdentityCredentials;
 
     getUserPool() {
-        if (environment.cognito_idp_endpoint) {
-            CognitoUtil._POOL_DATA.endpoint = environment.cognito_idp_endpoint;
-        }
-        return new CognitoUserPool(CognitoUtil._POOL_DATA);
+        return new CognitoUserPool(CognitoUtil.POOL_DATA);
     }
 
     getCurrentUser() {
@@ -77,20 +73,20 @@ export class CognitoUtil {
     // to avoid unnecessary calls to setCognitoCreds.
 
     buildCognitoCreds(idTokenJwt: string) {
-        let url = 'cognito-idp.' + CognitoUtil._REGION.toLowerCase() + '.amazonaws.com/' + CognitoUtil._USER_POOL_ID;
-        if (environment.cognito_idp_endpoint) {
-            url = environment.cognito_idp_endpoint + '/' + CognitoUtil._USER_POOL_ID;
-        }
+        let url = 'cognito-idp.' + CognitoUtil.REGION.toLowerCase() + '.amazonaws.com/' + CognitoUtil.USER_POOL_ID;
+        // if (environment.cognito_idp_endpoint) {
+        //     url = environment.cognito_idp_endpoint + '/' + CognitoUtil.USER_POOL_ID;
+        // }
         let logins: CognitoIdentity.LoginsMap = {};
         logins[url] = idTokenJwt;
         let params = {
-            IdentityPoolId: CognitoUtil._IDENTITY_POOL_ID, /* required */
+            IdentityPoolId: CognitoUtil.IDENTITY_POOL_ID, /* required */
             Logins: logins
         };
         let serviceConfigs = <awsservice.ServiceConfigurationOptions>{};
-        if (environment.cognito_identity_endpoint) {
-            serviceConfigs.endpoint = environment.cognito_identity_endpoint;
-        }
+        // if (environment.cognito_identity_endpoint) {
+        //     serviceConfigs.endpoint = environment.cognito_identity_endpoint;
+        // }
         let creds = new AWS.CognitoIdentityCredentials(params, serviceConfigs);
         this.setCognitoCreds(creds);
         return creds;
@@ -103,10 +99,11 @@ export class CognitoUtil {
 
     getAccessToken(callback: Callback): void {
         if (callback == null) {
-            throw("CognitoUtil: callback in getAccessToken is null...returning");
+            throw ("CognitoUtil: callback in getAccessToken is null...returning");
         }
-        if (this.getCurrentUser() != null) {
-            this.getCurrentUser().getSession(function (err, session) {
+        const currentUser = this.getCurrentUser();
+        if (currentUser !== null) {
+            currentUser.getSession((err: any, session: any) => {
                 if (err) {
                     console.log("CognitoUtil: Can't set the credentials:" + err);
                     callback.callbackWithParam(null);
@@ -117,18 +114,18 @@ export class CognitoUtil {
                     }
                 }
             });
-        }
-        else {
+        } else {
             callback.callbackWithParam(null);
         }
     }
 
     getIdToken(callback: Callback): void {
         if (callback == null) {
-            throw("CognitoUtil: callback in getIdToken is null...returning");
+            throw ("CognitoUtil: callback in getIdToken is null...returning");
         }
-        if (this.getCurrentUser() != null)
-            this.getCurrentUser().getSession(function (err, session) {
+        const currentUser = this.getCurrentUser();
+        if (currentUser !== null) {
+            currentUser.getSession(function (err: any, session: any) {
                 if (err) {
                     console.log("CognitoUtil: Can't set the credentials:" + err);
                     callback.callbackWithParam(null);
@@ -141,16 +138,19 @@ export class CognitoUtil {
                     }
                 }
             });
-        else
+        } else {
             callback.callbackWithParam(null);
+        }
+
     }
 
     getRefreshToken(callback: Callback): void {
         if (callback == null) {
-            throw("CognitoUtil: callback in getRefreshToken is null...returning");
+            throw ("CognitoUtil: callback in getRefreshToken is null...returning");
         }
-        if (this.getCurrentUser() != null)
-            this.getCurrentUser().getSession(function (err, session) {
+        const currentUser = this.getCurrentUser();
+        if (currentUser !== null) {
+            currentUser.getSession(function (err: any, session: any) {
                 if (err) {
                     console.log("CognitoUtil: Can't set the credentials:" + err);
                     callback.callbackWithParam(null);
@@ -162,23 +162,26 @@ export class CognitoUtil {
                     }
                 }
             });
-        else
+        } else {
             callback.callbackWithParam(null);
+        }
+
     }
 
     refresh(): void {
-        this.getCurrentUser().getSession(function (err, session) {
-            if (err) {
-                console.log("CognitoUtil: Can't set the credentials:" + err);
-            }
-
-            else {
-                if (session.isValid()) {
-                    console.log("CognitoUtil: refreshed successfully");
+        const currentUser = this.getCurrentUser();
+        if (currentUser !== null) {
+            currentUser.getSession(function (err: any, session: any) {
+                if (err) {
+                    console.log("CognitoUtil: Can't set the credentials:" + err);
                 } else {
-                    console.log("CognitoUtil: refreshed but session is still not valid");
+                    if (session.isValid()) {
+                        console.log("CognitoUtil: refreshed successfully");
+                    } else {
+                        console.log("CognitoUtil: refreshed but session is still not valid");
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }
