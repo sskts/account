@@ -16,7 +16,7 @@ exports.default = session({
     saveUninitialized: false,
     store: store,
     cookie: {
-        secure: true,
+        // secure: true,
         httpOnly: true,
         maxAge: 3600000
     }
