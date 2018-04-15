@@ -33,9 +33,9 @@ app.use((req, __, next) => {
     // Cognitoサービスプロバイダー
     req.cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
         apiVersion: 'latest',
-        region: COGNITO_REGION
-        // accessKeyId: accessKeyId,
-        // secretAccessKey: secretAccessKey
+        region: COGNITO_REGION,
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     });
     next();
 });
