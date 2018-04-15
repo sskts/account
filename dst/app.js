@@ -21,22 +21,24 @@ const COGNITO_REGION = process.env.COGNITO_REGION;
 if (COGNITO_REGION === undefined) {
     throw new Error('Environment variable `COGNITO_REGION` required.');
 }
+// Redis Cacheクライアント
+const redisClient = redis.createClient({
+    host: process.env.REDIS_HOST,
+    // tslint:disable-next-line:no-magic-numbers
+    port: parseInt(process.env.REDIS_PORT, 10),
+    password: process.env.REDIS_KEY,
+    tls: { servername: process.env.REDIS_HOST }
+});
+// Cognitoサービスプロバイダー
+const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
+    apiVersion: 'latest',
+    region: COGNITO_REGION,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+});
 app.use((req, __, next) => {
-    // Redis Cacheクライアント
-    req.redisClient = redis.createClient({
-        host: process.env.REDIS_HOST,
-        // tslint:disable-next-line:no-magic-numbers
-        port: parseInt(process.env.REDIS_PORT, 10),
-        password: process.env.REDIS_KEY,
-        tls: { servername: process.env.REDIS_HOST }
-    });
-    // Cognitoサービスプロバイダー
-    req.cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
-        apiVersion: 'latest',
-        region: COGNITO_REGION,
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    });
+    req.redisClient = redisClient;
+    req.cognitoidentityserviceprovider = cognitoidentityserviceprovider;
     next();
 });
 app.use(session_1.default);
