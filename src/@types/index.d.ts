@@ -16,6 +16,9 @@ declare global {
             expires_in: number;
         }
 
+        /**
+         * ログインユーザーセッションインターフェース
+         */
         export interface IUser {
             username: string;
         }

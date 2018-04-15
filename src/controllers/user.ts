@@ -130,17 +130,118 @@ export async function confirm(req: express.Request, res: express.Response) {
             res.redirect(`/confirm?${querystring.stringify(req.query)}`);
         }
     } else {
-        const confirmParamsStr = req.flash('confirmParams');
-        if (confirmParamsStr.length === 0) {
-            throw new Error('User cannot be confirmed, do not refresh the confirmation page.');
-        }
+        try {
+            const confirmParamsStr = req.flash('confirmParams');
+            if (confirmParamsStr.length === 0) {
+                throw new Error('User cannot be confirmed, do not refresh the confirmation page.');
+            }
 
-        const confirmParams = <IConfirmParams>JSON.parse(confirmParamsStr[0]);
-        res.render('confirm', {
-            message: req.query.message,
-            confirmParams: confirmParams,
-            confirmUrl: `/confirm?${querystring.stringify(req.query)}`,
-            resendcodeUrl: `/resendcode?${querystring.stringify(req.query)}`
-        });
+            const confirmParams = <IConfirmParams>JSON.parse(confirmParamsStr[0]);
+            res.render('confirm', {
+                confirmParams: confirmParams,
+                resendcodeUrl: `/resendcode?${querystring.stringify(req.query)}`
+            });
+        } catch (error) {
+            res.redirect(`/error?error=${error.message}`);
+        }
+    }
+}
+
+/**
+ * メールアドレス確認に必要なパラメーターインターフェース
+ */
+interface IConfirmForgotPasswordParams {
+    username: string;
+    destination?: string;
+    deliveryMedium?: string;
+}
+
+/**
+ * パスワード忘れフロー
+ */
+export async function forgotPassword(req: express.Request, res: express.Response) {
+    if (req.method === 'POST') {
+        try {
+            const confirmForgotPasswordParams = await new Promise<IConfirmForgotPasswordParams>((resolve, reject) => {
+                const params = {
+                    ClientId: <string>COGNITO_CLIENT_ID,
+                    Username: req.body.username
+                };
+                req.cognitoidentityserviceprovider.forgotPassword(params, (err, data) => {
+                    if (err instanceof Error) {
+                        reject(err);
+                    } else {
+                        debug(data);
+                        resolve({
+                            username: req.body.username,
+                            destination: (data.CodeDeliveryDetails !== undefined) ? data.CodeDeliveryDetails.Destination : undefined,
+                            deliveryMedium: (data.CodeDeliveryDetails !== undefined) ? data.CodeDeliveryDetails.DeliveryMedium : undefined
+                        });
+                    }
+                });
+            });
+
+            // 確認コード入力へ
+            req.flash('confirmForgotPasswordParams', JSON.stringify(confirmForgotPasswordParams));
+            res.redirect(`/confirmForgotPassword?${querystring.stringify(req.query)}`);
+        } catch (error) {
+            req.flash('errorMessage', error.message);
+            res.redirect(`/forgotPassword?${querystring.stringify(req.query)}`);
+        }
+    } else {
+        res.render('forgotPassword');
+    }
+}
+
+/**
+ * パスワード忘れ確認フロー
+ */
+export async function confirmForgotPassword(req: express.Request, res: express.Response) {
+    if (req.method === 'POST') {
+        try {
+            await new Promise<void>((resolve, reject) => {
+                const params = {
+                    ClientId: <string>COGNITO_CLIENT_ID,
+                    ConfirmationCode: req.body.code,
+                    Username: req.body.username,
+                    Password: req.body.password
+                };
+                req.cognitoidentityserviceprovider.confirmForgotPassword(params, (err, data) => {
+                    debug('confirmForgotPassword response:', err, data);
+                    if (err instanceof Error) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                });
+            });
+
+            // 認可フローへリダイレクト
+            res.redirect(`/authorize?${querystring.stringify(req.query)}`);
+        } catch (error) {
+            req.flash('errorMessage', error.message);
+            req.flash('confirmForgotPasswordParams', JSON.stringify({
+                username: req.body.username,
+                destination: req.body.destination,
+                deliveryMedium: req.body.deliveryMedium
+            }));
+            res.redirect(`/confirmForgotPassword?${querystring.stringify(req.query)}`);
+        }
+    } else {
+        try {
+            const confirmForgotPasswordParamsStr = req.flash('confirmForgotPasswordParams');
+            if (confirmForgotPasswordParamsStr.length === 0) {
+                throw new Error('Password cannot be reset, do not refresh the password reset page.');
+            }
+
+            const confirmForgotPasswordParams = <IConfirmParams>JSON.parse(confirmForgotPasswordParamsStr[0]);
+            res.render('confirmForgotPassword', {
+                confirmForgotPasswordParams: confirmForgotPasswordParams,
+                confirmUrl: `/confirm?${querystring.stringify(req.query)}`,
+                resendcodeUrl: `/resendcode?${querystring.stringify(req.query)}`
+            });
+        } catch (error) {
+            res.redirect(`/error?error=${error.message}`);
+        }
     }
 }
