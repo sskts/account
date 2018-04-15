@@ -1,0 +1,48 @@
+<div id="div-forms" class="modal-body">
+    <div>
+        <div>
+
+            <form name="confirmform" id="confirm" action="<%= confirmUrl %>" method="post">
+
+                <input type="hidden" class="form-control inputField-customizable" id="username" name="username" value="<%= confirmParams.username %>">
+                <input type="hidden" class="form-control inputField-customizable" id="destination" name="destination" value="<%= confirmParams.destination %>">
+                <input type="hidden" class="form-control inputField-customizable" id="deliveryMedium" name="deliveryMedium" value="<%= confirmParams.deliveryMedium %>">
+                <input type="hidden" class="form-control inputField-customizable" id="sub" name="sub" value="<%= confirmParams.sub %>">
+                <% if (messages.errorMessage) { %>
+                    <p id="errorMessage" class="errorMessage-customizable">
+                        <%= messages.errorMessage %>
+                    </p>
+                    <% } %>
+
+                        <br>
+                        <div id="div-confirm-msg">
+                            <span id="text-code">We have sent a code by email to
+                                <%= confirmParams.destination %>. Enter it below to confirm your account.
+                            </span>
+                        </div>
+
+                        <label>Verification Code</label>
+                        <input id="verification_code" type="password" name="code" required="">
+
+                        <div>
+                            <button name="confirm" type="submit" class="btn btn-primary submitButton-customizable">Confirm Account</button>
+                        </div>
+            </form>
+
+            <form name="resendcodeform" id="resend" action="<%= resendcodeUrl %>" method="post">
+
+                <input type="hidden" class="form-control inputField-customizable" name="username" value="<%= confirmParams.username %>">
+                <input type="hidden" class="form-control inputField-customizable" name="destination" value="<%= confirmParams.destination %>">
+                <input type="hidden" class="form-control inputField-customizable" name="deliveryMedium" value="<%= confirmParams.deliveryMedium %>">
+                <input type="hidden" class="form-control inputField-customizable" name="sub" value="<%= confirmParams.sub %>">
+
+                <p class="redirect-customizable">
+                    <span>Didn't receive a code?</span>
+                    <button name="resend" type="submit" class="btn btn-link">Resend it</button>
+                </p>
+            </form>
+
+        </div>
+    </div>
+
+</div>
