@@ -33,6 +33,7 @@ app.use((req, __, next) => {
     req.cognitoidentityserviceprovider = cognitoidentityserviceprovider;
     next();
 });
+app.set('trust proxy', 1); // trust first proxy
 app.use(session_1.default);
 app.use(flash());
 // view engine setup
