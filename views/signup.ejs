@@ -1,0 +1,188 @@
+<div id="div-forms" class="modal-body">
+    <div>
+        <div>
+            <div>
+                <span class="textDescription-customizable ">Sign up with a new account</span>
+                <form name="signupform" method="post" class="cognito-asf">
+                    <% if (messages.errorMessage) { %>
+                        <p id="errorMessage" class="errorMessage-customizable">
+                            <%= messages.errorMessage %>
+                        </p>
+                        <% } %>
+
+                            <label class="label-customizable">Username</label>
+                            <div>
+                                <input id="username-input-mobile" onkeyup="checkPasswordMatch('mobile');" type="text" autocapitalize="none" class="form-control inputField-customizable"
+                                    placeholder="Username" required="" name="username" value="">
+                            </div>
+                            <div>
+                                <label class="label-customizable">Phone number</label>
+                                <div>
+                                    <input type="tel" class="form-control inputField-customizable" placeholder="+12125551234" required="" id="requiredAttributesphone_number"
+                                        name="phone_number" value="">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="label-customizable">Given name</label>
+                                <div>
+                                    <input type="text" class="form-control inputField-customizable" required="" id="requiredAttributesgiven_name" name="given_name"
+                                        value="">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="label-customizable">Family name</label>
+                                <div>
+                                    <input type="text" class="form-control inputField-customizable" required="" id="requiredAttributesfamily_name" name="family_name"
+                                        value="">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="label-customizable">Email</label>
+                                <div>
+                                    <input type="email" class="form-control inputField-customizable" placeholder="name@host.com" required="" id="requiredAttributesemail"
+                                        name="email" value="">
+                                </div>
+                            </div>
+                            <label class="label-customizable">Password</label>
+                            <br>
+                            <input id="password-mobile" onkeyup="checkPasswordMatch('mobile');" type="password" class="form-control inputField-customizable"
+                                placeholder="Password" required="" name="password" value="">
+                            <br>
+
+                            <div id="checkPassword-lowerletter-mobile">
+                                <span aria-hidden="true" id="check-lowerletter-mobile"></span>
+                                <span id="checkPasswordText-lowerletter-mobile"></span>
+                            </div>
+
+                            <div id="checkPassword-length-mobile">
+                                <span aria-hidden="true" id="check-length-mobile"></span>
+                                <span id="checkPasswordText-length-mobile"></span>
+                            </div>
+
+                            <button id="signupButton-mobile" type="submit" name="signUpButton" class="btn btn-primary submitButton-customizable">Sign up</button>
+                            <br>
+                            <p class="redirect-customizable">
+                                <span>Already have an account?</span>&nbsp;
+                                <a href="<%= loginUrl %>">Sign in</a>
+                            </p>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://d3vhah7crmmd43.cloudfront.net/20171117230139/js/jquery-3.2.1.min.js"></script>
+<script>
+
+    function checkPasswordMatch(screenSize) {
+        var passwordPolicy = [];
+        passwordPolicy.lowercase = "Password must contain a lower case letter";
+        passwordPolicy.uppercase = "Password must contain an upper case letter";
+        passwordPolicy.number = "Password must contain a number";
+        passwordPolicy.special = "Password must contain a special character";
+        var passwordLength = 8;
+        passwordPolicy.lengthCheck = "Password must contain at least 8 characters";
+
+        var password = $("#password-" + screenSize).val();
+        var username_input = $("#username-input-" + screenSize).val() != "";
+
+        var requireLowerletter = false;
+        var requireUpperletter = false;
+        var requireNumber = false;
+        var requireSymbol = false;
+        var requireLength = false;
+
+        if (password) {
+
+            if (true) {
+                if (/[a-z]/.test(password)) {
+                    $("#check-lowerletter-" + screenSize).html("&#10003;");
+                    $("#checkPasswordText-lowerletter-" + screenSize).html(passwordPolicy.lowercase);
+                    $("#checkPassword-lowerletter-" + screenSize).addClass("passwordCheck-valid-customizable").removeClass(
+                        "passwordCheck-notValid-customizable");
+                    requireLowerletter = true;
+                } else {
+                    $("#check-lowerletter-" + screenSize).html("&#10006;");
+                    $("#checkPasswordText-lowerletter-" + screenSize).html(passwordPolicy.lowercase);
+                    $("#checkPassword-lowerletter-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
+                        "passwordCheck-valid-customizable");
+                    requireLowerletter = false;
+                }
+            } else {
+                requireLowerletter = true;
+            }
+            if (false) {
+                if (/[A-Z]/.test(password)) {
+                    $("#check-upperletter-" + screenSize).html("&#10003;");
+                    $("#checkPasswordText-upperletter-" + screenSize).html(passwordPolicy.uppercase);
+                    $("#checkPassword-upperletter-" + screenSize).addClass("passwordCheck-valid-customizable").removeClass(
+                        "passwordCheck-notValid-customizable");
+                    requireUpperletter = true;
+                } else {
+                    $("#check-upperletter-" + screenSize).html("&#10006;");
+                    $("#checkPasswordText-upperletter-" + screenSize).html(passwordPolicy.uppercase);
+                    $("#checkPassword-upperletter-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
+                        "passwordCheck-valid-customizable");
+                    requireUpperletter = false;
+                }
+            } else {
+                requireUpperletter = true;
+            }
+            if (false) {
+                if (/[!|@|#|$|%|^|&|*|(|)|-|_]/.test(password)) {
+                    $("#check-symbols-" + screenSize).html("&#10003;");
+                    $("#checkPasswordText-symbols-" + screenSize).html(passwordPolicy.special);
+                    $("#checkPassword-symbols-" + screenSize).addClass("passwordCheck-valid-customizable").removeClass(
+                        "passwordCheck-notValid-customizable");
+                    requireSymbol = true;
+                } else {
+                    $("#check-symbols-" + screenSize).html("&#10006;");
+                    $("#checkPasswordText-symbols-" + screenSize).html(passwordPolicy.special);
+                    $("#checkPassword-symbols-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
+                        "passwordCheck-valid-customizable");
+                    requireSymbol = false;
+                }
+            } else {
+                requireSymbol = true;
+            }
+            if (false) {
+                if (/[0-9]/.test(password)) {
+                    $("#check-numbers-" + screenSize).html("&#10003;");
+                    $("#checkPasswordText-numbers-" + screenSize).html(passwordPolicy.number);
+                    $("#checkPassword-numbers-" + screenSize).addClass("passwordCheck-valid-customizable").removeClass(
+                        "passwordCheck-notValid-customizable")
+                    requireNumber = true;
+                } else {
+                    $("#check-numbers-" + screenSize).html("&#10006;");
+                    $("#checkPasswordText-numbers-" + screenSize).html(passwordPolicy.number);
+                    $("#checkPassword-numbers-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
+                        "passwordCheck-valid-customizable");
+                    requireNumber = false;
+                }
+            } else {
+                requireNumber = true;
+            }
+
+            if (password.length < passwordLength) {
+                $("#check-length-" + screenSize).html("&#10006;");
+                $("#checkPasswordText-length-" + screenSize).html(passwordPolicy.lengthCheck);
+                $("#checkPassword-length-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
+                    "passwordCheck-valid-customizable");
+                requireLength = false;
+            } else {
+                $("#check-length-" + screenSize).html("&#10003;");
+                $("#checkPasswordText-length-" + screenSize).html(passwordPolicy.lengthCheck);
+                $("#checkPassword-length-" + screenSize).addClass("passwordCheck-valid-customizable").removeClass(
+                    "passwordCheck-notValid-customizable");
+                requireLength = true;
+            }
+        }
+        if (requireLowerletter && requireUpperletter && requireNumber && requireSymbol && requireLength && username_input) {
+            document.getElementById("signupButton-" + screenSize).disabled = false;
+        } else {
+            document.getElementById("signupButton-" + screenSize).disabled = true;
+        }
+    }
+
+</script>

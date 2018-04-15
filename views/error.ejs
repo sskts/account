@@ -1,0 +1,22 @@
+<div class="modal-body">
+    <p align="center">An error was encountered with the requested page.</p>
+    <br>
+    <p align="center">
+        <a href="#" onclick="displayErrorMessage();">View error</a>
+    </p>
+    <div id="errorMsg" align="center" class="hidden">
+        <p id="errorMessage" class="errorMessage-customizable">
+            <%= message %>
+        </p>
+    </div>
+    <script>
+        function displayErrorMessage() {
+            var messageBox = document.getElementById("errorMsg");
+            if (messageBox.className == "hidden") {
+                messageBox.className = "none";
+            } else {
+                messageBox.className = "hidden";
+            }
+        }
+    </script>
+</div>
