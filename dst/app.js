@@ -51,7 +51,7 @@ app.use((__1, __2, next) => {
     next(createError(http_status_1.NOT_FOUND));
 });
 // error handler
-app.use((err, __, res) => {
+app.use((err, __1, res, __2) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     // render the error page
