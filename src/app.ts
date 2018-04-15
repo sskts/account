@@ -13,9 +13,9 @@ import * as createError from 'http-errors';
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from 'http-status';
 import * as logger from 'morgan';
 import * as path from 'path';
-import * as redis from 'redis';
 
 import session from './middlewares/session';
+import redisClient from './redisClient';
 
 import router from './routes/index';
 
@@ -26,14 +26,6 @@ if (COGNITO_REGION === undefined) {
     throw new Error('Environment variable `COGNITO_REGION` required.');
 }
 
-// Redis Cacheクライアント
-const redisClient = redis.createClient({
-    host: <string>process.env.REDIS_HOST,
-    // tslint:disable-next-line:no-magic-numbers
-    port: parseInt(<string>process.env.REDIS_PORT, 10),
-    password: <string>process.env.REDIS_KEY,
-    tls: { servername: <string>process.env.REDIS_HOST }
-});
 // Cognitoサービスプロバイダー
 const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
     apiVersion: 'latest',

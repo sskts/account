@@ -13,22 +13,14 @@ const createError = require("http-errors");
 const http_status_1 = require("http-status");
 const logger = require("morgan");
 const path = require("path");
-const redis = require("redis");
 const session_1 = require("./middlewares/session");
+const redisClient_1 = require("./redisClient");
 const index_1 = require("./routes/index");
 const app = express();
 const COGNITO_REGION = process.env.COGNITO_REGION;
 if (COGNITO_REGION === undefined) {
     throw new Error('Environment variable `COGNITO_REGION` required.');
 }
-// Redis Cacheクライアント
-const redisClient = redis.createClient({
-    host: process.env.REDIS_HOST,
-    // tslint:disable-next-line:no-magic-numbers
-    port: parseInt(process.env.REDIS_PORT, 10),
-    password: process.env.REDIS_KEY,
-    tls: { servername: process.env.REDIS_HOST }
-});
 // Cognitoサービスプロバイダー
 const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
     apiVersion: 'latest',
@@ -37,7 +29,7 @@ const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 app.use((req, __, next) => {
-    req.redisClient = redisClient;
+    req.redisClient = redisClient_1.default;
     req.cognitoidentityserviceprovider = cognitoidentityserviceprovider;
     next();
 });
