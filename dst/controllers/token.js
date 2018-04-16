@@ -22,14 +22,6 @@ const COGNITO_AUTHORIZE_SERVER_ENDPOINT = process.env.COGNITO_AUTHORIZE_SERVER_E
 if (COGNITO_AUTHORIZE_SERVER_ENDPOINT === undefined) {
     throw new Error('Environment variable `COGNITO_AUTHORIZE_SERVER_ENDPOINT` required.');
 }
-const COGNITO_USER_POOL_ID = process.env.COGNITO_USER_POOL_ID;
-if (COGNITO_USER_POOL_ID === undefined) {
-    throw new Error('Environment variable `COGNITO_USER_POOL_ID` required.');
-}
-const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID;
-if (COGNITO_CLIENT_ID === undefined) {
-    throw new Error('Environment variable `COGNITO_CLIENT_ID` required.');
-}
 /**
  * /oauth2/token エンドポイントは HTTPS POST のみをサポートします。ユーザープールクライアントは、システムブラウザ経由ではなくこのエンドポイントに直接リクエストを送信します。
  * トークンのエンドポイントのレスポンスに更新トークンが含まれる場合は、前の更新トークンを破棄し、新しく返された更新トークンを使用します。

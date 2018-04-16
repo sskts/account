@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const crypto = require("crypto");
 const createDebug = require("debug");
 const querystring = require("querystring");
 const debug = createDebug('sskts-account:controllers:user');
@@ -26,6 +27,10 @@ const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID;
 if (COGNITO_CLIENT_ID === undefined) {
     throw new Error('Environment variable `COGNITO_CLIENT_ID` required.');
 }
+const COGNITO_CLIENT_SECRET = process.env.COGNITO_CLIENT_SECRET;
+if (COGNITO_CLIENT_SECRET === undefined) {
+    throw new Error('Environment variable `COGNITO_CLIENT_SECRET` required.');
+}
 /**
  * 会員登録フォーム
  */
@@ -33,8 +38,12 @@ function signup(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.method === 'POST') {
             try {
+                const hash = crypto.createHmac('sha256', COGNITO_CLIENT_SECRET)
+                    .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                    .digest('base64');
                 const params = {
                     ClientId: COGNITO_CLIENT_ID,
+                    SecretHash: hash,
                     Password: req.body.password,
                     Username: req.body.username,
                     UserAttributes: [
@@ -53,6 +62,10 @@ function signup(req, res) {
                         {
                             Name: 'phone_number',
                             Value: req.body.phone_number
+                        },
+                        {
+                            Name: 'custom:postalCode',
+                            Value: req.body.postalCode
                         }
                     ]
                 };
@@ -98,12 +111,15 @@ function confirm(req, res) {
         if (req.method === 'POST') {
             try {
                 yield new Promise((resolve, reject) => {
+                    const hash = crypto.createHmac('sha256', COGNITO_CLIENT_SECRET)
+                        .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                        .digest('base64');
                     const params = {
                         ClientId: COGNITO_CLIENT_ID,
+                        SecretHash: hash,
                         ConfirmationCode: req.body.code,
                         Username: req.body.username,
                         ForceAliasCreation: false
-                        // SecretHash: 'STRING_VALUE'
                     };
                     req.cognitoidentityserviceprovider.confirmSignUp(params, (err, data) => {
                         if (err instanceof Error) {
@@ -153,8 +169,12 @@ function forgotPassword(req, res) {
         if (req.method === 'POST') {
             try {
                 const confirmForgotPasswordParams = yield new Promise((resolve, reject) => {
+                    const hash = crypto.createHmac('sha256', COGNITO_CLIENT_SECRET)
+                        .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                        .digest('base64');
                     const params = {
                         ClientId: COGNITO_CLIENT_ID,
+                        SecretHash: hash,
                         Username: req.body.username
                     };
                     req.cognitoidentityserviceprovider.forgotPassword(params, (err, data) => {
@@ -198,8 +218,12 @@ function confirmForgotPassword(req, res) {
                     throw new Error('Password does not match the confirm password.');
                 }
                 yield new Promise((resolve, reject) => {
+                    const hash = crypto.createHmac('sha256', COGNITO_CLIENT_SECRET)
+                        .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                        .digest('base64');
                     const params = {
                         ClientId: COGNITO_CLIENT_ID,
+                        SecretHash: hash,
                         ConfirmationCode: req.body.code,
                         Username: req.body.username,
                         Password: req.body.password

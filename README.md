@@ -18,6 +18,7 @@
 | `COGNITO_AUTHORIZE_SERVER_ENDPOINT` | true     |                 | 本来のCognitoサービスの認可サーバードメイン       |
 | `COGNITO_USER_POOL_ID`              | true     |                 | CognitoユーザープールID                |
 | `COGNITO_CLIENT_ID`                 | true     |                 | 本アプリのCognitoクライアントID            |
+| `COGNITO_CLIENT_SECRET`             | true     |                 | 本アプリのCognitoクライアントシークレット        |
 | `COGNITO_REGION`                    | true     |                 | Cognitoリージョン                    |
 | `REDIS_HOST`                        | true     |                 | セッションと一時データ保管に使用するRedis Cache   |
 | `REDIS_PORT`                        | true     |                 | セッションと一時データ保管に使用するRedis Cache   |

@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const crypto = require("crypto");
 const createDebug = require("debug");
 const querystring = require("querystring");
 const uniqid = require("uniqid");
@@ -23,6 +24,10 @@ if (COGNITO_USER_POOL_ID === undefined) {
 const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID;
 if (COGNITO_CLIENT_ID === undefined) {
     throw new Error('Environment variable `COGNITO_CLIENT_ID` required.');
+}
+const COGNITO_CLIENT_SECRET = process.env.COGNITO_CLIENT_SECRET;
+if (COGNITO_CLIENT_SECRET === undefined) {
+    throw new Error('Environment variable `COGNITO_CLIENT_SECRET` required.');
 }
 /**
  * 認証エンドポイント
@@ -92,6 +97,9 @@ function login(req, res) {
         if (req.method === 'POST') {
             try {
                 // usernameとpasswordを確認して認可コード生成
+                const hash = crypto.createHmac('sha256', COGNITO_CLIENT_SECRET)
+                    .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                    .digest('base64');
                 yield new Promise((resolve, reject) => {
                     const params = {
                         UserPoolId: COGNITO_USER_POOL_ID,
@@ -99,7 +107,7 @@ function login(req, res) {
                         AuthFlow: 'ADMIN_NO_SRP_AUTH',
                         AuthParameters: {
                             USERNAME: req.body.username,
-                            // SECRET_HASH: hash,
+                            SECRET_HASH: hash,
                             PASSWORD: req.body.password
                         }
                     };

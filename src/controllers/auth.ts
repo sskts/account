@@ -2,6 +2,7 @@
  * 認証コントローラー
  */
 
+import * as  crypto from 'crypto';
 import * as  createDebug from 'debug';
 import * as express from 'express';
 import * as querystring from 'querystring';
@@ -18,6 +19,10 @@ if (COGNITO_USER_POOL_ID === undefined) {
 const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID;
 if (COGNITO_CLIENT_ID === undefined) {
     throw new Error('Environment variable `COGNITO_CLIENT_ID` required.');
+}
+const COGNITO_CLIENT_SECRET = process.env.COGNITO_CLIENT_SECRET;
+if (COGNITO_CLIENT_SECRET === undefined) {
+    throw new Error('Environment variable `COGNITO_CLIENT_SECRET` required.');
 }
 
 /**
@@ -90,6 +95,9 @@ export async function login(req: express.Request, res: express.Response) {
     if (req.method === 'POST') {
         try {
             // usernameとpasswordを確認して認可コード生成
+            const hash = crypto.createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
+                .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                .digest('base64');
             await new Promise<string>((resolve, reject) => {
                 const params = {
                     UserPoolId: <string>COGNITO_USER_POOL_ID,
@@ -97,7 +105,7 @@ export async function login(req: express.Request, res: express.Response) {
                     AuthFlow: 'ADMIN_NO_SRP_AUTH',
                     AuthParameters: {
                         USERNAME: req.body.username,
-                        // SECRET_HASH: hash,
+                        SECRET_HASH: hash,
                         PASSWORD: req.body.password
                     }
                 };

@@ -2,6 +2,7 @@
  * ユーザーコントローラー
  */
 
+import * as  crypto from 'crypto';
 import * as  createDebug from 'debug';
 import * as express from 'express';
 import * as querystring from 'querystring';
@@ -20,6 +21,10 @@ const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID;
 if (COGNITO_CLIENT_ID === undefined) {
     throw new Error('Environment variable `COGNITO_CLIENT_ID` required.');
 }
+const COGNITO_CLIENT_SECRET = process.env.COGNITO_CLIENT_SECRET;
+if (COGNITO_CLIENT_SECRET === undefined) {
+    throw new Error('Environment variable `COGNITO_CLIENT_SECRET` required.');
+}
 
 /**
  * メールアドレス確認に必要なパラメーターインターフェース
@@ -37,8 +42,12 @@ interface IConfirmParams {
 export async function signup(req: express.Request, res: express.Response) {
     if (req.method === 'POST') {
         try {
+            const hash = crypto.createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
+                .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                .digest('base64');
             const params = {
                 ClientId: <string>COGNITO_CLIENT_ID,
+                SecretHash: hash,
                 Password: req.body.password,
                 Username: req.body.username,
                 UserAttributes: [
@@ -57,6 +66,10 @@ export async function signup(req: express.Request, res: express.Response) {
                     {
                         Name: 'phone_number',
                         Value: req.body.phone_number
+                    },
+                    {
+                        Name: 'custom:postalCode',
+                        Value: req.body.postalCode
                     }
                 ]
             };
@@ -99,12 +112,15 @@ export async function confirm(req: express.Request, res: express.Response) {
     if (req.method === 'POST') {
         try {
             await new Promise<void>((resolve, reject) => {
+                const hash = crypto.createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
+                    .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                    .digest('base64');
                 const params = {
                     ClientId: <string>COGNITO_CLIENT_ID,
+                    SecretHash: hash,
                     ConfirmationCode: req.body.code,
                     Username: req.body.username,
                     ForceAliasCreation: false
-                    // SecretHash: 'STRING_VALUE'
                 };
                 req.cognitoidentityserviceprovider.confirmSignUp(params, (err, data) => {
                     if (err instanceof Error) {
@@ -158,8 +174,12 @@ export async function forgotPassword(req: express.Request, res: express.Response
     if (req.method === 'POST') {
         try {
             const confirmForgotPasswordParams = await new Promise<IConfirmForgotPasswordParams>((resolve, reject) => {
+                const hash = crypto.createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
+                    .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                    .digest('base64');
                 const params = {
                     ClientId: <string>COGNITO_CLIENT_ID,
+                    SecretHash: hash,
                     Username: req.body.username
                 };
                 req.cognitoidentityserviceprovider.forgotPassword(params, (err, data) => {
@@ -200,8 +220,12 @@ export async function confirmForgotPassword(req: express.Request, res: express.R
             }
 
             await new Promise<void>((resolve, reject) => {
+                const hash = crypto.createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
+                    .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                    .digest('base64');
                 const params = {
                     ClientId: <string>COGNITO_CLIENT_ID,
+                    SecretHash: hash,
                     ConfirmationCode: req.body.code,
                     Username: req.body.username,
                     Password: req.body.password
