@@ -1,95 +1,129 @@
-<div id="div-forms" class="modal-body">
-    <div>
-        <div>
-            <div>
-                <span class="textDescription-customizable ">Sign up with a new account</span>
-                <form name="signupform" method="post" class="cognito-asf">
-                    <% if (messages.errorMessage) { %>
-                        <p id="errorMessage" class="errorMessage-customizable">
-                            <%= messages.errorMessage %>
-                        </p>
-                        <% } %>
+<div id="div-forms" class="contents center signup">
+    <div class="inner">
+        <p class="mb-middle">
+            必須項目を入力し「次へ」ボタンを押してください
+        </p>
+        <form name="signupform" method="post" class="cognito-asf">
+            <% if (messages.errorMessage) { %>
+                <p id="errorMessage" class="error text-red mb-small">
+                    <%= messages.errorMessage %>
+                </p>
+                <% } %>
 
-                            <label class="label-customizable">Username</label>
-                            <div>
-                                <input id="username-input-mobile" onkeyup="checkPasswordMatch('mobile');" type="text" autocapitalize="none" class="form-control inputField-customizable"
-                                    placeholder="Username" required="" name="username" value="">
-                            </div>
-                            <div>
-                                <label class="label-customizable">Phone number</label>
-                                <div>
-                                    <input type="tel" class="form-control inputField-customizable" placeholder="+12125551234" required="" id="requiredAttributesphone_number"
-                                        name="phone_number" value="">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="label-customizable">Given name</label>
-                                <div>
-                                    <input type="text" class="form-control inputField-customizable" required="" id="requiredAttributesgiven_name" name="given_name"
-                                        value="">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="label-customizable">Family name</label>
-                                <div>
-                                    <input type="text" class="form-control inputField-customizable" required="" id="requiredAttributesfamily_name" name="family_name"
-                                        value="">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="label-customizable">Email</label>
-                                <div>
-                                    <input type="email" class="form-control inputField-customizable" placeholder="name@host.com" required="" id="requiredAttributesemail"
-                                        name="email" value="">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="label-customizable">Postal Code</label>
-                                <div>
-                                    <input type="text" class="form-control inputField-customizable" placeholder="1550033" required="" id="requiredAttributesPostalCode"
-                                        name="postalCode" value="">
-                                </div>
-                            </div>
-                            <label class="label-customizable">Password</label>
-                            <br>
-                            <input id="password-mobile" onkeyup="checkPasswordMatch('mobile');" type="password" class="form-control inputField-customizable"
-                                placeholder="Password" required="" name="password" value="">
-                            <br>
+                    <dl class="mb-middle">
+                        <dt>
+                            <strong>ログインID</strong>
+                            <span class="text-red small-text">入力必須</span>
+                        </dt>
+                        <dd>
+                            <input id="username-input-mobile" onkeyup="checkPasswordMatch('mobile');" type="text" autocapitalize="none" class="form-control"
+                                placeholder="ログインID" required="" name="username" value="">
+                        </dd>
+                    </dl>
 
-                            <div id="checkPassword-lowerletter-mobile">
+                    <dl class="mb-middle">
+                        <dt>
+                            <strong>お名前（カタカナ）</strong>
+                            <span class="text-red small-text">入力必須</span>
+                        </dt>
+                        <dd class="mb-x-small">
+                            <input type="text" class="form-control" required="" id="requiredAttributesfamily_name" name="family_name" value="" placeholder="セイ">
+                        </dd>
+                        <dd>
+                            <input type="text" class="form-control" required="" id="requiredAttributesgiven_name" name="given_name" value="" placeholder="メイ">
+                        </dd>
+                    </dl>
+
+                    <dl class="mb-middle">
+                        <dt>
+                            <strong>メールアドレス</strong>
+                            <span class="text-red small-text">入力必須</span>
+                        </dt>
+                        <dd>
+                            <input type="email" class="form-control" placeholder="メールアドレス" required="" id="requiredAttributesemail" name="email" value="">
+                        </dd>
+                    </dl>
+                    <dl class="mb-middle">
+                        <dt>
+                            <strong>電話番号</strong>
+                            <span class="text-red small-text">入力必須</span>
+                        </dt>
+                        <dd>
+                            <input type="tel" class="form-control" placeholder="+8112345678" required="" id="requiredAttributesphone_number" name="phone_number"
+                                value="">
+                        </dd>
+                    </dl>
+                    <!-- <dl class="mb-middle">
+                        <dt>生年月日
+                            <span class="text-red small-text">入力必須</span>
+                        </dt>
+                        <dd>
+                            
+                        </dd>
+                    </dl>
+                    <dl class="mb-middle">
+                        <dt>性別
+                            <span class="text-red small-text">入力必須</span>
+                        </dt>
+                        <dd>
+                            
+                        </dd>
+                    </dl> -->
+                    <dl class="mb-middle">
+                        <dt>
+                            <strong>郵便番号</strong>
+                            <span class="text-red small-text">入力必須</span>
+                        </dt>
+                        <dd>
+                            <input type="text" class="form-control" placeholder="1550033" required="" id="requiredAttributesPostalCode" name="postalCode"
+                                value="">
+                        </dd>
+                    </dl>
+                    <dl class="mb-middle">
+                        <dt>
+                            <strong>パスワード</strong>
+                            <span class="text-red small-text">入力必須</span>
+                        </dt>
+                        <dd>
+                            <div class="mb-x-small">
+                                <input id="password-mobile" onkeyup="checkPasswordMatch('mobile');" type="password" class="form-control" placeholder="パスワード"
+                                    required="" name="password" value="">
+                            </div>
+                            <div id="checkPassword-lowerletter-mobile" class="mb-x-small small-text">
                                 <span aria-hidden="true" id="check-lowerletter-mobile"></span>
                                 <span id="checkPasswordText-lowerletter-mobile"></span>
                             </div>
 
-                            <div id="checkPassword-length-mobile">
+                            <div id="checkPassword-length-mobile small-text">
                                 <span aria-hidden="true" id="check-length-mobile"></span>
                                 <span id="checkPasswordText-length-mobile"></span>
                             </div>
+                        </dd>
+                    </dl>
 
-                            <button id="signupButton-mobile" type="submit" name="signUpButton" class="btn btn-primary submitButton-customizable">Sign up</button>
-                            <br>
-                            <p class="redirect-customizable">
-                                <span>Already have an account?</span>&nbsp;
-                                <a href="<%= loginUrl %>">Sign in</a>
-                            </p>
-                </form>
 
-            </div>
-        </div>
+
+                    <button id="signupButton-mobile" type="submit" name="signUpButton" class="button button-primary button-block">次へ</button>
+
+                    <!-- <p class="redirect-customizable">
+                        <span>Already have an account?</span>&nbsp;
+                        <a href="<%= loginUrl %>">Sign in</a>
+                    </p> -->
+        </form>
     </div>
 </div>
 
-<script src="https://d3vhah7crmmd43.cloudfront.net/20171117230139/js/jquery-3.2.1.min.js"></script>
+
 <script>
 
     function checkPasswordMatch(screenSize) {
         var passwordPolicy = [];
-        passwordPolicy.lowercase = "Password must contain a lower case letter";
-        passwordPolicy.uppercase = "Password must contain an upper case letter";
-        passwordPolicy.number = "Password must contain a number";
-        passwordPolicy.special = "Password must contain a special character";
+        passwordPolicy.lowercase = "パスワードには小文字を含める必要があります";
+        passwordPolicy.uppercase = "パスワードは大文字でなければなりません";
+        passwordPolicy.number = "パスワードには数字が必要です";
+        passwordPolicy.special = "パスワードには特殊文字を含める必要があります";
         var passwordLength = 8;
-        passwordPolicy.lengthCheck = "Password must contain at least 8 characters";
+        passwordPolicy.lengthCheck = "パスワードは" + passwordLength + "文字以上でなければなりません";
 
         var password = $("#password-" + screenSize).val();
         var username_input = $("#username-input-" + screenSize).val() != "";

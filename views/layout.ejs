@@ -2,8 +2,7 @@
     data-aui-build-date="3.17.16.3-2017-10-11">
 
 <head>
-    <link href="https://d3vhah7crmmd43.cloudfront.net/20171117230139/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="https://d3vhah7crmmd43.cloudfront.net/20171117230139/css/cognito-login.css" rel="stylesheet" media="screen">
+    <link href="/css/style.css" rel="stylesheet" media="screen">
 
     <title>Signin</title>
 
@@ -15,27 +14,15 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         };
     </script>
+    <script src="https://d3vhah7crmmd43.cloudfront.net/20171117230139/js/jquery-3.2.1.min.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-    <div class="container">
-        <div class="modal-dialog">
-            <div class="modal-content background-customizable">
-                <div>
-                    <div class="banner-customizable">
-                        <center>
-                        </center>
-                    </div>
-                </div>
-
-                <%- body %>
-            </div>
-        </div>
+    <div class="wrapper">
+        <%- body %>
     </div>
-
-    <div class="fwcim-container"></div>
 </body>
 
 </html>

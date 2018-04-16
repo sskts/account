@@ -1,48 +1,49 @@
-<div id="div-forms" class="modal-body">
-    <div>
-        <div>
+<div id="div-forms" class="contents center confirm">
+    <div class="inner">
+        <form name="confirmform" id="confirm" method="post">
 
-            <form name="confirmform" id="confirm" method="post">
-
-                <input type="hidden" class="form-control inputField-customizable" id="username" name="username" value="<%= confirmParams.username %>">
-                <input type="hidden" class="form-control inputField-customizable" id="destination" name="destination" value="<%= confirmParams.destination %>">
-                <input type="hidden" class="form-control inputField-customizable" id="deliveryMedium" name="deliveryMedium" value="<%= confirmParams.deliveryMedium %>">
-                <input type="hidden" class="form-control inputField-customizable" id="sub" name="sub" value="<%= confirmParams.sub %>">
-                <% if (messages.errorMessage) { %>
-                    <p id="errorMessage" class="errorMessage-customizable">
-                        <%= messages.errorMessage %>
-                    </p>
-                    <% } %>
-
-                        <br>
-                        <div id="div-confirm-msg">
-                            <span id="text-code">We have sent a code by email to
-                                <%= confirmParams.destination %>. Enter it below to confirm your account.
-                            </span>
-                        </div>
-
-                        <label>Verification Code</label>
-                        <input id="verification_code" type="password" name="code" required="">
-
-                        <div>
-                            <button name="confirm" type="submit" class="btn btn-primary submitButton-customizable">Confirm Account</button>
-                        </div>
-            </form>
-
-            <form name="resendcodeform" id="resend" action="<%= resendcodeUrl %>" method="post">
-
-                <input type="hidden" class="form-control inputField-customizable" name="username" value="<%= confirmParams.username %>">
-                <input type="hidden" class="form-control inputField-customizable" name="destination" value="<%= confirmParams.destination %>">
-                <input type="hidden" class="form-control inputField-customizable" name="deliveryMedium" value="<%= confirmParams.deliveryMedium %>">
-                <input type="hidden" class="form-control inputField-customizable" name="sub" value="<%= confirmParams.sub %>">
-
-                <p class="redirect-customizable">
-                    <span>Didn't receive a code?</span>
-                    <button name="resend" type="submit" class="btn btn-link">Resend it</button>
+            <input type="hidden" class="form-control inputField-customizable" id="username" name="username" value="<%= confirmParams.username %>">
+            <input type="hidden" class="form-control inputField-customizable" id="destination" name="destination" value="<%= confirmParams.destination %>">
+            <input type="hidden" class="form-control inputField-customizable" id="deliveryMedium" name="deliveryMedium" value="<%= confirmParams.deliveryMedium %>">
+            <input type="hidden" class="form-control inputField-customizable" id="sub" name="sub" value="<%= confirmParams.sub %>">
+            <% if (messages.errorMessage) { %>
+                <p id="errorMessage" class="error text-red mb-small">
+                    <%= messages.errorMessage %>
                 </p>
-            </form>
+                <% } %>
 
-        </div>
+                    <br>
+                    <div id="div-confirm-msg">
+                        <p id="text-code" class="mb-middle">
+                            ご登録いただいた
+                            <%= confirmParams.destination %>までワンタイムパスワードを送信しました。 ワンタイムパスワードを入力して「次へ」ボタンを押してください。
+                        </p>
+                    </div>
+
+                    <dl class="mb-middle">
+                        <dt class="mb-x-small">
+                            <strong>ワンタイムパスワード</strong>
+                        </dt>
+                        <dd>
+                            <input id="verification_code" type="password" name="code" required="" placeholder="ワンタイムパスワード">
+                        </dd>
+                    </dl>
+
+
+                    <button name="confirm" type="submit" class="button button-primary button-block mb-middle">次へ</button>
+        </form>
+
+        <form name="resendcodeform" id="resend" action="<%= resendcodeUrl %>" method="post">
+
+            <input type="hidden" class="form-control inputField-customizable" name="username" value="<%= confirmParams.username %>">
+            <input type="hidden" class="form-control inputField-customizable" name="destination" value="<%= confirmParams.destination %>">
+            <input type="hidden" class="form-control inputField-customizable" name="deliveryMedium" value="<%= confirmParams.deliveryMedium %>">
+            <input type="hidden" class="form-control inputField-customizable" name="sub" value="<%= confirmParams.sub %>">
+
+            <p class="text-center">
+                <button name="resend" type="submit" class="link">ワンタイムパスワードを再送信する</button>
+            </p>
+        </form>
     </div>
 
 </div>

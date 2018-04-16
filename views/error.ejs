@@ -1,14 +1,23 @@
-<div class="modal-body">
-    <p align="center">An error was encountered with the requested page.</p>
-    <br>
-    <p align="center">
-        <a href="#" onclick="displayErrorMessage();">View error</a>
+<div class="contents center error-page">
+    <p class="mb-middle">
+        要求されたページでエラーが発生しました。
     </p>
-    <div id="errorMsg" align="center" class="hidden">
-        <p id="errorMessage" class="errorMessage-customizable">
+    <p class="mb-middle">
+        <a href="#" onclick="displayErrorMessage();">エラー詳細</a>
+    </p>
+    <div id="errorMsg" class="hidden">
+        <p id="errorMessage" class="error text-red mb-small">
             <%= message %>
         </p>
     </div>
+    <style>
+        .hidden {
+            display: none;
+        }
+        .none {
+            display: block;
+        }
+    </style>
     <script>
         function displayErrorMessage() {
             var messageBox = document.getElementById("errorMsg");

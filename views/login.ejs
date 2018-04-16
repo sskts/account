@@ -1,41 +1,31 @@
-<div id="div-forms" class="modal-body">
-    <div>
-        <div>
-            <div>
-                <div>
+<div id="div-forms" class="contents center login">
+    <div class="inner">
+        <p class="mb-middle">
+            ログインIDとパスワードを入力して
+            <br> ログインボタンを押してください
+        </p>
+        <form method="POST" name="cognitoSignInForm" class="cognito-asf">
+            <% if (messages.errorMessage) { %>
+                <p id="loginErrorMessage" class="error text-red mb-small">
+                    <%= messages.errorMessage %>
+                </p>
+                <% } %>
 
-                    <span class="textDescription-customizable ">Sign in with your username and password</span>
-                    <form method="POST" name="cognitoSignInForm" class="cognito-asf">
-                        <% if (messages.errorMessage) { %>
-                            <p id="loginErrorMessage" class="errorMessage-customizable">
-                                <%= messages.errorMessage %>
-                            </p>
-                            <% } %>
+                    <div class="mb-small">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="ログインID" required="">
+                    </div>
 
-                                <label class="label-customizable">Username</label>
-                                <div>
-                                    <input id="username" name="username" type="text" class="form-control inputField-customizable" placeholder="Username" required="">
-                                </div>
-
-                                <label class="label-customizable">Password</label>
-                                <div>
-                                    <input id="password" name="password" type="password" class="form-control inputField-customizable" placeholder="Password"
-                                        required="">
-                                </div>
-                                <input type="hidden" class="form-control inputField-customizable" id="cognito-asf-data" name="cognitoAsfData">
-                                <a class="redirect-customizable" href="<%= forgotPasswordUrl %>">Forgot your password?</a>
-                                <input name="signInSubmitButton" type="Submit" value="Sign in" class="btn btn-primary submitButton-customizable">
-                                <br>
-                                <div>
-                                    <p class="redirect-customizable">
-                                        <span>Need an account?</span>&nbsp;
-                                        <a href="<%= signupUrl %>">Sign up</a>
-                                    </p>
-                                </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
+                    <div class="mb-middle">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="パスワード" required="">
+                    </div>
+                    <input type="hidden" class="form-control" id="cognito-asf-data" name="cognitoAsfData">
+                    <button name="signInSubmitButton" type="Submit" class="button button-primary button-block mb-middle">ログイン</button>
+                    <div class="text-center">
+                        <a href="<%= forgotPasswordUrl %>">ワスワードを忘れた方はこちら</a>
+                    </div>
+                    <div class="text-center">
+                        <a href="<%= signupUrl %>">Sign up</a>
+                    </div>
+        </form>
     </div>
 </div>
