@@ -73,7 +73,7 @@ function signup(req, res) {
                     });
                 });
                 // 確認コード入力へ
-                req.flash('confirmParams', JSON.stringify(confirmParams));
+                req.flash('confirmParams', confirmParams);
                 res.redirect(`/confirm?${querystring.stringify(req.query)}`);
             }
             catch (error) {
@@ -121,22 +121,18 @@ function confirm(req, res) {
             }
             catch (error) {
                 req.flash('errorMessage', error.message);
-                req.flash('confirmParams', JSON.stringify({
+                req.flash('confirmParams', {
                     username: req.body.username,
                     sub: req.body.sub,
                     destination: req.body.destination,
                     deliveryMedium: req.body.deliveryMedium
-                }));
+                });
                 res.redirect(`/confirm?${querystring.stringify(req.query)}`);
             }
         }
         else {
             try {
-                const confirmParamsStr = req.flash('confirmParams');
-                if (confirmParamsStr.length === 0) {
-                    throw new Error('User cannot be confirmed, do not refresh the confirmation page.');
-                }
-                const confirmParams = JSON.parse(confirmParamsStr[0]);
+                const confirmParams = req.flash('confirmParams')[0];
                 res.render('confirm', {
                     confirmParams: confirmParams,
                     resendcodeUrl: `/resendcode?${querystring.stringify(req.query)}`
@@ -162,11 +158,11 @@ function forgotPassword(req, res) {
                         Username: req.body.username
                     };
                     req.cognitoidentityserviceprovider.forgotPassword(params, (err, data) => {
+                        debug('forgotPassword response', err, data);
                         if (err instanceof Error) {
                             reject(err);
                         }
                         else {
-                            debug(data);
                             resolve({
                                 username: req.body.username,
                                 destination: (data.CodeDeliveryDetails !== undefined) ? data.CodeDeliveryDetails.Destination : undefined,
@@ -176,7 +172,7 @@ function forgotPassword(req, res) {
                     });
                 });
                 // 確認コード入力へ
-                req.flash('confirmForgotPasswordParams', JSON.stringify(confirmForgotPasswordParams));
+                req.flash('confirmForgotPasswordParams', confirmForgotPasswordParams);
                 res.redirect(`/confirmForgotPassword?${querystring.stringify(req.query)}`);
             }
             catch (error) {
@@ -197,6 +193,10 @@ function confirmForgotPassword(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.method === 'POST') {
             try {
+                // validation
+                if (req.body.password !== req.body.confirmPassword) {
+                    throw new Error('Password does not match the confirm password.');
+                }
                 yield new Promise((resolve, reject) => {
                     const params = {
                         ClientId: COGNITO_CLIENT_ID,
@@ -219,21 +219,17 @@ function confirmForgotPassword(req, res) {
             }
             catch (error) {
                 req.flash('errorMessage', error.message);
-                req.flash('confirmForgotPasswordParams', JSON.stringify({
+                req.flash('confirmForgotPasswordParams', {
                     username: req.body.username,
                     destination: req.body.destination,
                     deliveryMedium: req.body.deliveryMedium
-                }));
+                });
                 res.redirect(`/confirmForgotPassword?${querystring.stringify(req.query)}`);
             }
         }
         else {
             try {
-                const confirmForgotPasswordParamsStr = req.flash('confirmForgotPasswordParams');
-                if (confirmForgotPasswordParamsStr.length === 0) {
-                    throw new Error('Password cannot be reset, do not refresh the password reset page.');
-                }
-                const confirmForgotPasswordParams = JSON.parse(confirmForgotPasswordParamsStr[0]);
+                const confirmForgotPasswordParams = req.flash('confirmForgotPasswordParams')[0];
                 res.render('confirmForgotPassword', {
                     confirmForgotPasswordParams: confirmForgotPasswordParams,
                     confirmUrl: `/confirm?${querystring.stringify(req.query)}`,
