@@ -20,12 +20,16 @@
                     </div>
                     <input type="hidden" class="form-control" id="cognito-asf-data" name="cognitoAsfData">
                     <button name="signInSubmitButton" type="Submit" class="button button-primary button-block mb-middle">ログイン</button>
-                    <div class="text-center">
-                        <a href="<%= forgotPasswordUrl %>">ワスワードを忘れた方はこちら</a>
-                    </div>
-                    <div class="text-center">
-                        <a href="<%= signupUrl %>">Sign up</a>
-                    </div>
+
         </form>
+        <div class="text-center mb-small">
+            <a href="<%= forgotPasswordUrl %>">ワスワードを忘れた方はこちら</a>
+        </div>
+        <div class="text-center">
+            <a href="javascript:history.back();">戻る</a>
+        </div>
+        <div class="text-center">
+            <a href="<%= signupUrl %>">Sign up</a>
+        </div>
     </div>
 </div>

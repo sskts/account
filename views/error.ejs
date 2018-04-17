@@ -6,14 +6,18 @@
         <a href="#" onclick="displayErrorMessage();">エラー詳細</a>
     </p>
     <div id="errorMsg" class="hidden">
-        <p id="errorMessage" class="error text-red mb-small">
+        <p id="errorMessage" class="error text-red mb-middle">
             <%= message %>
         </p>
+    </div>
+    <div class="text-center">
+        <a href="javascript:history.back();">戻る</a>
     </div>
     <style>
         .hidden {
             display: none;
         }
+
         .none {
             display: block;
         }

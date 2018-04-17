@@ -29,7 +29,6 @@
                         </dd>
                     </dl>
 
-
                     <button name="confirm" type="submit" class="button button-primary button-block mb-middle">次へ</button>
         </form>
 
@@ -40,10 +39,14 @@
             <input type="hidden" class="form-control inputField-customizable" name="deliveryMedium" value="<%= confirmParams.deliveryMedium %>">
             <input type="hidden" class="form-control inputField-customizable" name="sub" value="<%= confirmParams.sub %>">
 
-            <p class="text-center">
+            <p class="text-center mb-middle">
                 <button name="resend" type="submit" class="link">ワンタイムパスワードを再送信する</button>
             </p>
         </form>
+
+        <div class="text-center">
+            <a href="javascript:history.back();">戻る</a>
+        </div>
     </div>
 
 </div>

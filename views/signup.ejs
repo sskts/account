@@ -1,5 +1,6 @@
 <div id="div-forms" class="contents center signup">
     <div class="inner">
+        <div class="text-center mb-small large-text">基本情報入力</div>
         <p class="mb-middle">
             必須項目を入力し「次へ」ボタンを押してください
         </p>
@@ -13,7 +14,7 @@
                     <dl class="mb-middle">
                         <dt>
                             <strong>ログインID</strong>
-                            <span class="text-red small-text">入力必須</span>
+                            <span class="text-red small-text">必須</span>
                         </dt>
                         <dd>
                             <input id="username-input-mobile" onkeyup="checkPasswordMatch('mobile');" type="text" autocapitalize="none" class="form-control"
@@ -22,40 +23,53 @@
                     </dl>
 
                     <dl class="mb-middle">
-                        <dt>
+                        <dt class="mb-small">
                             <strong>お名前（カタカナ）</strong>
-                            <span class="text-red small-text">入力必須</span>
+                            <span class="text-red small-text">必須</span>
                         </dt>
-                        <dd class="mb-x-small">
-                            <input type="text" class="form-control" required="" id="requiredAttributesfamily_name" name="family_name" value="" placeholder="セイ">
+                        <dd class="mb-small">
+                            <div class="text-light-gray">セイ</div>
+                            <input type="text" class="form-control" required="" id="requiredAttributesfamily_name" name="family_name" value="" placeholder="全角カタカナで入力してください">
                         </dd>
                         <dd>
-                            <input type="text" class="form-control" required="" id="requiredAttributesgiven_name" name="given_name" value="" placeholder="メイ">
+                            <div class="text-light-gray">メイ</div>
+                            <input type="text" class="form-control" required="" id="requiredAttributesgiven_name" name="given_name" value="" placeholder="全角カタカナで入力してください">
                         </dd>
                     </dl>
 
                     <dl class="mb-middle">
                         <dt>
                             <strong>メールアドレス</strong>
-                            <span class="text-red small-text">入力必須</span>
+                            <span class="text-red small-text">必須</span>
                         </dt>
                         <dd>
-                            <input type="email" class="form-control" placeholder="メールアドレス" required="" id="requiredAttributesemail" name="email" value="">
+                            <div class="mb-x-small">
+                                <input type="email" class="form-control" placeholder="メールアドレスを入力してください" required="" id="requiredAttributesemail" name="email"
+                                    value="">
+                            </div>
+                            <p class="small-text">
+                                <strong>【ドメイン指定受信をご利用の場合について】</strong>
+                                <br>※ 携帯電話のドメイン指定受信をされている場合、「@ticket-cinemasunshine.com」を追加設定してください。
+                                <br>※ au(@ezweb.ne.jp)をご利用の場合、上記に加え「なりすまし規制回避リスト」にも「@ticket-cinemasunshine.com」の追加設定をしてください。
+                            </p>
                         </dd>
                     </dl>
                     <dl class="mb-middle">
                         <dt>
                             <strong>電話番号</strong>
-                            <span class="text-red small-text">入力必須</span>
+                            <span class="text-red small-text">必須</span>
                         </dt>
                         <dd>
-                            <input type="tel" class="form-control" placeholder="+8112345678" required="" id="requiredAttributesphone_number" name="phone_number"
-                                value="">
+                            <div class="mb-x-small">
+                                <input type="tel" class="form-control" placeholder="電話番号を入力してください" required="" id="requiredAttributesphone_number" name="phone_number"
+                                    value="">
+                            </div>
+                            <p class="small-text">※半角数字、ハイフン「-」なしで入力してください</p>
                         </dd>
                     </dl>
                     <!-- <dl class="mb-middle">
                         <dt>生年月日
-                            <span class="text-red small-text">入力必須</span>
+                            <span class="text-red small-text">必須</span>
                         </dt>
                         <dd>
                             
@@ -63,7 +77,7 @@
                     </dl>
                     <dl class="mb-middle">
                         <dt>性別
-                            <span class="text-red small-text">入力必須</span>
+                            <span class="text-red small-text">必須</span>
                         </dt>
                         <dd>
                             
@@ -72,21 +86,21 @@
                     <dl class="mb-middle">
                         <dt>
                             <strong>郵便番号</strong>
-                            <span class="text-red small-text">入力必須</span>
+                            <span class="text-red small-text">必須</span>
                         </dt>
                         <dd>
-                            <input type="text" class="form-control" placeholder="1550033" required="" id="requiredAttributesPostalCode" name="postalCode"
+                            <input type="text" class="form-control" placeholder="郵便番号を入力してください" required="" id="requiredAttributesPostalCode" name="postalCode"
                                 value="">
                         </dd>
                     </dl>
                     <dl class="mb-middle">
                         <dt>
                             <strong>パスワード</strong>
-                            <span class="text-red small-text">入力必須</span>
+                            <span class="text-red small-text">必須</span>
                         </dt>
                         <dd>
                             <div class="mb-x-small">
-                                <input id="password-mobile" onkeyup="checkPasswordMatch('mobile');" type="password" class="form-control" placeholder="パスワード"
+                                <input id="password-mobile" onkeyup="checkPasswordMatch('mobile');" type="password" class="form-control" placeholder="パスワードを入力してください"
                                     required="" name="password" value="">
                             </div>
                             <div id="checkPassword-lowerletter-mobile" class="mb-x-small small-text">
@@ -94,22 +108,22 @@
                                 <span id="checkPasswordText-lowerletter-mobile"></span>
                             </div>
 
-                            <div id="checkPassword-length-mobile small-text">
+                            <div id="checkPassword-length-mobile" class="small-text">
                                 <span aria-hidden="true" id="check-length-mobile"></span>
                                 <span id="checkPasswordText-length-mobile"></span>
                             </div>
                         </dd>
                     </dl>
 
-
-
-                    <button id="signupButton-mobile" type="submit" name="signUpButton" class="button button-primary button-block">次へ</button>
-
+                    <button id="signupButton-mobile" type="submit" name="signUpButton" class="button button-primary button-block mb-middle">次へ</button>
                     <!-- <p class="redirect-customizable">
                         <span>Already have an account?</span>&nbsp;
                         <a href="<%= loginUrl %>">Sign in</a>
                     </p> -->
         </form>
+        <div class="text-center">
+            <a href="javascript:history.back();">戻る</a>
+        </div>
     </div>
 </div>
 
