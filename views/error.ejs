@@ -2,9 +2,7 @@
     <p class="mb-middle">
         要求されたページでエラーが発生しました。
     </p>
-    <p class="mb-middle">
-        <a href="#" onclick="displayErrorMessage();">エラー詳細</a>
-    </p>
+    <button name="confirm" type="button" class="button button-info button-block mb-middle" onclick="displayErrorMessage();">エラー詳細を見る</button>
     <div id="errorMsg" class="hidden">
         <p id="errorMessage" class="error text-red mb-middle">
             <%= message %>
