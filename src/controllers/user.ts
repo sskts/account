@@ -6,6 +6,7 @@ import * as  crypto from 'crypto';
 import * as  createDebug from 'debug';
 import * as express from 'express';
 import * as querystring from 'querystring';
+import { CognitoError } from '../models/CognitoError';
 
 const debug = createDebug('sskts-account:controllers:user');
 
@@ -94,7 +95,7 @@ export async function signup(req: express.Request, res: express.Response) {
             req.flash('confirmParams', <any>confirmParams);
             res.redirect(`/confirm?${querystring.stringify(req.query)}`);
         } catch (error) {
-            req.flash('errorMessage', error.message);
+            req.flash('errorMessage', new CognitoError(error).message);
             res.redirect(`/signup?${querystring.stringify(req.query)}`);
         }
     } else {
@@ -136,7 +137,7 @@ export async function confirm(req: express.Request, res: express.Response) {
             (<Express.Session>req.session).user = { username: req.body.username };
             res.redirect(`/authorize?${querystring.stringify(req.query)}`);
         } catch (error) {
-            req.flash('errorMessage', error.message);
+            req.flash('errorMessage', new CognitoError(error).message);
             req.flash('confirmParams', <any>{
                 username: req.body.username,
                 sub: req.body.sub,
@@ -200,7 +201,7 @@ export async function forgotPassword(req: express.Request, res: express.Response
             req.flash('confirmForgotPasswordParams', <any>confirmForgotPasswordParams);
             res.redirect(`/confirmForgotPassword?${querystring.stringify(req.query)}`);
         } catch (error) {
-            req.flash('errorMessage', error.message);
+            req.flash('errorMessage', new CognitoError(error).message);
             res.redirect(`/forgotPassword?${querystring.stringify(req.query)}`);
         }
     } else {
@@ -216,7 +217,7 @@ export async function confirmForgotPassword(req: express.Request, res: express.R
         try {
             // validation
             if (req.body.password !== req.body.confirmPassword) {
-                throw new Error('Password does not match the confirm password.');
+                throw { code: 'PasswordMismatchException' };
             }
 
             await new Promise<void>((resolve, reject) => {
@@ -243,7 +244,7 @@ export async function confirmForgotPassword(req: express.Request, res: express.R
             // 認可フローへリダイレクト
             res.redirect(`/authorize?${querystring.stringify(req.query)}`);
         } catch (error) {
-            req.flash('errorMessage', error.message);
+            req.flash('errorMessage', new CognitoError(error).message);
             req.flash('confirmForgotPasswordParams', <any>{
                 username: req.body.username,
                 destination: req.body.destination,

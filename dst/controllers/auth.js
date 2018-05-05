@@ -15,6 +15,7 @@ const crypto = require("crypto");
 const createDebug = require("debug");
 const querystring = require("querystring");
 const uniqid = require("uniqid");
+const CognitoError_1 = require("../models/CognitoError");
 const authorizationCode_1 = require("../repos/authorizationCode");
 const debug = createDebug('sskts-account:controllers:auth');
 const COGNITO_USER_POOL_ID = process.env.COGNITO_USER_POOL_ID;
@@ -131,7 +132,7 @@ function login(req, res) {
                 yield returnAuthorizationCode(req, res, req.body.username, req.query.client_id, req.query.redirect_uri, req.query.state);
             }
             catch (error) {
-                req.flash('errorMessage', error.message);
+                req.flash('errorMessage', new CognitoError_1.CognitoError(error).message);
                 res.redirect(`/login?${querystring.stringify(req.query)}`);
             }
         }

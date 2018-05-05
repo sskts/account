@@ -8,6 +8,7 @@ import * as express from 'express';
 import * as querystring from 'querystring';
 import * as uniqid from 'uniqid';
 
+import { CognitoError } from '../models/CognitoError';
 import { RedisRepository as AuthorizationCodeRepo } from '../repos/authorizationCode';
 
 const debug = createDebug('sskts-account:controllers:auth');
@@ -128,7 +129,7 @@ export async function login(req: express.Request, res: express.Response) {
             (<Express.Session>req.session).user = { username: req.body.username };
             await returnAuthorizationCode(req, res, req.body.username, req.query.client_id, req.query.redirect_uri, req.query.state);
         } catch (error) {
-            req.flash('errorMessage', error.message);
+            req.flash('errorMessage', new CognitoError(error).message);
             res.redirect(`/login?${querystring.stringify(req.query)}`);
         }
     } else {

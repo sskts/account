@@ -14,6 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const crypto = require("crypto");
 const createDebug = require("debug");
 const querystring = require("querystring");
+const CognitoError_1 = require("../models/CognitoError");
 const debug = createDebug('sskts-account:controllers:user');
 const COGNITO_AUTHORIZE_SERVER_ENDPOINT = process.env.COGNITO_AUTHORIZE_SERVER_ENDPOINT;
 if (COGNITO_AUTHORIZE_SERVER_ENDPOINT === undefined) {
@@ -90,7 +91,7 @@ function signup(req, res) {
                 res.redirect(`/confirm?${querystring.stringify(req.query)}`);
             }
             catch (error) {
-                req.flash('errorMessage', error.message);
+                req.flash('errorMessage', new CognitoError_1.CognitoError(error).message);
                 res.redirect(`/signup?${querystring.stringify(req.query)}`);
             }
         }
@@ -136,7 +137,7 @@ function confirm(req, res) {
                 res.redirect(`/authorize?${querystring.stringify(req.query)}`);
             }
             catch (error) {
-                req.flash('errorMessage', error.message);
+                req.flash('errorMessage', new CognitoError_1.CognitoError(error).message);
                 req.flash('confirmParams', {
                     username: req.body.username,
                     sub: req.body.sub,
@@ -196,7 +197,7 @@ function forgotPassword(req, res) {
                 res.redirect(`/confirmForgotPassword?${querystring.stringify(req.query)}`);
             }
             catch (error) {
-                req.flash('errorMessage', error.message);
+                req.flash('errorMessage', new CognitoError_1.CognitoError(error).message);
                 res.redirect(`/forgotPassword?${querystring.stringify(req.query)}`);
             }
         }
@@ -215,7 +216,7 @@ function confirmForgotPassword(req, res) {
             try {
                 // validation
                 if (req.body.password !== req.body.confirmPassword) {
-                    throw new Error('Password does not match the confirm password.');
+                    throw { code: 'PasswordMismatchException' };
                 }
                 yield new Promise((resolve, reject) => {
                     const hash = crypto.createHmac('sha256', COGNITO_CLIENT_SECRET)
@@ -242,7 +243,7 @@ function confirmForgotPassword(req, res) {
                 res.redirect(`/authorize?${querystring.stringify(req.query)}`);
             }
             catch (error) {
-                req.flash('errorMessage', error.message);
+                req.flash('errorMessage', new CognitoError_1.CognitoError(error).message);
                 req.flash('confirmForgotPasswordParams', {
                     username: req.body.username,
                     destination: req.body.destination,
