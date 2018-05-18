@@ -5,6 +5,7 @@
 import * as  crypto from 'crypto';
 import * as  createDebug from 'debug';
 import * as express from 'express';
+import * as libphonenumber from 'google-libphonenumber';
 import * as querystring from 'querystring';
 import { CognitoError } from '../models/CognitoError';
 
@@ -42,6 +43,19 @@ interface IConfirmParams {
  */
 export async function signup(req: express.Request, res: express.Response) {
     if (req.method === 'POST') {
+        signupValidation(req);
+        const validationResult = await req.getValidationResult();
+        debug(validationResult.array());
+        if (!validationResult.isEmpty()) {
+            const validationErrorMessage = validationResult
+                .array()
+                .map((error) => error.msg)
+                .join('<br>');
+            req.flash('validationErrorMessage', validationErrorMessage);
+            res.redirect(`/signup?${querystring.stringify(req.query)}`);
+
+            return;
+        }
         try {
             const hash = crypto.createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
                 .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
@@ -66,7 +80,7 @@ export async function signup(req: express.Request, res: express.Response) {
                     },
                     {
                         Name: 'phone_number',
-                        Value: req.body.phone_number
+                        Value: phoneNumberFormat(req.body.phone_number)
                     },
                     {
                         Name: 'custom:postalCode',
@@ -104,6 +118,41 @@ export async function signup(req: express.Request, res: express.Response) {
             loginUrl: `/login?${querystring.stringify(req.query)}`
         });
     }
+}
+
+/**
+ * 会員登録検証
+ */
+function signupValidation(req: express.Request) {
+    // ログインID
+    req.checkBody('username', 'ログインIDが未入力です').notEmpty();
+    // セイ
+    req.checkBody('family_name', 'セイが未入力です').notEmpty();
+    req.checkBody('family_name', 'セイは全角カタカナで入力してください').matches(/^[ァ-ヶー]+$/);
+    // メイ
+    req.checkBody('given_name', 'メイが未入力です').notEmpty();
+    req.checkBody('given_name', 'メイは全角カタカナで入力してください').matches(/^[ァ-ヶー]+$/);
+    // メールアドレス
+    req.checkBody('email', 'メールアドレスが未入力です').notEmpty();
+    req.checkBody('email', 'メールアドレスの形式が正しくありません').isEmail();
+    // 電話番号
+    req.checkBody('phone_number', '電話番号が未入力です').notEmpty();
+    (<any>req.checkBody('phone_number', '電話番号の形式が正しくありません')).custom((value: string) => {
+        const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
+        const parsePhoneNumber = phoneUtil.parseAndKeepRawInput(value, 'JP');
+
+        return phoneUtil.isValidNumber(parsePhoneNumber);
+    });
+}
+
+/**
+ * 電話番号フォーマット
+ */
+function phoneNumberFormat(phoneNumber: string) {
+    const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
+    const parsePhoneNumber = phoneUtil.parseAndKeepRawInput(phoneNumber, 'JP');
+
+    return phoneUtil.format(parsePhoneNumber, libphonenumber.PhoneNumberFormat.E164);
 }
 
 /**

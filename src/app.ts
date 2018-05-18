@@ -9,11 +9,11 @@ import * as expressLayouts from 'express-ejs-layouts';
 // tslint:disable-next-line:no-require-imports no-var-requires
 const flash = require('express-flash');
 // import * as flash from 'express-flash';
+import * as expressValidator from 'express-validator';
 import * as createError from 'http-errors';
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from 'http-status';
 import * as logger from 'morgan';
 import * as path from 'path';
-
 import session from './middlewares/session';
 import redisClient from './redisClient';
 
@@ -42,6 +42,8 @@ app.use((req, __, next) => {
 app.set('trust proxy', 1); // trust first proxy
 app.use(session);
 app.use(flash());
+
+app.use(expressValidator());
 
 // view engine setup
 app.set('views', path.join(__dirname, '/../views'));

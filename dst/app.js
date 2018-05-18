@@ -9,6 +9,7 @@ const expressLayouts = require("express-ejs-layouts");
 // tslint:disable-next-line:no-require-imports no-var-requires
 const flash = require('express-flash');
 // import * as flash from 'express-flash';
+const expressValidator = require("express-validator");
 const createError = require("http-errors");
 const http_status_1 = require("http-status");
 const logger = require("morgan");
@@ -36,6 +37,7 @@ app.use((req, __, next) => {
 app.set('trust proxy', 1); // trust first proxy
 app.use(session_1.default);
 app.use(flash());
+app.use(expressValidator());
 // view engine setup
 app.set('views', path.join(__dirname, '/../views'));
 app.set('view engine', 'ejs');
