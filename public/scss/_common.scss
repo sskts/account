@@ -49,6 +49,7 @@ input[type=tel],
 input[type=email],
 input[type=number],
 input[type=submit],
+input[type=date],
 textarea,
 select,
 option,
@@ -69,7 +70,8 @@ input[type=number],
 input[type=password],
 input[type=tel],
 input[type=email],
-input[type=number] {
+input[type=number],
+input[type=date] {
     width: 100%;
     border-bottom: 1px solid #999;
     padding: 0;
@@ -94,7 +96,7 @@ select {
     padding: 0 54px 0 10px;
     height: 44px;
     background-color: transparent;
-    background-image: url(/assets/images/common/select.svg);
+    background-image: url(/images/select_box.svg);
     background-repeat: no-repeat;
     background-size: 44px;
     background-position: right center;

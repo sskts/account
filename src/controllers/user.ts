@@ -43,20 +43,21 @@ interface IConfirmParams {
  */
 export async function signup(req: express.Request, res: express.Response) {
     if (req.method === 'POST') {
-        signupValidation(req);
-        const validationResult = await req.getValidationResult();
-        debug(validationResult.array());
-        if (!validationResult.isEmpty()) {
-            const validationErrorMessage = validationResult
-                .array()
-                .map((error) => error.msg)
-                .join('<br>');
-            req.flash('validationErrorMessage', validationErrorMessage);
-            res.redirect(`/signup?${querystring.stringify(req.query)}`);
-
-            return;
-        }
+        debug('signup:post', req.body);
         try {
+            signupValidation(req);
+            const validationResult = await req.getValidationResult();
+            debug(validationResult.array());
+            if (!validationResult.isEmpty()) {
+                const validationErrorMessage = validationResult
+                    .array()
+                    .map((error) => error.msg)
+                    .join('<br>');
+                req.flash('validationErrorMessage', validationErrorMessage);
+                res.redirect(`/signup?${querystring.stringify(req.query)}`);
+
+                return;
+            }
             const hash = crypto.createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
                 .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
                 .digest('base64');
@@ -82,6 +83,14 @@ export async function signup(req: express.Request, res: express.Response) {
                         Name: 'phone_number',
                         Value: phoneNumberFormat(req.body.phone_number)
                     },
+                    // {
+                    //     Name: 'custom:gender',
+                    //     Value: req.body.gender
+                    // },
+                    // {
+                    //     Name: 'custom:birthday',
+                    //     Value: req.body.birthday.replace(/\-/g, '')
+                    // },
                     {
                         Name: 'custom:postalCode',
                         Value: req.body.postalCode
@@ -143,6 +152,13 @@ function signupValidation(req: express.Request) {
 
         return phoneUtil.isValidNumber(parsePhoneNumber);
     });
+    // 郵便番号
+    req.checkBody('postalCode', '郵便番号が未入力です').notEmpty();
+    req.checkBody('postalCode', '郵便番号の形式が正しくありません').matches(/^\d{7}$/);
+    // // 性別
+    // req.checkBody('gender', '性別が未選択です').notEmpty();
+    // // 生年月日
+    // req.checkBody('birthday', '生年月日が未入力です').notEmpty();
 }
 
 /**
