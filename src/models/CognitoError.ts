@@ -1,27 +1,6 @@
 /**
- * Amazon Cognitoエラー
+ * エラー一覧
  */
-export class CognitoError {
-
-    public code: string;
-    public statusCode: number;
-    public message: string;
-
-    constructor(err: any) {
-        this.code = err.code;
-        this.statusCode = err.statusCode;
-        const error = errors.find((target) => {
-            return (target.code === err.code);
-        });
-        if (error === undefined) {
-            this.message = err.message;
-        } else {
-            this.message = `${error.message.ja}`;
-            this.statusCode = error.statusCode;
-        }
-    }
-}
-
 // tslint:disable:max-line-length
 const errors = [
     {
@@ -229,3 +208,27 @@ const errors = [
         statusCode: 400
     }
 ];
+
+/**
+ * Amazon Cognitoエラー
+ */
+export class CognitoError {
+
+    public code: string;
+    public statusCode: number;
+    public message: string;
+
+    constructor(err: any) {
+        this.code = err.code;
+        this.statusCode = err.statusCode;
+        const error = errors.find((target) => {
+            return (target.code === err.code);
+        });
+        if (error === undefined) {
+            this.message = err.message;
+        } else {
+            this.message = `${error.message.ja}`;
+            this.statusCode = error.statusCode;
+        }
+    }
+}
