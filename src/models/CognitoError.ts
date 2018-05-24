@@ -1,6 +1,9 @@
 /**
  * エラー一覧
  */
+import * as  createDebug from 'debug';
+const debug = createDebug('sskts-account:CognitoError');
+
 // tslint:disable:max-line-length
 const errors = [
     {
@@ -196,6 +199,18 @@ const errors = [
         statusCode: 400
     },
     {
+        code: 'UsernameExistsException',
+        message: {
+            en: 'User already exists',
+            ja: 'このユーザーは既に存在します'
+        },
+        description: {
+            en: '',
+            ja: ''
+        },
+        statusCode: 400
+    },
+    {
         code: 'PasswordMismatchException',
         message: {
             en: '',
@@ -221,6 +236,7 @@ export class CognitoError {
     constructor(err: any) {
         this.code = err.code;
         this.statusCode = err.statusCode;
+        debug('error.code', this.code);
         const error = errors.find((target) => {
             return (target.code === err.code);
         });
