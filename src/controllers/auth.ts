@@ -6,7 +6,7 @@ import * as  crypto from 'crypto';
 import * as  createDebug from 'debug';
 import * as express from 'express';
 import * as querystring from 'querystring';
-import * as uniqid from 'uniqid';
+import * as uuid from 'uuid';
 
 import { CognitoError } from '../models/CognitoError';
 import { RedisRepository as AuthorizationCodeRepo } from '../repos/authorizationCode';
@@ -150,8 +150,7 @@ async function returnAuthorizationCode(
     state: string
 ) {
     // 認可コードに保管すべき値は、ユーザーネーム、パスワード、クライアントID
-    const code = uniqid();
-
+    const code = uuid.v4();
     const authorizationRepo = new AuthorizationCodeRepo(req.redisClient);
     await authorizationRepo.save(code, {
         username: username,

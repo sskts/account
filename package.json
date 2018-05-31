@@ -39,7 +39,7 @@
     "redis": "^2.8.0",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
-    "uniqid": "^4.1.1"
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "@types/basic-auth": "^1.1.2",
@@ -58,7 +58,7 @@
     "@types/redis": "^2.8.6",
     "@types/request": "^2.47.0",
     "@types/request-promise-native": "^1.0.14",
-    "@types/uniqid": "^4.1.2",
+    "@types/uuid": "^3.4.3",
     "autoprefixer": "^8.3.0",
     "mocha": "^5.1.0",
     "node-sass": "^4.8.3",

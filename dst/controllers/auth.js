@@ -14,7 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const crypto = require("crypto");
 const createDebug = require("debug");
 const querystring = require("querystring");
-const uniqid = require("uniqid");
+const uuid = require("uuid");
 const CognitoError_1 = require("../models/CognitoError");
 const authorizationCode_1 = require("../repos/authorizationCode");
 const debug = createDebug('sskts-account:controllers:auth');
@@ -149,7 +149,7 @@ exports.login = login;
 function returnAuthorizationCode(req, res, username, clientId, redirectUri, state) {
     return __awaiter(this, void 0, void 0, function* () {
         // 認可コードに保管すべき値は、ユーザーネーム、パスワード、クライアントID
-        const code = uniqid();
+        const code = uuid.v4();
         const authorizationRepo = new authorizationCode_1.RedisRepository(req.redisClient);
         yield authorizationRepo.save(code, {
             username: username,
