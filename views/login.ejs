@@ -1,7 +1,7 @@
 <div id="div-forms" class="contents center login">
     <div class="inner">
         <p class="mb-middle">
-            ログインIDとパスワードを入力してログインボタンを押してください
+            ユーザーネームとパスワードを入力してログインボタンを押してください
         </p>
         <form method="POST" name="cognitoSignInForm" class="cognito-asf">
             <% if (messages.errorMessage) { %>
@@ -11,7 +11,7 @@
                 <% } %>
 
                     <div class="mb-small">
-                        <input id="username" name="username" type="text" class="form-control" placeholder="ログインID" required="">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="ユーザーネーム" required="">
                     </div>
 
                     <div class="mb-middle">

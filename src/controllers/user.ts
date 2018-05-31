@@ -133,14 +133,31 @@ export async function signup(req: express.Request, res: express.Response) {
  * 会員登録検証
  */
 function signupValidation(req: express.Request) {
-    // ログインID
-    req.checkBody('username', 'ログインIDが未入力です').notEmpty();
+    const NAME_MAX_LENGTH = 12;
+    const USER_NAME_MAX_LENGTH = 30;
+    const USER_NAME_MIN_LENGTH = 6;
+    // ユーザーネーム
+    req.checkBody('username', 'ユーザーネームが未入力です').notEmpty();
+    req.checkBody('username', 'ユーザーネームは英数字で入力してください').matches(/^[A-Za-z0-9]*$/);
+    req.checkBody('username', `ユーザーネームは${USER_NAME_MIN_LENGTH}文字以上${USER_NAME_MAX_LENGTH}文字以内で入力してください`).isLength({
+        min: USER_NAME_MIN_LENGTH,
+        max: USER_NAME_MAX_LENGTH
+    });
+    // req.checkBody('username', 'ユーザーネームが未入力です').notEmpty();
     // セイ
     req.checkBody('family_name', 'セイが未入力です').notEmpty();
     req.checkBody('family_name', 'セイは全角カタカナで入力してください').matches(/^[ァ-ヶー]+$/);
+    req.checkBody('family_name', `セイは${NAME_MAX_LENGTH}文字以内で入力してください`).isLength({
+        min: 0,
+        max: NAME_MAX_LENGTH
+    });
     // メイ
     req.checkBody('given_name', 'メイが未入力です').notEmpty();
     req.checkBody('given_name', 'メイは全角カタカナで入力してください').matches(/^[ァ-ヶー]+$/);
+    req.checkBody('family_name', `メイは${NAME_MAX_LENGTH}文字以内で入力してください`).isLength({
+        min: 0,
+        max: NAME_MAX_LENGTH
+    });
     // メールアドレス
     req.checkBody('email', 'メールアドレスが未入力です').notEmpty();
     req.checkBody('email', 'メールアドレスの形式が正しくありません').isEmail();

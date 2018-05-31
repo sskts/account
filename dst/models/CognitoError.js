@@ -95,7 +95,7 @@ const errors = [
         code: 'NotAuthorizedException',
         message: {
             en: '',
-            ja: 'ログインIDまたはパスワードが違います。'
+            ja: 'ユーザーネームまたはパスワードが違います。'
         },
         description: {
             en: 'This exception is thrown when a user is not authorized.',
