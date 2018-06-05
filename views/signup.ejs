@@ -22,8 +22,13 @@
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd>
-                    <input id="username-input-mobile" onkeyup="checkPasswordMatch('mobile');" type="text" autocapitalize="none" class="form-control"
-                        placeholder="半角英数字で入力してください" required="" name="username" value="">
+                    <div class="mb-x-small">
+                        <input id="username-input-mobile" onkeyup="checkPasswordMatch('mobile');" type="text" autocapitalize="none" class="form-control"
+                        placeholder="ユーザーネームを入力してください" required="" name="username" value="">
+                    </div>
+                    <p class="small-text">
+                        ※ 半角英数字6文字以上30文字以内で入力してください
+                    </p>
                 </dd>
             </dl>
 
@@ -33,11 +38,11 @@
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd class="mb-small">
-                    <div class="text-light-gray">セイ</div>
+                    <div>セイ</div>
                     <input type="text" class="form-control" required="" id="requiredAttributesfamily_name" name="family_name" value="" placeholder="全角カタカナで入力してください">
                 </dd>
                 <dd>
-                    <div class="text-light-gray">メイ</div>
+                    <div>メイ</div>
                     <input type="text" class="form-control" required="" id="requiredAttributesgiven_name" name="given_name" value="" placeholder="全角カタカナで入力してください">
                 </dd>
             </dl>
@@ -69,7 +74,7 @@
                         <input type="tel" class="form-control" placeholder="電話番号を入力してください" required="" id="requiredAttributesphone_number" name="phone_number"
                             value="">
                     </div>
-                    <p class="small-text">※半角数字、ハイフン「-」なしで入力してください</p>
+                    <p class="small-text">※ 半角数字、ハイフン「-」なしで入力してください</p>
                 </dd>
             </dl>
             <!-- <dl class="mb-middle">
@@ -98,8 +103,11 @@
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd>
-                    <input type="text" class="form-control" placeholder="郵便番号を入力してください" required="" id="requiredAttributesPostalCode" name="postalCode"
-                        value="">
+                    <div class="mb-x-small">
+                        <input type="text" class="form-control" placeholder="郵便番号を入力してください" required="" id="requiredAttributesPostalCode" name="postalCode"
+                            value="">
+                    </div>
+                    <p class="small-text">※ 半角数字、ハイフン「-」なしで入力してください</p>
                 </dd>
             </dl>
             <dl class="mb-middle">
@@ -112,14 +120,27 @@
                         <input id="password-mobile" onkeyup="checkPasswordMatch('mobile');" type="password" class="form-control" placeholder="パスワードを入力してください"
                             required="" name="password" value="">
                     </div>
+
+                    <p class="small-text">※ 小文字、数字、特殊文字を含む8文字以上で入力してください</p>
+
                     <div id="checkPassword-lowerletter-mobile" class="mb-x-small small-text">
                         <span aria-hidden="true" id="check-lowerletter-mobile"></span>
                         <span id="checkPasswordText-lowerletter-mobile"></span>
                     </div>
 
-                    <div id="checkPassword-length-mobile" class="small-text">
+                    <div id="checkPassword-length-mobile" class="mb-x-small small-text">
                         <span aria-hidden="true" id="check-length-mobile"></span>
                         <span id="checkPasswordText-length-mobile"></span>
+                    </div>
+    
+                    <div id="checkPassword-symbols-mobile" class="mb-x-small small-text">
+                        <span aria-hidden="true" id="check-symbols-mobile"></span>
+                        <span id="checkPasswordText-symbols-mobile"></span>
+                    </div>
+
+                    <div id="checkPassword-numbers-mobile" class="mb-x-small small-text">
+                        <span aria-hidden="true" id="check-numbers-mobile"></span>
+                        <span id="checkPasswordText-numbers-mobile"></span>
                     </div>
                 </dd>
             </dl>
@@ -172,7 +193,7 @@
             } else {
                 requireLowerletter = true;
             }
-            if (false) {
+            if (true) {
                 if (/[A-Z]/.test(password)) {
                     $("#check-upperletter-" + screenSize).html("&#10003;");
                     $("#checkPasswordText-upperletter-" + screenSize).html(passwordPolicy.uppercase);
@@ -189,7 +210,7 @@
             } else {
                 requireUpperletter = true;
             }
-            if (false) {
+            if (true) {
                 if (/[!|@|#|$|%|^|&|*|(|)|-|_]/.test(password)) {
                     $("#check-symbols-" + screenSize).html("&#10003;");
                     $("#checkPasswordText-symbols-" + screenSize).html(passwordPolicy.special);
@@ -206,7 +227,7 @@
             } else {
                 requireSymbol = true;
             }
-            if (false) {
+            if (true) {
                 if (/[0-9]/.test(password)) {
                     $("#check-numbers-" + screenSize).html("&#10003;");
                     $("#checkPasswordText-numbers-" + screenSize).html(passwordPolicy.number);
