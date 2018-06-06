@@ -76,7 +76,7 @@ function authorize(req, res) {
             res.redirect(`/login?${querystring.stringify(req.query)}`);
         }
         catch (error) {
-            res.redirect(`/error?error=${error.message}`);
+            res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
         }
     });
 }
@@ -92,7 +92,7 @@ function login(req, res) {
             yield validateRequest(req);
         }
         catch (error) {
-            res.redirect(`/error?error=${error.message}`);
+            res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
             return;
         }
         if (req.method === 'POST') {
@@ -244,7 +244,7 @@ function logout(req, res) {
             res.redirect(req.query.logout_uri);
         }
         catch (error) {
-            res.redirect(`/error?error=${error.message}`);
+            res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
         }
     });
 }

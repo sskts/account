@@ -67,6 +67,7 @@ app.use((__1: express.Request, __2: express.Response, next: express.NextFunction
 app.use((err: any, __1: express.Request, res: express.Response, __2: express.NextFunction) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
+    res.locals.REDIRECT_URI = undefined;
 
     // render the error page
     const status = (err.status !== undefined) ? err.status : INTERNAL_SERVER_ERROR;

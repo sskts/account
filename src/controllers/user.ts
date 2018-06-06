@@ -236,7 +236,7 @@ export async function confirm(req: express.Request, res: express.Response) {
                 resendcodeUrl: `/resendcode?${querystring.stringify(req.query)}`
             });
         } catch (error) {
-            res.redirect(`/error?error=${error.message}`);
+            res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
         }
     }
 }
@@ -343,7 +343,7 @@ export async function confirmForgotPassword(req: express.Request, res: express.R
                 resendcodeUrl: `/resendcode?${querystring.stringify(req.query)}`
             });
         } catch (error) {
-            res.redirect(`/error?error=${error.message}`);
+            res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
         }
     }
 }

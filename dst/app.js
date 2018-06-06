@@ -56,6 +56,7 @@ app.use((__1, __2, next) => {
 app.use((err, __1, res, __2) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
+    res.locals.REDIRECT_URI = undefined;
     // render the error page
     const status = (err.status !== undefined) ? err.status : http_status_1.INTERNAL_SERVER_ERROR;
     res.status(status);

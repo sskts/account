@@ -19,7 +19,8 @@ router.all('/forgotPassword', UserController.forgotPassword);
 router.all('/confirmForgotPassword', UserController.confirmForgotPassword);
 router.get('/error', (req, res) => {
     res.status(http_status_1.BAD_REQUEST).render('error', {
-        message: req.query.error
+        message: req.query.error,
+        REDIRECT_URI: req.query.redirect_uri
     });
 });
 exports.default = router;

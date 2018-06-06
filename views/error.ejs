@@ -8,9 +8,11 @@
             <%= message %>
         </p>
     </div>
+    <% if (REDIRECT_URI !== undefined) { %>
     <div class="text-center">
-        <a href="javascript:history.back();"><i class="icon left-icon prev-circle-white"></i>戻る</a>
+        <a href="<%= REDIRECT_URI %>"><i class="icon left-icon prev-circle-white"></i>戻る</a>
     </div>
+    <% } %>
     <style>
         .hidden {
             display: none;

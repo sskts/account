@@ -233,7 +233,7 @@ function confirm(req, res) {
                 });
             }
             catch (error) {
-                res.redirect(`/error?error=${error.message}`);
+                res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
             }
         }
     });
@@ -339,7 +339,7 @@ function confirmForgotPassword(req, res) {
                 });
             }
             catch (error) {
-                res.redirect(`/error?error=${error.message}`);
+                res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
             }
         }
     });

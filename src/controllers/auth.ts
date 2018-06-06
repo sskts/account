@@ -75,7 +75,7 @@ export async function authorize(req: express.Request, res: express.Response) {
         // ログインページへリダイレクト
         res.redirect(`/login?${querystring.stringify(req.query)}`);
     } catch (error) {
-        res.redirect(`/error?error=${error.message}`);
+        res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
     }
 }
 
@@ -88,7 +88,7 @@ export async function login(req: express.Request, res: express.Response) {
     try {
         await validateRequest(req);
     } catch (error) {
-        res.redirect(`/error?error=${error.message}`);
+        res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
 
         return;
     }
@@ -258,6 +258,6 @@ export async function logout(req: express.Request, res: express.Response) {
         delete (<Express.Session>req.session).user;
         res.redirect(req.query.logout_uri);
     } catch (error) {
-        res.redirect(`/error?error=${error.message}`);
+        res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
     }
 }
