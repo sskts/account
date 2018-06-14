@@ -83,14 +83,14 @@ export async function signup(req: express.Request, res: express.Response) {
                         Name: 'phone_number',
                         Value: phoneNumberFormat(req.body.phone_number)
                     },
-                    // {
-                    //     Name: 'custom:gender',
-                    //     Value: req.body.gender
-                    // },
-                    // {
-                    //     Name: 'custom:birthday',
-                    //     Value: req.body.birthday.replace(/\-/g, '')
-                    // },
+                    {
+                        Name: 'gender',
+                        Value: req.body.gender
+                    },
+                    {
+                        Name: 'birthdate',
+                        Value: req.body.birthdate
+                    },
                     {
                         Name: 'custom:postalCode',
                         Value: req.body.postalCode
@@ -172,10 +172,10 @@ function signupValidation(req: express.Request) {
     // 郵便番号
     req.checkBody('postalCode', '郵便番号が未入力です').notEmpty();
     req.checkBody('postalCode', '郵便番号の形式が正しくありません').matches(/^\d{7}$/);
-    // // 性別
-    // req.checkBody('gender', '性別が未選択です').notEmpty();
-    // // 生年月日
-    // req.checkBody('birthday', '生年月日が未入力です').notEmpty();
+    // 性別
+    req.checkBody('gender', '性別が未選択です').notEmpty();
+    // 生年月日
+    req.checkBody('birthdate', '生年月日が未入力です').notEmpty();
 }
 
 /**

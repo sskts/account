@@ -39,11 +39,11 @@
                 </dt>
                 <dd class="mb-small">
                     <div>セイ</div>
-                    <input type="text" class="form-control" required="" id="requiredAttributesfamily_name" name="family_name" value="" placeholder="全角カタカナで入力してください">
+                    <input type="text" class="form-control" required="" id="family_name" name="family_name" value="" placeholder="全角カタカナで入力してください">
                 </dd>
                 <dd>
                     <div>メイ</div>
-                    <input type="text" class="form-control" required="" id="requiredAttributesgiven_name" name="given_name" value="" placeholder="全角カタカナで入力してください">
+                    <input type="text" class="form-control" required="" id="given_name" name="given_name" value="" placeholder="全角カタカナで入力してください">
                 </dd>
             </dl>
 
@@ -54,7 +54,7 @@
                 </dt>
                 <dd>
                     <div class="mb-x-small">
-                        <input type="email" class="form-control" placeholder="メールアドレスを入力してください" required="" id="requiredAttributesemail" name="email"
+                        <input type="email" class="form-control" placeholder="メールアドレスを入力してください" required="" id="email" name="email"
                             value="">
                     </div>
                     <p class="small-text">
@@ -71,18 +71,18 @@
                 </dt>
                 <dd>
                     <div class="mb-x-small">
-                        <input type="tel" class="form-control" placeholder="電話番号を入力してください" required="" id="requiredAttributesphone_number" name="phone_number"
+                        <input type="tel" class="form-control" placeholder="電話番号を入力してください" required="" id="phone_number" name="phone_number"
                             value="">
                     </div>
                     <p class="small-text">※ 半角数字、ハイフン「-」なしで入力してください</p>
                 </dd>
             </dl>
-            <!-- <dl class="mb-middle">
+            <dl class="mb-middle">
                 <dt>生年月日
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd>
-                    <input type="date" class="form-control" placeholder="生年月日を選択してください" required="" id="requiredAttributesBirthday" name="birthday"
+                    <input type="date" class="form-control" placeholder="生年月日を選択してください" required="" id="birthdate" name="birthdate"
                     value="">
                 </dd>
             </dl>
@@ -91,12 +91,12 @@
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd>
-                    <select name="gender" class="form-control" placeholder="性別を選択してください">
+                    <select id="gender" name="gender" class="form-control" placeholder="性別を選択してください">
                         <option value="0">男性</option>
                         <option value="1">女性</option>
                     </select>
                 </dd>
-            </dl> -->
+            </dl>
             <dl class="mb-middle">
                 <dt>
                     <strong>郵便番号</strong>
@@ -104,7 +104,7 @@
                 </dt>
                 <dd>
                     <div class="mb-x-small">
-                        <input type="text" class="form-control" placeholder="郵便番号を入力してください" required="" id="requiredAttributesPostalCode" name="postalCode"
+                        <input type="text" class="form-control" placeholder="郵便番号を入力してください" required="" id="postalCode" name="postalCode"
                             value="">
                     </div>
                     <p class="small-text">※ 半角数字、ハイフン「-」なしで入力してください</p>
