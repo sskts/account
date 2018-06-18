@@ -164,6 +164,9 @@ function signupValidation(req: express.Request) {
     // 電話番号
     req.checkBody('phone_number', '電話番号が未入力です').notEmpty();
     (<any>req.checkBody('phone_number', '電話番号の形式が正しくありません')).custom((value: string) => {
+        if (value === '') {
+            return false;
+        }
         const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
         const parsePhoneNumber = phoneUtil.parseAndKeepRawInput(value, 'JP');
 

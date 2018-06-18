@@ -24,7 +24,7 @@
                 <dd>
                     <div class="mb-x-small">
                         <input id="username-input-mobile" onkeyup="checkPasswordMatch('mobile');" type="text" autocapitalize="none" class="form-control"
-                        placeholder="ユーザーネームを入力してください" required="" name="username" value="">
+                        placeholder="ユーザーネームを入力してください" name="username" value="">
                     </div>
                     <p class="small-text">
                         ※ 半角英数字6文字以上30文字以内で入力してください
@@ -39,11 +39,11 @@
                 </dt>
                 <dd class="mb-small">
                     <div>セイ</div>
-                    <input type="text" class="form-control" required="" id="family_name" name="family_name" value="" placeholder="全角カタカナで入力してください">
+                    <input type="text" class="form-control" id="family_name" name="family_name" value="" placeholder="全角カタカナで入力してください">
                 </dd>
                 <dd>
                     <div>メイ</div>
-                    <input type="text" class="form-control" required="" id="given_name" name="given_name" value="" placeholder="全角カタカナで入力してください">
+                    <input type="text" class="form-control" id="given_name" name="given_name" value="" placeholder="全角カタカナで入力してください">
                 </dd>
             </dl>
 
@@ -54,7 +54,7 @@
                 </dt>
                 <dd>
                     <div class="mb-x-small">
-                        <input type="email" class="form-control" placeholder="メールアドレスを入力してください" required="" id="email" name="email"
+                        <input type="email" class="form-control" placeholder="メールアドレスを入力してください" id="email" name="email"
                             value="">
                     </div>
                     <p class="small-text">
@@ -71,23 +71,25 @@
                 </dt>
                 <dd>
                     <div class="mb-x-small">
-                        <input type="tel" class="form-control" placeholder="電話番号を入力してください" required="" id="phone_number" name="phone_number"
+                        <input type="tel" class="form-control" placeholder="電話番号を入力してください" id="phone_number" name="phone_number"
                             value="">
                     </div>
                     <p class="small-text">※ 半角数字、ハイフン「-」なしで入力してください</p>
                 </dd>
             </dl>
             <dl class="mb-middle">
-                <dt>生年月日
+                <dt>
+                    <strong>生年月日</strong>
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd>
-                    <input type="date" class="form-control" placeholder="生年月日を選択してください" required="" id="birthdate" name="birthdate"
+                    <input type="date" class="form-control" placeholder="生年月日を選択してください" id="birthdate" name="birthdate"
                     value="">
                 </dd>
             </dl>
             <dl class="mb-middle">
-                <dt class="mb-small">性別
+                <dt class="mb-small">
+                    <strong>性別</strong>
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd>
@@ -104,7 +106,7 @@
                 </dt>
                 <dd>
                     <div class="mb-x-small">
-                        <input type="text" class="form-control" placeholder="郵便番号を入力してください" required="" id="postalCode" name="postalCode"
+                        <input type="text" class="form-control" placeholder="郵便番号を入力してください" id="postalCode" name="postalCode"
                             value="">
                     </div>
                     <p class="small-text">※ 半角数字、ハイフン「-」なしで入力してください</p>
@@ -118,7 +120,7 @@
                 <dd>
                     <div class="mb-x-small">
                         <input id="password-mobile" onkeyup="checkPasswordMatch('mobile');" type="password" class="form-control" placeholder="パスワードを入力してください"
-                            required="" name="password" value="">
+                            name="password" value="">
                     </div>
 
                     <p class="small-text">※ 小文字、数字、特殊文字を含む8文字以上で入力してください</p>
