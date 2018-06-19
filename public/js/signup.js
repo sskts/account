@@ -1,8 +1,8 @@
 function checkPasswordMatch(screenSize) {
     var passwordPolicy = [];
     passwordPolicy.lowercase = "パスワードには小文字を含める必要があります";
-    passwordPolicy.uppercase = "パスワードは大文字でなければなりません";
-    passwordPolicy.number = "パスワードには数字が必要です";
+    passwordPolicy.uppercase = "パスワードは大文字を含める必要があります";
+    passwordPolicy.number = "パスワードには数字を含める必要です";
     passwordPolicy.special = "パスワードには特殊文字を含める必要があります";
     var passwordLength = 8;
     passwordPolicy.lengthCheck = "パスワードは" + passwordLength + "文字以上でなければなりません";
