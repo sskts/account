@@ -16,7 +16,7 @@
             </p>
             <% } %>
 
-            <dl class="mb-middle">
+            <dl class="mb-large">
                 <dt>
                     <strong>ユーザーネーム</strong>
                     <span class="text-red small-text">必須</span>
@@ -26,13 +26,13 @@
                         <input id="username-input-mobile" onkeyup="checkPasswordMatch('mobile');" type="text" autocapitalize="none" class="form-control"
                         placeholder="ユーザーネームを入力してください" required="" name="username" value="">
                     </div>
-                    <p class="small-text">
+                    <p class="small-x-text text-light-gray">
                         ※ 半角英数字6文字以上30文字以内で入力してください
                     </p>
                 </dd>
             </dl>
 
-            <dl class="mb-middle">
+            <dl class="mb-large">
                 <dt class="mb-small">
                     <strong>お名前（カタカナ）</strong>
                     <span class="text-red small-text">必須</span>
@@ -47,7 +47,7 @@
                 </dd>
             </dl>
 
-            <dl class="mb-middle">
+            <dl class="mb-large">
                 <dt>
                     <strong>メールアドレス</strong>
                     <span class="text-red small-text">必須</span>
@@ -57,14 +57,14 @@
                         <input type="email" class="form-control" placeholder="メールアドレスを入力してください" required="" id="requiredAttributesemail" name="email"
                             value="">
                     </div>
-                    <p class="small-text">
+                    <p class="small-x-text text-light-gray">
                         <strong>【ドメイン指定受信をご利用の場合について】</strong>
                         <br>※ 携帯電話のドメイン指定受信をされている場合、「@ticket-cinemasunshine.com」を追加設定してください。
                         <br>※ au(@ezweb.ne.jp)をご利用の場合、上記に加え「なりすまし規制回避リスト」にも「@ticket-cinemasunshine.com」の追加設定をしてください。
                     </p>
                 </dd>
             </dl>
-            <dl class="mb-middle">
+            <dl class="mb-large">
                 <dt>
                     <strong>電話番号</strong>
                     <span class="text-red small-text">必須</span>
@@ -74,11 +74,13 @@
                         <input type="tel" class="form-control" placeholder="電話番号を入力してください" required="" id="requiredAttributesphone_number" name="phone_number"
                             value="">
                     </div>
-                    <p class="small-text">※ 半角数字、ハイフン「-」なしで入力してください</p>
+                    <p class="small-x-text text-light-gray">※ 半角数字、ハイフン「-」なしで入力してください</p>
                 </dd>
             </dl>
-            <!-- <dl class="mb-middle">
-                <dt>生年月日
+
+            <dl class="mb-large">
+                <dt>
+                    <strong>生年月日</strong>
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd>
@@ -86,18 +88,20 @@
                     value="">
                 </dd>
             </dl>
-            <dl class="mb-middle">
-                <dt class="mb-small">性別
+            <dl class="mb-large">
+                <dt class="mb-small">
+                    <strong>性別</strong>
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd>
-                    <select name="gender" class="form-control" placeholder="性別を選択してください">
+                    <select id="gender" name="gender" class="form-control" placeholder="性別を選択してください">
+                        <option value="">選択してください</option>
                         <option value="0">男性</option>
                         <option value="1">女性</option>
                     </select>
                 </dd>
-            </dl> -->
-            <dl class="mb-middle">
+            </dl>
+            <dl class="mb-large">
                 <dt>
                     <strong>郵便番号</strong>
                     <span class="text-red small-text">必須</span>
@@ -107,10 +111,10 @@
                         <input type="text" class="form-control" placeholder="郵便番号を入力してください" required="" id="requiredAttributesPostalCode" name="postalCode"
                             value="">
                     </div>
-                    <p class="small-text">※ 半角数字、ハイフン「-」なしで入力してください</p>
+                    <p class="small-x-text text-light-gray">※ 半角数字、ハイフン「-」なしで入力してください</p>
                 </dd>
             </dl>
-            <dl class="mb-middle">
+            <dl class="mb-large">
                 <dt>
                     <strong>パスワード</strong>
                     <span class="text-red small-text">必須</span>
@@ -121,7 +125,7 @@
                             required="" name="password" value="">
                     </div>
 
-                    <p class="small-text">※ 小文字、数字、特殊文字を含む8文字以上で入力してください</p>
+                    <p class="small-x-text mb-x-small text-light-gray">※ 小文字、大文字、数字、特殊文字を含む8文字以上で入力してください</p>
 
                     <div id="checkPassword-lowerletter-mobile" class="mb-x-small small-text">
                         <span aria-hidden="true" id="check-lowerletter-mobile"></span>
