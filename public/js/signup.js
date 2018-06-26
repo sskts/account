@@ -53,7 +53,7 @@ function checkPasswordMatch(screenSize) {
             requireUpperletter = true;
         }
         if (true) {
-            if (/[!|@|#|$|%|^|&|*|(|)|-|_]/.test(password)) {
+            if (/[!|@|#|$|%|^|&|*|-|_]/.test(password)) {
                 $("#check-symbols-" + screenSize).html("&#10003;");
                 $("#checkPasswordText-symbols-" + screenSize).html(passwordPolicy.special);
                 $("#checkPassword-symbols-" + screenSize).addClass("passwordCheck-valid-customizable").removeClass(

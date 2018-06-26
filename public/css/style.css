@@ -93,16 +93,12 @@ p {
     line-height: 1.6;
 }
 
-p a,
-p .link {
+p a, p .link {
     color: #0074A9;
     text-decoration: underline;
 }
 
-p a:focus, 
-p a:hover,
-p .link:focus,
-p .link:hover {
+p a:focus, p a:hover, p .link:focus, p .link:hover {
     color: #0074A9;
 }
 
@@ -338,4 +334,80 @@ header {
 
 .signup select {
     width: auto;
+}
+
+.loading-cover {
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 11;
+    visibility: visible;
+    animation: fadein 0.4s both;
+    display: none;
+}
+
+.loading-cover.active {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    z-index: 10;
+    justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    z-index: 11;
+    width: 40px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -20px;
+    animation: fadein 0.4s both;
+    display: none;
+}
+
+.loading div {
+    height: 20px;
+    width: 2px;
+    background-color: #FFF;
+    animation: loading 1s infinite;
+}
+
+.loading .bar1 {
+    animation-delay: 0.5s;
+}
+
+.loading .bar2 {
+    animation-delay: 0.6s;
+}
+
+.loading .bar3 {
+    animation-delay: 0.7s;
+}
+
+.loading .bar4 {
+    animation-delay: 0.8s;
+}
+
+.loading .bar5 {
+    animation-delay: 0.9s;
+}
+
+.loading.active {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+}
+
+@keyframes loading {
+    30% {
+        transform: scaleY(2);
+    }
 }

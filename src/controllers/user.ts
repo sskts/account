@@ -51,7 +51,7 @@ export async function signup(req: express.Request, res: express.Response) {
             if (!validationResult.isEmpty()) {
                 const validationErrorMessage = validationResult
                     .array()
-                    .map((error) => error.msg)
+                    .map((error) => `・${error.msg}`)
                     .join('<br>');
                 req.flash('validationErrorMessage', validationErrorMessage);
                 res.redirect(`/signup?${querystring.stringify(req.query)}`);
