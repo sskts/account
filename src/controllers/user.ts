@@ -41,6 +41,7 @@ interface IConfirmParams {
 /**
  * 会員登録フォーム
  */
+// tslint:disable-next-line:max-func-body-length
 export async function signup(req: express.Request, res: express.Response) {
     if (req.method === 'POST') {
         debug('signup:post', req.body);
@@ -54,7 +55,10 @@ export async function signup(req: express.Request, res: express.Response) {
                     .map((error) => `・${error.msg}`)
                     .join('<br>');
                 req.flash('validationErrorMessage', validationErrorMessage);
-                res.redirect(`/signup?${querystring.stringify(req.query)}`);
+                res.render('signup', {
+                    loginUrl: `/login?${querystring.stringify(req.query)}`,
+                    form: req.body
+                });
 
                 return;
             }
@@ -119,12 +123,28 @@ export async function signup(req: express.Request, res: express.Response) {
             res.redirect(`/confirm?${querystring.stringify(req.query)}`);
         } catch (error) {
             req.flash('errorMessage', new CognitoError(error).message);
-            res.redirect(`/signup?${querystring.stringify(req.query)}`);
+            res.render('signup', {
+                loginUrl: `/login?${querystring.stringify(req.query)}`,
+                form: req.body
+            });
         }
     } else {
+        // debug('signup input', req.body);
+        const form = {
+            username: '',
+            family_name: '',
+            given_name: '',
+            email: '',
+            phone_number: '',
+            birthdate: '',
+            gender: '',
+            postalCode: '',
+            password: ''
+        };
         // 非ログイン中でなければログインページへ
         res.render('signup', {
-            loginUrl: `/login?${querystring.stringify(req.query)}`
+            loginUrl: `/login?${querystring.stringify(req.query)}`,
+            form: form
         });
     }
 }

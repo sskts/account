@@ -36,6 +36,7 @@ if (COGNITO_CLIENT_SECRET === undefined) {
 /**
  * 会員登録フォーム
  */
+// tslint:disable-next-line:max-func-body-length
 function signup(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.method === 'POST') {
@@ -50,7 +51,10 @@ function signup(req, res) {
                         .map((error) => `・${error.msg}`)
                         .join('<br>');
                     req.flash('validationErrorMessage', validationErrorMessage);
-                    res.redirect(`/signup?${querystring.stringify(req.query)}`);
+                    res.render('signup', {
+                        loginUrl: `/login?${querystring.stringify(req.query)}`,
+                        form: req.body
+                    });
                     return;
                 }
                 const hash = crypto.createHmac('sha256', COGNITO_CLIENT_SECRET)
@@ -114,13 +118,29 @@ function signup(req, res) {
             }
             catch (error) {
                 req.flash('errorMessage', new CognitoError_1.CognitoError(error).message);
-                res.redirect(`/signup?${querystring.stringify(req.query)}`);
+                res.render('signup', {
+                    loginUrl: `/login?${querystring.stringify(req.query)}`,
+                    form: req.body
+                });
             }
         }
         else {
+            // debug('signup input', req.body);
+            const form = {
+                username: '',
+                family_name: '',
+                given_name: '',
+                email: '',
+                phone_number: '',
+                birthdate: '',
+                gender: '',
+                postalCode: '',
+                password: ''
+            };
             // 非ログイン中でなければログインページへ
             res.render('signup', {
-                loginUrl: `/login?${querystring.stringify(req.query)}`
+                loginUrl: `/login?${querystring.stringify(req.query)}`,
+                form: form
             });
         }
     });

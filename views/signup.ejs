@@ -24,7 +24,7 @@
                 <dd>
                     <div class="mb-x-small">
                         <input id="username-input-mobile" onkeyup="checkPasswordMatch('mobile');" type="text" autocapitalize="none" class="form-control"
-                        placeholder="ユーザーネームを入力してください" name="username" value="">
+                        placeholder="ユーザーネームを入力してください" name="username" value="<%= form.username %>">
                     </div>
                     <p class="small-x-text text-light-gray">
                         ※ 半角英数字6文字以上30文字以内で入力してください
@@ -39,11 +39,11 @@
                 </dt>
                 <dd class="mb-small">
                     <div>セイ</div>
-                    <input type="text" class="form-control" id="family_name" name="family_name" value="" placeholder="全角カタカナで入力してください">
+                    <input type="text" class="form-control" id="family_name" name="family_name" value="<%= form.family_name %>" placeholder="全角カタカナで入力してください">
                 </dd>
                 <dd>
                     <div>メイ</div>
-                    <input type="text" class="form-control" id="given_name" name="given_name" value="" placeholder="全角カタカナで入力してください">
+                    <input type="text" class="form-control" id="given_name" name="given_name" value="<%= form.given_name %>" placeholder="全角カタカナで入力してください">
                 </dd>
             </dl>
 
@@ -55,7 +55,7 @@
                 <dd>
                     <div class="mb-x-small">
                         <input type="email" class="form-control" placeholder="メールアドレスを入力してください" id="email" name="email"
-                            value="">
+                            value="<%= form.email %>">
                     </div>
                     <p class="small-x-text text-light-gray">
                         <strong>【ドメイン指定受信をご利用の場合について】</strong>
@@ -72,7 +72,7 @@
                 <dd>
                     <div class="mb-x-small">
                         <input type="tel" class="form-control" placeholder="電話番号を入力してください" id="phone_number" name="phone_number"
-                            value="">
+                            value="<%= form.phone_number %>">
                     </div>
                     <p class="small-x-text text-light-gray">※ 半角数字、ハイフン「-」なしで入力してください</p>
                 </dd>
@@ -85,7 +85,7 @@
                 </dt>
                 <dd>
                     <input type="date" class="form-control" placeholder="生年月日を選択してください" id="birthdate" name="birthdate"
-                    value="">
+                    value="<%= form.birthdate %>">
                 </dd>
             </dl>
             <dl class="mb-large">
@@ -94,7 +94,7 @@
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd>
-                    <select id="gender" name="gender" class="form-control" placeholder="性別を選択してください">
+                    <select id="gender" name="gender" class="form-control" placeholder="性別を選択してください" value="<%= form.gender %>">
                         <option value="">---</option>
                         <option value="0">男性</option>
                         <option value="1">女性</option>
@@ -109,7 +109,7 @@
                 <dd>
                     <div class="mb-x-small">
                         <input type="number" class="form-control" placeholder="郵便番号を入力してください" id="postalCode" name="postalCode"
-                            value="">
+                            value="<%= form.postalCode %>">
                     </div>
                     <p class="small-x-text text-light-gray">※ 半角数字、ハイフン「-」なしで入力してください</p>
                 </dd>
