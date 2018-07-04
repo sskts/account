@@ -137,7 +137,7 @@ export async function signup(req: express.Request, res: express.Response) {
             email: '',
             phone_number: '',
             birthdate: '',
-            gender: '',
+            gender: '0',
             postalCode: '',
             password: ''
         };
@@ -196,7 +196,7 @@ function signupValidation(req: express.Request) {
     req.checkBody('postalCode', '郵便番号が未入力です').notEmpty();
     req.checkBody('postalCode', '郵便番号の形式が正しくありません').matches(/^\d{7}$/);
     // 性別
-    req.checkBody('gender', '性別が未選択です').notEmpty();
+    // req.checkBody('gender', '性別が未選択です').notEmpty();
     // 生年月日
     req.checkBody('birthdate', '生年月日が未入力です').notEmpty();
 }
