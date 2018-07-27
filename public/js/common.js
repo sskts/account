@@ -6,5 +6,6 @@ $(function(){
  * ローディング表示
  */
 function showLoading () {
-    $('.loading-cover, .loading').addClass('active');
+    if ($('#username').val().length > 0 && $('#password').val().length > 0)
+        $('.loading-cover, .loading').addClass('active');
 }
