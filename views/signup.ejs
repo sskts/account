@@ -1,0 +1,166 @@
+<div id="div-forms" class="contents center signup">
+    <div class="inner">
+        <div class="text-center mb-small large-text">基本情報入力</div>
+        <p class="mb-middle">
+            必須項目を入力し「次へ」ボタンを押してください
+        </p>
+        <form name="signupform" method="post" class="cognito-asf">
+            <% if (messages.validationErrorMessage) { %>
+            <p id="validationErrorMessage" class="error text-red mb-small">
+                <%- messages.validationErrorMessage %>
+            </p>
+            <% } %>
+            <% if (messages.errorMessage) { %>
+            <p id="errorMessage" class="error text-red mb-small">
+                <%= messages.errorMessage %>
+            </p>
+            <% } %>
+
+            <dl class="mb-large">
+                <dt>
+                    <strong>ユーザーネーム</strong>
+                    <span class="text-red small-text">必須</span>
+                </dt>
+                <dd>
+                    <div class="mb-x-small">
+                        <input id="username-input-mobile" onkeyup="checkPasswordMatch('mobile');" type="text" autocapitalize="none" class="form-control"
+                        placeholder="ユーザーネームを入力してください" name="username" value="<%= form.username %>">
+                    </div>
+                    <p class="small-x-text text-light-gray">
+                        ※ 半角英数字6文字以上30文字以内で入力してください
+                    </p>
+                </dd>
+            </dl>
+
+            <dl class="mb-large">
+                <dt class="mb-small">
+                    <strong>お名前（カタカナ）</strong>
+                    <span class="text-red small-text">必須</span>
+                </dt>
+                <dd class="mb-small">
+                    <div>セイ</div>
+                    <input type="text" class="form-control" id="family_name" name="family_name" value="<%= form.family_name %>" placeholder="全角カタカナで入力してください">
+                </dd>
+                <dd>
+                    <div>メイ</div>
+                    <input type="text" class="form-control" id="given_name" name="given_name" value="<%= form.given_name %>" placeholder="全角カタカナで入力してください">
+                </dd>
+            </dl>
+
+            <dl class="mb-large">
+                <dt>
+                    <strong>メールアドレス</strong>
+                    <span class="text-red small-text">必須</span>
+                </dt>
+                <dd>
+                    <div class="mb-x-small">
+                        <input type="email" class="form-control" placeholder="メールアドレスを入力してください" id="email" name="email"
+                            value="<%= form.email %>">
+                    </div>
+                    <p class="small-x-text text-light-gray">
+                        <strong>【ドメイン指定受信をご利用の場合について】</strong>
+                        <br>※ 携帯電話のドメイン指定受信をされている場合、「@ticket-cinemasunshine.com」を追加設定してください。
+                        <br>※ au(@ezweb.ne.jp)をご利用の場合、上記に加え「なりすまし規制回避リスト」にも「@ticket-cinemasunshine.com」の追加設定をしてください。
+                    </p>
+                </dd>
+            </dl>
+            <dl class="mb-large">
+                <dt>
+                    <strong>電話番号</strong>
+                    <span class="text-red small-text">必須</span>
+                </dt>
+                <dd>
+                    <div class="mb-x-small">
+                        <input type="tel" class="form-control" placeholder="電話番号を入力してください" id="phone_number" name="phone_number"
+                            value="<%= form.phone_number %>">
+                    </div>
+                    <p class="small-x-text text-light-gray">※ 半角数字、ハイフン「-」なしで入力してください</p>
+                </dd>
+            </dl>
+
+            <dl class="mb-large">
+                <dt>
+                    <strong>生年月日</strong>
+                    <span class="text-red small-text">必須</span>
+                </dt>
+                <dd>
+                    <input type="date" class="form-control" placeholder="生年月日を選択してください" id="birthdate" name="birthdate"
+                    value="<%= form.birthdate %>">
+                </dd>
+            </dl>
+            <dl class="mb-large">
+                <dt class="mb-small">
+                    <strong>性別</strong>
+                    <span class="text-red small-text">必須</span>
+                </dt>
+                <dd>
+                    <select id="gender" name="gender" class="form-control" placeholder="性別を選択してください" value="<%= form.gender %>">
+                        <option <%= (form.gender === '0') ? 'selected' : '' %> value="0">---</option>
+                        <option <%= (form.gender === '1') ? 'selected' : '' %> value="1">男性</option>
+                        <option <%= (form.gender === '2') ? 'selected' : '' %> value="2">女性</option>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="mb-large">
+                <dt>
+                    <strong>郵便番号</strong>
+                    <span class="text-red small-text">必須</span>
+                </dt>
+                <dd>
+                    <div class="mb-x-small">
+                        <input type="number" class="form-control" placeholder="郵便番号を入力してください" id="postalCode" name="postalCode"
+                            value="<%= form.postalCode %>">
+                    </div>
+                    <p class="small-x-text text-light-gray">※ 半角数字、ハイフン「-」なしで入力してください</p>
+                </dd>
+            </dl>
+            <dl class="mb-large">
+                <dt>
+                    <strong>パスワード</strong>
+                    <span class="text-red small-text">必須</span>
+                </dt>
+                <dd>
+                    <div class="mb-x-small">
+                        <input id="password-mobile" onkeyup="checkPasswordMatch('mobile');" type="password" class="form-control" placeholder="パスワードを入力してください"
+                            name="password" value="">
+                    </div>
+
+                    <p class="small-x-text mb-x-small text-light-gray">※ 小文字、大文字、数字、特殊文字（!、@、#、$、%、^、&、*、-、_）を含む8文字以上で入力してください</p>
+
+                    <div id="checkPassword-lowerletter-mobile" class="mb-x-small small-text">
+                        <span aria-hidden="true" id="check-lowerletter-mobile"></span>
+                        <span id="checkPasswordText-lowerletter-mobile"></span>
+                    </div>
+
+                    <div id="checkPassword-upperletter-mobile" class="mb-x-small small-text">
+                        <span aria-hidden="true" id="check-upperletter-mobile"></span>
+                        <span id="checkPasswordText-upperletter-mobile"></span>
+                    </div>
+
+                    <div id="checkPassword-length-mobile" class="mb-x-small small-text">
+                        <span aria-hidden="true" id="check-length-mobile"></span>
+                        <span id="checkPasswordText-length-mobile"></span>
+                    </div>
+    
+                    <div id="checkPassword-symbols-mobile" class="mb-x-small small-text">
+                        <span aria-hidden="true" id="check-symbols-mobile"></span>
+                        <span id="checkPasswordText-symbols-mobile"></span>
+                    </div>
+
+                    <div id="checkPassword-numbers-mobile" class="mb-x-small small-text">
+                        <span aria-hidden="true" id="check-numbers-mobile"></span>
+                        <span id="checkPasswordText-numbers-mobile"></span>
+                    </div>
+                </dd>
+            </dl>
+
+            <button id="signupButton-mobile" type="submit" name="signUpButton" class="button button-primary button-block mb-middle">次へ</button>
+        </form>
+        <div class="text-center">
+            <a href="javascript:history.back();"><i class="icon left-icon prev-circle-white"></i>戻る</a>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/signup.js"></script>

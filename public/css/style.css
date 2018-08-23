@@ -1,0 +1,413 @@
+@charset "UTF-8";
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+body {
+    line-height: 1;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #cccccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+input, select {
+    vertical-align: middle;
+}
+
+ol, ul, li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+    font-size: 0;
+    line-height: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    -webkit-text-size-adjust: 100%;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #EEE;
+    background: linear-gradient(to bottom, #002549 0%, #000c21 20%, black 100%);
+    background-attachment: fixed;
+    font-size: 14px;
+    color: #FFF;
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "游ゴシック  Medium", meiryo, sans-serif;
+}
+
+h1, h2, h3 {
+    font-weight: normal;
+}
+
+a, .link {
+    color: #FFF;
+    text-decoration: none;
+}
+
+a:focus, a:hover, .link:focus, .link:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+p {
+    line-height: 1.6;
+}
+
+p a, p .link {
+    color: #0074A9;
+    text-decoration: underline;
+}
+
+p a:focus, p a:hover, p .link:focus, p .link:hover {
+    color: #0074A9;
+}
+
+div {
+    line-height: 1;
+}
+
+input[type=text], input[type=number], input[type=password], input[type=tel], input[type=email], input[type=number], input[type=submit], input[type=date], textarea, select, option, button, label {
+    font-weight: normal;
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "游ゴシック  Medium", meiryo, sans-serif;
+    border-radius: 0;
+}
+
+input[type=text], input[type=number], input[type=password], input[type=tel], input[type=email], input[type=number], input[type=date] {
+    width: 100%;
+    border-bottom: 1px solid #999;
+    padding: 0;
+    background-color: transparent;
+    line-height: 44px;
+    height: 44px;
+    outline: none;
+}
+
+textarea {
+    width: 100%;
+    border: 1px solid #999;
+    padding: 8px 10px;
+    background-color: #FFF;
+}
+
+select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    overflow: hidden;
+    border: 1px solid #999;
+    padding: 0 54px 0 10px;
+    height: 44px;
+    background-color: transparent;
+    background-image: url(/images/select_box.svg);
+    background-repeat: no-repeat;
+    background-size: 44px;
+    background-position: right center;
+    outline: none;
+}
+
+option {
+    color: #FFF;
+}
+
+.wrapper {
+    position: relative;
+    min-height: 100vh;
+}
+
+header {
+    height: 48px;
+    display: block;
+}
+
+.contents {
+    position: relative;
+    min-height: 100vh;
+    max-width: 375px;
+    padding: 50px 20px;
+}
+
+.position-center {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.mb-xx-small {
+    margin-bottom: 5px;
+}
+
+.mb-x-small {
+    margin-bottom: 10px;
+}
+
+.mb-small {
+    margin-bottom: 20px;
+}
+
+.mb-middle {
+    margin-bottom: 30px;
+}
+
+.mb-large {
+    margin-bottom: 40px;
+}
+
+.mb-x-large {
+    margin-bottom: 50px;
+}
+
+.mb-xx-large {
+    margin-bottom: 100px;
+}
+
+.small-x-text {
+    font-size: 10px;
+}
+
+.small-text {
+    font-size: 12px;
+}
+
+.large-text {
+    font-size: 18px;
+}
+
+.large-x-text {
+    font-size: 24px;
+}
+
+.large-xx-text {
+    font-size: 50px;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.control-label {
+    display: block;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    color: #FFF;
+}
+
+.text-red {
+    color: red;
+}
+
+.text-light-gray {
+    color: #6D6D6D;
+}
+
+.validation {
+    margin-top: 10px;
+    padding: 5px;
+    background-color: #5a0000;
+}
+
+.button {
+    border-radius: 0;
+    padding: 20px 0;
+}
+
+.button-block {
+    display: block;
+    width: 100%;
+    max-width: 375px;
+}
+
+.button-bottom {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.button-primary {
+    background-color: #0074A9;
+    color: #FFF;
+}
+
+.button-primary:hover {
+    background-color: #0074A9;
+}
+
+.button-info {
+    background-color: transparent;
+    color: #FFF;
+    border: 1px solid #FFF;
+}
+
+.button-info:hover {
+    background-color: transparent;
+}
+
+.small-button {
+    padding: 10px;
+}
+
+.error {
+    padding: 15px;
+    border: 1px solid red;
+    background-color: #ffefef;
+}
+
+.icon {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    vertical-align: middle;
+}
+
+.left-icon {
+    margin-right: 5px;
+}
+
+.prev-circle-white {
+    background-image: url(/images/prev_circle_white.svg);
+}
+
+.signup input[type=radio] {
+    display: none;
+}
+
+.signup select {
+    width: auto;
+}
+
+.loading-cover {
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 11;
+    visibility: visible;
+    animation: fadein 0.4s both;
+    display: none;
+}
+
+.loading-cover.active {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    z-index: 10;
+    justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    z-index: 11;
+    width: 40px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -20px;
+    animation: fadein 0.4s both;
+    display: none;
+}
+
+.loading div {
+    height: 20px;
+    width: 2px;
+    background-color: #FFF;
+    animation: loading 1s infinite;
+}
+
+.loading .bar1 {
+    animation-delay: 0.5s;
+}
+
+.loading .bar2 {
+    animation-delay: 0.6s;
+}
+
+.loading .bar3 {
+    animation-delay: 0.7s;
+}
+
+.loading .bar4 {
+    animation-delay: 0.8s;
+}
+
+.loading .bar5 {
+    animation-delay: 0.9s;
+}
+
+.loading.active {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+}
+
+@keyframes loading {
+    30% {
+        transform: scaleY(2);
+    }
+}

@@ -1,0 +1,38 @@
+<div class="contents center error-page">
+    <p class="mb-middle">
+        要求されたページでエラーが発生しました。
+    </p>
+    <button name="confirm" type="button" class="button button-info button-block mb-middle" onclick="displayErrorMessage();">エラー詳細を見る</button>
+    <div id="errorMsg" class="hidden">
+        <p id="errorMessage" class="error text-red mb-middle">
+            <%= message %>
+        </p>
+    </div>
+    <% if (REDIRECT_URI !== undefined) { %>
+    <div class="text-center">
+        <a href="<%= REDIRECT_URI %>"><i class="icon left-icon prev-circle-white"></i>戻る</a>
+    </div>
+    <% } %>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .none {
+            display: block;
+        }
+        #errorMessage {
+            word-break: break-all;
+        }
+    </style>
+    <script>
+        function displayErrorMessage() {
+            var messageBox = document.getElementById("errorMsg");
+            if (messageBox.className == "hidden") {
+                messageBox.className = "none";
+            } else {
+                messageBox.className = "hidden";
+            }
+        }
+    </script>
+</div>

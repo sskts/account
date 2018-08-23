@@ -1,0 +1,14 @@
+{
+  "sub": "aebaf573-98c1-4cea-84bf-e20ebdc6869a",
+  "device_key": "ap-northeast-1_1a1debcf-36b5-4b4d-bbcb-61026c1f8d97",
+  "event_id": "22b2bec7-3bbc-11e8-be3d-7b6810c1cb9f",
+  "token_use": "access",
+  "scope": "aws.cognito.signin.user.admin",
+  "auth_time": 1523253985,
+  "iss": "https://cognito-idp.ap-northeast-1.amazonaws.com/ap-northeast-1_lnqUeviXj",
+  "exp": 1523257585,
+  "iat": 1523253985,
+  "jti": "99b2cf44-c8ed-4fa9-803b-79e65c70522e",
+  "client_id": "6fv99t00epikf7eb50p17963d4",
+  "username": "ilovegadd"
+}

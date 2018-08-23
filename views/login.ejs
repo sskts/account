@@ -1,0 +1,32 @@
+<div id="div-forms" class="contents center login">
+    <div class="inner">
+        <div class="text-center mb-small large-text">ログイン</div>
+        <p class="mb-middle">
+            ユーザーネームとパスワードを入力してログインボタンを押してください
+        </p>
+        <form method="POST" name="cognitoSignInForm" class="cognito-asf">
+            <% if (messages.errorMessage) { %>
+                <p id="loginErrorMessage" class="error text-red mb-small">
+                    <%= messages.errorMessage %>
+                </p>
+                <% } %>
+
+                    <div class="mb-small">
+                        <input id="username" name="username" type="text" class="form-control" placeholder="ユーザーネーム" required="">
+                    </div>
+
+                    <div class="mb-middle">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="パスワード" required="">
+                    </div>
+                    <input type="hidden" class="form-control" id="cognito-asf-data" name="cognitoAsfData">
+                    <button name="signInSubmitButton" type="submit" class="button button-primary button-block mb-middle">ログイン</button>
+
+        </form>
+        <p class="text-center mb-small">
+            <a href="<%= forgotPasswordUrl %>">パスワードを忘れた方はこちら</a>
+        </p>
+        <div class="text-center">
+            <a href="javascript:history.back();"><i class="icon left-icon prev-circle-white"></i>戻る</a>
+        </div>
+    </div>
+</div>

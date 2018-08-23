@@ -1,0 +1,30 @@
+<html class="a-transition a-transform a-opacity a-border-image a-border-radius a-box-shadow a-text-stroke a-text-shadow a-touch-scrolling a-transform3d a-gradients a-local-storage a-textarea-placeholder a-input-placeholder a-autofocus a-webworker a-history a-geolocation a-drag-drop a-svg a-canvas a-video a-audio a-js"
+    data-aui-build-date="3.17.16.3-2017-10-11">
+
+<head>
+    <link href="/css/style.css" rel="stylesheet" media="screen">
+
+    <title>Signin</title>
+
+    <script>
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
+    </script>
+    <script src="https://d3vhah7crmmd43.cloudfront.net/20171117230139/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/common.js"></script>
+
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1">
+</head>
+
+<body>
+    <div class="wrapper">
+        <%- body %>
+    </div>
+    <%- include loading %>
+</body>
+
+</html>
