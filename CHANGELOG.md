@@ -17,3 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v1.0.0 - 2018-08-23
+### Added
+- v1.0.0をリリース。
