@@ -1,3 +1,30 @@
+$(function(){
+    $(document).on('click', '.eye, .eye-slash', visualizationPasswordToggle);
+});
+
+/**
+ * パスワード表示切り替え
+ * @param {Event} event 
+ */
+function visualizationPasswordToggle(event) {
+    event.preventDefault();
+    var isVisible = $(this).hasClass('eye-slash');
+    var target = $('input[name=password]');
+    if (isVisible) {
+        $('.eye-slash').removeClass('active');
+        $('.eye').addClass('active');
+        target.attr('type', 'password');
+    } else {
+        $('.eye').removeClass('active');
+        $('.eye-slash').addClass('active');
+        target.attr('type', 'text');
+    }
+}
+
+/**
+ * パスワード検証
+ * @param {'pc' | 'mobile'} screenSize 
+ */
 function checkPasswordMatch(screenSize) {
     var passwordPolicy = [];
     passwordPolicy.lowercase = "パスワードには小文字を含める必要があります";
@@ -53,7 +80,7 @@ function checkPasswordMatch(screenSize) {
             requireUpperletter = true;
         }
         if (true) {
-            if (/[!|@|#|$|%|^|&|*|-|_]/.test(password)) {
+            if (/[!|#|$|%|^|&|*|_]/.test(password)) {
                 $("#check-symbols-" + screenSize).html("&#10003;");
                 $("#checkPasswordText-symbols-" + screenSize).html(passwordPolicy.special);
                 $("#checkPassword-symbols-" + screenSize).addClass("passwordCheck-valid-customizable").removeClass(
