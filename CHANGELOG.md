@@ -18,6 +18,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.0 - 2018-10-12
+### Added
+- パスワード表示切り替え追加
+### Fixed
+- パスワード特殊文字不具合修正。
+
 ## v1.0.1 - 2018-10-04
 ### Fixed
 - ドメイン指定受信文言修正。

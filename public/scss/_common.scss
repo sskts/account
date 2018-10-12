@@ -122,9 +122,6 @@ header {
     min-height: 100vh;
     max-width: 375px;
     padding: 50px 20px;
-    .inner {
-        
-    }
 }
 
 .position-center {
@@ -133,6 +130,10 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+}
+
+.position-relative {
+    position: relative;
 }
 
 .mb-xx-small {
