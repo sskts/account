@@ -72,8 +72,16 @@ function authorize(req, res) {
                 yield returnAuthorizationCode(req, res, user.username, req.query.client_id, req.query.redirect_uri, req.query.state);
                 return;
             }
-            // ログインページへリダイレクト
-            res.redirect(`/login?${querystring.stringify(req.query)}`);
+            if (req.query.isReSignIn === '1') {
+                // チケットページのドメイン取得
+                // tslint:disable-next-line:no-magic-numbers
+                const baseUrl = (req.query.redirect_uri).split('/').splice(0, 3).join('/');
+                res.redirect(`${baseUrl}/#/auth/select`);
+            }
+            else {
+                // ログインページへリダイレクト
+                res.redirect(`/login?${querystring.stringify(req.query)}`);
+            }
         }
         catch (error) {
             res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
