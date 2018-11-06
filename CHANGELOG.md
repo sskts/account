@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.2 - 2018-11-06
+### Fixed
+- パスワード条件文言追加
+
 ## v1.1.1 - 2018-10-30
 ### Fixed
 - ログアウト期間修正
