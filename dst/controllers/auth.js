@@ -141,6 +141,7 @@ function login(req, res) {
             }
             catch (error) {
                 req.flash('errorMessage', new CognitoError_1.CognitoError(error).message);
+                req.query.userName = req.body.username;
                 res.redirect(`/login?${querystring.stringify(req.query)}`);
             }
         }
@@ -148,7 +149,8 @@ function login(req, res) {
             // 非ログイン中でなければログインページへ
             res.render('login', {
                 forgotPasswordUrl: `/forgotPassword?${querystring.stringify(req.query)}`,
-                signupUrl: `/signup?${querystring.stringify(req.query)}`
+                signupUrl: `/signup?${querystring.stringify(req.query)}`,
+                userName: req.query.userName
             });
         }
     });

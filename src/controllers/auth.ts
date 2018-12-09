@@ -136,13 +136,15 @@ export async function login(req: express.Request, res: express.Response) {
             await returnAuthorizationCode(req, res, req.body.username, req.query.client_id, req.query.redirect_uri, req.query.state);
         } catch (error) {
             req.flash('errorMessage', new CognitoError(error).message);
+            req.query.userName = req.body.username;
             res.redirect(`/login?${querystring.stringify(req.query)}`);
         }
     } else {
         // 非ログイン中でなければログインページへ
         res.render('login', {
             forgotPasswordUrl: `/forgotPassword?${querystring.stringify(req.query)}`,
-            signupUrl: `/signup?${querystring.stringify(req.query)}`
+            signupUrl: `/signup?${querystring.stringify(req.query)}`,
+            userName: req.query.userName
         });
     }
 }
