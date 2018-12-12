@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "check": "npm run tslint && nsp check",
+    "check": "npm run tslint",
     "clean": "rimraf ./dst ./doc ./coverage \"npm-debug.log*\" ./.nyc_output",
     "coverage": "nyc mocha \"src/**/*.spec.ts\"",
     "css": "npm run scss && postcss public/css/**/*.css -u autoprefixer -d public/css",
