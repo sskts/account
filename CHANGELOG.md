@@ -18,6 +18,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.3 - 2018-12-12
+### Fixed
+- ユーザー名を表示させるように修正
+- ログイン失敗時ユーザー名がそのまま残るように修正
+
 ## v1.1.2 - 2018-11-06
 ### Fixed
 - パスワード条件文言追加
