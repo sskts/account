@@ -84,8 +84,33 @@
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd>
-                    <input type="date" class="form-control" placeholder="生年月日を選択してください" id="birthdate" name="birthdate"
-                    value="<%= form.birthdate %>">
+                    <select name="birthdate_year" id="birthdate_year" class="text-white">
+                        <% 
+                        var year = (new Date()).getFullYear();
+                        const yearsAgo = year - 100;
+                        for (; year > yearsAgo;year--) { %>
+                            <option <%= (year === parseInt(form.birthdate_year)) ? 'selected' : '' %> value="<%= year %>"><%= year %></option>
+                        <% } %>
+                    </select>
+                    <span>年</span>
+                    <select name="birthdate_month" id="birthdate_month" class="text-white">
+                        <% 
+                        for(var i = 1; i <= 12; i++) {
+                            let no = ('0' + i).slice(-2);
+                        %>
+                            <option <%= (form.birthdate_month === no) ? 'selected' : '' %> value="<%= no %>"><%= i %></option>
+                        <% } %>
+                    </select>
+                    <span>月</span>
+                    <select name="birthdate_day" id="birthdate_day" class="text-white">
+                        <% 
+                        for(var i = 1; i <= 31; i++) {
+                            let no = ('0' + i).slice(-2);
+                        %>
+                            <option <%= (form.birthdate_day === no) ? 'selected' : '' %> value="<%= no %>"><%= i %></option>
+                        <% } %>
+                    </select>
+                    <span>日</span>
                 </dd>
             </dl>
             <dl class="mb-large">

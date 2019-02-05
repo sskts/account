@@ -46,6 +46,8 @@ export async function signup(req: express.Request, res: express.Response) {
     if (req.method === 'POST') {
         debug('signup:post', req.body);
         try {
+            console.log(req.body.form);
+            req.body.birthdate = req.body.birthdate_year + "-" + req.body.birthdate_month + "-" + req.body.birthdate_day;
             signupValidation(req);
             const validationResult = await req.getValidationResult();
             debug(validationResult.array());
@@ -129,6 +131,8 @@ export async function signup(req: express.Request, res: express.Response) {
             });
         }
     } else {
+
+        const thirtyFiveYearsOld = ((new Date()).getFullYear() - 35) + '';
         // debug('signup input', req.body);
         const form = {
             username: '',
@@ -137,6 +141,9 @@ export async function signup(req: express.Request, res: express.Response) {
             email: '',
             phone_number: '',
             birthdate: '',
+            birthdate_year: thirtyFiveYearsOld,
+            birthdate_month: '01',
+            birthdate_day: '01',
             gender: '0',
             postalCode: '',
             password: ''
@@ -198,7 +205,22 @@ function signupValidation(req: express.Request) {
     // 性別
     // req.checkBody('gender', '性別が未選択です').notEmpty();
     // 生年月日
-    req.checkBody('birthdate', '生年月日が未入力です').notEmpty();
+    //req.checkBody('birthdate', '生年月日が未入力です').notEmpty();
+    (<any>req.checkBody('birthdate', '日付が正しくありません')).custom((birthdate: string) => {
+        return validDate(birthdate);
+    });
+}
+
+/**
+ * 日付確認
+ */
+function validDate(date : string) : boolean{
+    var d = date.split("-")
+    const year = parseInt(d[0]);
+    const month = parseInt(d[1]);
+    const day = parseInt(d[2]);
+    const dt = new Date(year, month - 1, day);
+    return (dt.getFullYear()==year && dt.getMonth()==month-1 && dt.getDate()==day);
 }
 
 /**
