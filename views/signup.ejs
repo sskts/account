@@ -89,28 +89,25 @@
                         var year = (new Date()).getFullYear();
                         const yearsAgo = year - 100;
                         for (; year > yearsAgo;year--) { %>
-                            <option <%= (year === parseInt(form.birthdate_year)) ? 'selected' : '' %> value="<%= year %>"><%= year %></option>
+                            <option <%= (year === parseInt(form.birthdate_year)) ? 'selected' : '' %> value="<%= year %>"><%= year %>年</option>
                         <% } %>
                     </select>
-                    <span>年</span>
                     <select name="birthdate_month" id="birthdate_month" class="text-white">
                         <% 
                         for(var i = 1; i <= 12; i++) {
                             let no = ('0' + i).slice(-2);
                         %>
-                            <option <%= (form.birthdate_month === no) ? 'selected' : '' %> value="<%= no %>"><%= i %></option>
+                            <option <%= (form.birthdate_month === no) ? 'selected' : '' %> value="<%= no %>"><%= i %>月</option>
                         <% } %>
                     </select>
-                    <span>月</span>
                     <select name="birthdate_day" id="birthdate_day" class="text-white">
                         <% 
                         for(var i = 1; i <= 31; i++) {
                             let no = ('0' + i).slice(-2);
                         %>
-                            <option <%= (form.birthdate_day === no) ? 'selected' : '' %> value="<%= no %>"><%= i %></option>
+                            <option <%= (form.birthdate_day === no) ? 'selected' : '' %> value="<%= no %>"><%= i %>日</option>
                         <% } %>
                     </select>
-                    <span>日</span>
                 </dd>
             </dl>
             <dl class="mb-large">
