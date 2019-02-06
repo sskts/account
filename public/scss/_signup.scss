@@ -2,9 +2,6 @@
     input[type=radio] {
         display: none;
     }
-    select {
-        width: auto;
-    }
     .eye,
     .eye-slash {
         display: none;
@@ -20,6 +17,20 @@
         margin-top: -10px;
         &.active {
             display: flex;
+        }
+    }
+    .flex-select {
+        display: flex;
+        .select-form {
+            flex: 1;
+            color: #FFF;
+        }
+        .empty {
+            flex: 1;
+            padding: 0 54px 0 10px;
+        }
+        .margin5px {
+            margin-right: 5px;
         }
     }
 }
