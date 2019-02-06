@@ -46,7 +46,7 @@ export async function signup(req: express.Request, res: express.Response) {
     if (req.method === 'POST') {
         debug('signup:post', req.body);
         try {
-            req.body.birthdate = req.body.birthdate_year + "-" + req.body.birthdate_month + "-" + req.body.birthdate_day;
+            req.body.birthdate = `${req.body.birthdate_year}-${req.body.birthdate_month}-${req.body.birthdate_day}`;
             signupValidation(req);
             const validationResult = await req.getValidationResult();
             debug(validationResult.array());
@@ -130,8 +130,8 @@ export async function signup(req: express.Request, res: express.Response) {
             });
         }
     } else {
-
-        const thirtyFiveYearsOld = ((new Date()).getFullYear() - 35) + '';
+        const THIRTY_FIVE = 35;
+        const thirtyFiveYearsOld = String(((new Date()).getFullYear() - THIRTY_FIVE));
         // debug('signup input', req.body);
         const form = {
             username: '',
@@ -213,13 +213,17 @@ function signupValidation(req: express.Request) {
 /**
  * 日付確認
  */
-function validDate(date : string) : boolean{
-    var d = date.split("-")
-    const year = parseInt(d[0]);
-    const month = parseInt(d[1]);
-    const day = parseInt(d[2]);
+function validDate(date : string) : boolean {
+    const YEAR_INDEX = 0;
+    const MONTH_INDEX = 0;
+    const DAY_INDEX = 0;
+    const d = date.split('-');
+    const year = parseInt(d[YEAR_INDEX], 10);
+    const month = parseInt(d[MONTH_INDEX], 10);
+    const day = parseInt(d[DAY_INDEX], 10);
     const dt = new Date(year, month - 1, day);
-    return (dt.getFullYear()==year && dt.getMonth()==month-1 && dt.getDate()==day);
+
+    return (dt.getFullYear() === year && dt.getMonth() === month - 1 && dt.getDate() === day);
 }
 
 /**

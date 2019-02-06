@@ -21,7 +21,8 @@
     "interface-over-type-literal": true,
     "linebreak-style": [
       true,
-      "LF"
+      "LF",
+      "CRLF"
     ],
     "no-any": false,
     "no-backbone-get-set-outside-model": false,
