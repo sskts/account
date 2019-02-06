@@ -21,16 +21,13 @@
     }
     .flex-select {
         display: flex;
+        flex-wrap: wrap;
         .select-form {
-            flex: 1;
             color: #FFF;
+            margin-bottom: 10px;
         }
-        .empty {
-            flex: 1;
-            padding: 0 54px 0 10px;
-        }
-        .margin10px {
-            margin-right: 10px;
+        .margin5px {
+            margin-right: 5px;
         }
     }
 }
