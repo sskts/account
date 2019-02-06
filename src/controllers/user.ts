@@ -46,7 +46,6 @@ export async function signup(req: express.Request, res: express.Response) {
     if (req.method === 'POST') {
         debug('signup:post', req.body);
         try {
-            console.log(req.body.form);
             req.body.birthdate = req.body.birthdate_year + "-" + req.body.birthdate_month + "-" + req.body.birthdate_day;
             signupValidation(req);
             const validationResult = await req.getValidationResult();

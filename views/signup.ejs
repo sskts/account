@@ -87,11 +87,10 @@
                     <div class="flex-select">
                         <select name="birthdate_year" id="birthdate_year" class="select-form margin5px">
                             <% 
-                                            var year = (new Date()).getFullYear();
-                                            const yearsAgo = year - 100;
-                                            for (; year > yearsAgo;year--) { %>
-                            <option <%=(year===parseInt(form.birthdate_year)) ? 'selected' : '' %> value="
-                                <%= year %>">
+                            var year = (new Date()).getFullYear();
+                            const yearsAgo = year - 100;
+                            for (; year > yearsAgo;year--) { %>
+                            <option <%=(year===parseInt(form.birthdate_year)) ? 'selected' : '' %> value="<%= year %>">
                                 <%= year %>年</option>
                             <% } %>
                         </select>
@@ -100,23 +99,21 @@
                 </dd>
                 <dd>
                     <div class="flex-select">
-                        <select name="birthdate_month" id="birthdate_month" class="select-form margin5px">
+                        <select name="birthdate_month" id="birthdate_month" class="select-form margin10px">
                             <% 
-                                        for(var i = 1; i <= 12; i++) {
-                                            let no = ('0' + i).slice(-2);
-                                        %>
-                            <option <%=(form.birthdate_month===no) ? 'selected' : '' %> value="
-                                <%= no %>">
+                            for(var i = 1; i <= 12; i++) {
+                                let no = ('0' + i).slice(-2);
+                            %>
+                            <option <%=(form.birthdate_month===no) ? 'selected' : '' %> value="<%= no %>">
                                 <%= i %>月</option>
                             <% } %>
                         </select>
                         <select name="birthdate_day" id="birthdate_day" class="select-form">
                             <% 
-                                        for(var i = 1; i <= 31; i++) {
-                                            let no = ('0' + i).slice(-2);
-                                        %>
-                            <option <%=(form.birthdate_day===no) ? 'selected' : '' %> value="
-                                <%= no %>">
+                            for(var i = 1; i <= 31; i++) {
+                                let no = ('0' + i).slice(-2);
+                            %>
+                            <option <%=(form.birthdate_day===no) ? 'selected' : '' %> value="<%= no %>">
                                 <%= i %>日</option>
                             <% } %>
                         </select>
