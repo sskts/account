@@ -78,14 +78,41 @@
                 </dd>
             </dl>
 
-            <dl class="mb-large">
-                <dt>
+            <dl class="mb-middle">
+                <dt class="mb-small">
                     <strong>生年月日</strong>
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd>
-                    <input type="date" class="form-control" placeholder="生年月日を選択してください" id="birthdate" name="birthdate"
-                    value="<%= form.birthdate %>">
+                    <div class="flex-select">
+                        <select name="birthdate_year" id="birthdate_year" class="select-form margin5px">
+                            <% 
+                            var year = (new Date()).getFullYear();
+                            const yearsAgo = year - 100;
+                            for (; year > yearsAgo;year--) { %>
+                            <option <%=(year===parseInt(form.birthdate_year)) ? 'selected' : '' %> value="<%= year %>">
+                                <%= year %>年</option>
+                            <% } %>
+                        </select>
+                        <select name="birthdate_month" id="birthdate_month" class="select-form margin5px">
+                            <% 
+                            for(var i = 1; i <= 12; i++) {
+                                let no = ('0' + i).slice(-2);
+                            %>
+                            <option <%=(form.birthdate_month===no) ? 'selected' : '' %> value="<%= no %>">
+                                <%= i %>月</option>
+                            <% } %>
+                        </select>
+                        <select name="birthdate_day" id="birthdate_day" class="select-form">
+                            <% 
+                            for(var i = 1; i <= 31; i++) {
+                                let no = ('0' + i).slice(-2);
+                            %>
+                            <option <%=(form.birthdate_day===no) ? 'selected' : '' %> value="<%= no %>">
+                                <%= i %>日</option>
+                            <% } %>
+                        </select>
+                    </div>
                 </dd>
             </dl>
             <dl class="mb-large">
@@ -94,11 +121,13 @@
                     <span class="text-red small-text">必須</span>
                 </dt>
                 <dd>
-                    <select id="gender" name="gender" class="form-control" placeholder="性別を選択してください" value="<%= form.gender %>">
-                        <option <%= (form.gender === '0') ? 'selected' : '' %> value="0">---</option>
-                        <option <%= (form.gender === '1') ? 'selected' : '' %> value="1">男性</option>
-                        <option <%= (form.gender === '2') ? 'selected' : '' %> value="2">女性</option>
-                    </select>
+                    <div class="flex-select">
+                        <select id="gender" name="gender" class="select-form" placeholder="性別を選択してください" value="<%= form.gender %>">
+                            <option <%=(form.gender==='0' ) ? 'selected' : '' %> value="0">---</option>
+                            <option <%=(form.gender==='1' ) ? 'selected' : '' %> value="1">男性</option>
+                            <option <%=(form.gender==='2' ) ? 'selected' : '' %> value="2">女性</option>
+                        </select>
+                    </div>
                 </dd>
             </dl>
             <dl class="mb-large">
