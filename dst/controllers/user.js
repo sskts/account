@@ -200,7 +200,6 @@ function signupValidation(req) {
     // 性別
     // req.checkBody('gender', '性別が未選択です').notEmpty();
     // 生年月日
-    //req.checkBody('birthdate', '生年月日が未入力です').notEmpty();
     req.checkBody('birthdate', '日付が正しくありません').custom((birthdate) => {
         return validDate(birthdate);
     });
@@ -210,8 +209,8 @@ function signupValidation(req) {
  */
 function validDate(date) {
     const YEAR_INDEX = 0;
-    const MONTH_INDEX = 0;
-    const DAY_INDEX = 0;
+    const MONTH_INDEX = 1;
+    const DAY_INDEX = 2;
     const d = date.split('-');
     const year = parseInt(d[YEAR_INDEX], 10);
     const month = parseInt(d[MONTH_INDEX], 10);
