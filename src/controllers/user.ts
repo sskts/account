@@ -204,7 +204,6 @@ function signupValidation(req: express.Request) {
     // 性別
     // req.checkBody('gender', '性別が未選択です').notEmpty();
     // 生年月日
-    //req.checkBody('birthdate', '生年月日が未入力です').notEmpty();
     (<any>req.checkBody('birthdate', '日付が正しくありません')).custom((birthdate: string) => {
         return validDate(birthdate);
     });
@@ -215,8 +214,8 @@ function signupValidation(req: express.Request) {
  */
 function validDate(date : string) : boolean {
     const YEAR_INDEX = 0;
-    const MONTH_INDEX = 0;
-    const DAY_INDEX = 0;
+    const MONTH_INDEX = 1;
+    const DAY_INDEX = 2;
     const d = date.split('-');
     const year = parseInt(d[YEAR_INDEX], 10);
     const month = parseInt(d[MONTH_INDEX], 10);
