@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.5 - 2019-02-27
+### Added
+- パスワード変更時にチェックを追加
+
 ## v1.1.4 - 2019-02-15
 ### Changed
 - 誕生日選択用のUIを変更
