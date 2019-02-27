@@ -130,7 +130,31 @@ function checkPasswordMatch(screenSize) {
     }
     if (requireLowerletter && requireUpperletter && requireNumber && requireSymbol && requireLength && username_input) {
         document.getElementById("signupButton-" + screenSize).disabled = false;
+        return true;
     } else {
+        document.getElementById("signupButton-" + screenSize).disabled = true;
+        return false;
+    }
+}
+
+function checkConfirmPasswordMatch(screenSize) {
+    if(!checkPasswordMatch(screenSize)) {
+        return;
+    }
+    var password = $("#password-" + screenSize).val();
+    var confirmPassword = $("#confirm_password-" + screenSize).val();
+    var confirmCheck = "パスワードを同じにする必要があります";
+    if (password === confirmPassword) {
+        $("#check-confirm-" + screenSize).html("&#10003;");
+        $("#checkPasswordText-confirm-" + screenSize).html(confirmCheck);
+        $("#checkPassword-confirm-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
+            "passwordCheck-valid-customizable");
+        document.getElementById("signupButton-" + screenSize).disabled = false;
+    } else {
+        $("#check-confirm-" + screenSize).html("&#10006;");
+        $("#checkPasswordText-confirm-" + screenSize).html(confirmCheck);
+        $("#checkPassword-confirm-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
+            "passwordCheck-valid-customizable");
         document.getElementById("signupButton-" + screenSize).disabled = true;
     }
 }
