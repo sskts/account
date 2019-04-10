@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.6 - 2019-04-10
+### Added
+- メールのドメインコピー機能追加
+
 ## v1.1.5 - 2019-02-27
 ### Added
 - パスワード変更時にチェックを追加

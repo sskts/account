@@ -158,3 +158,33 @@ function checkConfirmPasswordMatch(screenSize) {
         document.getElementById("signupButton-" + screenSize).disabled = true;
     }
 }
+
+function clickCopyToClipboard() {
+    if (copyTextToClipboard("@ticket-cinemasunshine.com")) {
+        $("#copy-to-clipboard>strong").html("✔　コピーしました")
+        $("#copy-to-clipboard").addClass("active");
+        setTimeout(function () {
+            $("#copy-to-clipboard>strong").html("ドメインをコピーする")
+            $("#copy-to-clipboard").removeClass("active");
+        }, 10000);
+    }
+}
+
+/**
+ * クリップボードコピー関数
+ * 入力値をクリップボードへコピーする
+ * @param  textVal {string} 入力値
+ * @return boolean true: 成功　false: 失敗
+ */
+function copyTextToClipboard(textVal){
+  // テキストエリアを用意する
+  var copyFrom = document.createElement("textarea");
+  copyFrom.textContent = textVal;
+  var bodyElm = document.getElementsByTagName("body")[0];
+  bodyElm.appendChild(copyFrom);
+  copyFrom.select();
+  var retVal = document.execCommand('copy');
+  bodyElm.removeChild(copyFrom);
+  // 処理結果を返却
+  return retVal;
+}
