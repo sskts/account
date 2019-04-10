@@ -57,11 +57,28 @@
                         <input type="email" class="form-control" placeholder="メールアドレスを入力してください" id="email" name="email"
                             value="<%= form.email %>">
                     </div>
-                    <p class="small-x-text text-light-gray">
-                        <strong>【ドメイン指定受信をご利用の場合について】</strong>
-                        <br>※ 携帯電話のドメイン指定受信をされている場合、「@ticket-cinemasunshine.com」と「@verificationemail.com」を追加設定してください。
-                        <br>※ au(@ezweb.ne.jp)をご利用の場合、上記に加え「なりすまし規制回避リスト」にも「@ticket-cinemasunshine.com」と「@verificationemail.com」の追加設定をしてください。
-                    </p>
+                    <div class="mb-x-small">
+                        <p class="small-x-text text-light-gray">
+                            <strong>【ドメイン指定受信をご利用の場合について】</strong>
+                            <br>※ 携帯電話のドメイン指定受信をされている場合、「@ticket-cinemasunshine.com」を追加設定してください。
+                            <br>※ au(@ezweb.ne.jp)をご利用の場合、上記に加え「なりすまし規制回避リスト」にも「@ticket-cinemasunshine.com」の追加設定をしてください。
+                        </p>
+                    </div>
+                    <div class="mb-x-small">
+                        <p class="small-text text-light-blue">
+                            下記のボタンから受信許可していただくドメインをコピーしていただけます。
+                        </p>
+                    </div>
+                    <div class="mb-x-small">
+                        <p class="large-text text-center text-light-blue">
+                            <strong>@ticket-cinemasunshine.com</strong>
+                        </p>
+                    </div>
+                    <div class="mb-x-small text-center">
+                        <div id="copy-to-clipboard" class="button-copy large-text" onclick='clickCopyToClipboard();' type="button">
+                            <strong>ドメインをコピーする</strong>
+                        </div>
+                    </div>
                 </dd>
             </dl>
             <dl class="mb-large">
