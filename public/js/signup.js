@@ -160,14 +160,17 @@ function checkConfirmPasswordMatch(screenSize) {
 }
 
 function clickCopyToClipboard() {
-    if (copyTextToClipboard("@ticket-cinemasunshine.com")) {
-        $("#copy-to-clipboard>strong").html("✔　コピーしました")
-        $("#copy-to-clipboard").addClass("active");
-        setTimeout(function () {
-            $("#copy-to-clipboard>strong").html("ドメインをコピーする")
-            $("#copy-to-clipboard").removeClass("active");
-        }, 10000);
-    }
+    const range = document.createRange();
+    range.selectNode(document.getElementById("cinemasunshine-domain"))
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+  
+    $("#copy-to-clipboard>strong").html("✔　コピーしました")
+    $("#copy-to-clipboard").addClass("active");
+    setTimeout(function () {
+      $("#copy-to-clipboard>strong").html("ドメインをコピーする")
+      $("#copy-to-clipboard").removeClass("active");
+    }, 10000);
 }
 
 /**
