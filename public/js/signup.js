@@ -182,7 +182,7 @@ function copyTextToClipboard(textVal){
   // テキストエリアを用意する
   var temp = document.createElement('textarea');
 
-  temp.value = string;
+  temp.value = textVal;
   temp.selectionStart = 0;
   temp.selectionEnd = temp.value.length;
 
