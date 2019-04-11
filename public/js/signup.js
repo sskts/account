@@ -160,10 +160,12 @@ function checkConfirmPasswordMatch(screenSize) {
 }
 
 function clickCopyToClipboard() {
+    const domainNode = document.getElementById("cinemasunshine-domain");
     const range = document.createRange();
-    range.selectNode(document.getElementById("cinemasunshine-domain"))
+    range.selectNode(domainNode)
     window.getSelection().addRange(range);
-    document.execCommand('copy');
+    const rtn = document.execCommand('copy');
+    alert(rtn);
   
     $("#copy-to-clipboard>strong").html("✔　コピーしました")
     $("#copy-to-clipboard").addClass("active");
