@@ -173,7 +173,7 @@ function clickCopyToClipboard() {
         $("#copy-to-clipboard>strong").html("ドメインをコピーする")
         $("#copy-to-clipboard").removeClass("active");
       }, 10000);
-    }, 100);
+   }, 2000);
 }
 
 /**
