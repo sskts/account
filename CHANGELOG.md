@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.7 - 2019-04-11
+### Fixed
+- iOSでコピーできない不具合修正
+
 ## v1.1.6 - 2019-04-10
 ### Added
 - メールのドメインコピー機能追加
