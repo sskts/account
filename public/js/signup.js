@@ -164,15 +164,17 @@ function clickCopyToClipboard() {
     const range = document.createRange();
     range.selectNode(domainNode)
     window.getSelection().addRange(range);
-    const rtn = document.execCommand('copy');
-    alert(rtn);
+    setTimeout(function(){
+      const rtn = document.execCommand('copy');
+      alert(rtn);
+      $("#copy-to-clipboard>strong").html("✔　コピーしました")
+      $("#copy-to-clipboard").addClass("active");
+      setTimeout(function () {
+        $("#copy-to-clipboard>strong").html("ドメインをコピーする")
+        $("#copy-to-clipboard").removeClass("active");
+      }, 10000);
   
-    $("#copy-to-clipboard>strong").html("✔　コピーしました")
-    $("#copy-to-clipboard").addClass("active");
-    setTimeout(function () {
-      $("#copy-to-clipboard>strong").html("ドメインをコピーする")
-      $("#copy-to-clipboard").removeClass("active");
-    }, 10000);
+    }, 100);
 }
 
 /**
