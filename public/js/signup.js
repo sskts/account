@@ -160,11 +160,11 @@ function checkConfirmPasswordMatch(screenSize) {
 }
 
 function clickCopyToClipboard() {
-    const domainNode = document.getElementById("cinemasunshine-domain");
-    const range = document.createRange();
-    range.selectNode(domainNode)
-    window.getSelection().addRange(range);
-    setTimeout(function(){
+   setTimeout(function(){
+      const domainNode = document.getElementById("cinemasunshine-domain");
+      const range = document.createRange();
+      range.selectNode(domainNode)
+      window.getSelection().addRange(range);
       const rtn = document.execCommand('copy');
       alert(rtn);
       $("#copy-to-clipboard>strong").html("✔　コピーしました")
@@ -173,7 +173,6 @@ function clickCopyToClipboard() {
         $("#copy-to-clipboard>strong").html("ドメインをコピーする")
         $("#copy-to-clipboard").removeClass("active");
       }, 10000);
-  
     }, 100);
 }
 
