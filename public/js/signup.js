@@ -163,7 +163,7 @@ function clickCopyToClipboard() {
     window.getSelection().removeAllRanges();
     const domainNode = document.getElementById("cinemasunshine-domain");
     domainNode.contentEditable = true;
-    domainNNode.readOnly = false;
+    domainNode.readOnly = false;
     const range = document.createRange();
     range.selectNode(domainNode)
     window.getSelection().addRange(range);
@@ -172,7 +172,6 @@ function clickCopyToClipboard() {
     $("#copy-to-clipboard>strong").html("✔　コピーしました")
     $("#copy-to-clipboard").addClass("active");
     domainNode.contentEditable = false;
-    domainNNode.readOnly = false;
     setTimeout(function () {
       $("#copy-to-clipboard>strong").html("ドメインをコピーする")
       $("#copy-to-clipboard").removeClass("active");
