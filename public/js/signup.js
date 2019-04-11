@@ -169,7 +169,7 @@ function clickCopyToClipboard() {
             $("#copy-to-clipboard").removeClass("active");
         }, 10000);
     }
-  }, 1000);
+  }, 200);
 }
 
 /**
@@ -179,31 +179,22 @@ function clickCopyToClipboard() {
  * @return boolean true: 成功　false: 失敗
  */
 function copyTextToClipboard(textVal){
-  // テキストエリアを用意する
-  var temp = document.createElement('textarea');
-
-  temp.value = textVal;
-  temp.selectionStart = 0;
-  temp.selectionEnd = temp.value.length;
-
-  var s = temp.style;
-  s.position = 'fixed';
-  s.left = '-100%';
-
-  document.body.appendChild(temp);
-  temp.focus();
-  var result = document.execCommand('copy');
-  temp.blur();
-  document.body.removeChild(temp);
-  // true なら実行できている falseなら失敗か対応していないか
-  return result;
-  /*var copyFrom = document.createElement("textarea");
-  copyFrom.textContent = textVal;
-  var bodyElm = document.getElementsByTagName("body")[0];
-  bodyElm.appendChild(copyFrom);
-  copyFrom.select();
-  var retVal = document.execCommand('copy');
-  bodyElm.removeChild(copyFrom);
-  // 処理結果を返却
-  return retVal;*/
+    // テキストエリアを用意する
+    var temp = document.createElement('textarea');
+  
+    temp.value = textVal;
+    temp.selectionStart = 0;
+    temp.selectionEnd = temp.value.length;
+  
+    var s = temp.style;
+    s.position = 'fixed';
+    s.left = '-100%';
+  
+    document.body.appendChild(temp);
+    temp.focus();
+    var result = document.execCommand('copy');
+    temp.blur();
+    document.body.removeChild(temp);
+    // true なら実行できている falseなら失敗か対応していないか
+    return result;
 }
