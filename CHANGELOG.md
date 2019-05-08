@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.8 - 2019-04-10
+### Added
+- ログイン時のパスワード入力注記追加
+
 ## v1.1.7 - 2019-04-11
 ### Fixed
 - iOSでコピーできない不具合修正
