@@ -18,7 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
-## v1.1.8 - 2019-04-10
+## v1.1.8 - 2019-05/08
 ### Added
 - ログイン時のパスワード入力注記追加
 
