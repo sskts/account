@@ -18,6 +18,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.8 - 2019-05-08
+### Added
+- パスワード入力注意の文言を追加
+### Changed
+- node-sassバージョンを4.12.0に変更
+
 ## v1.1.7 - 2019-04-11
 ### Fixed
 - iOSでコピーできない不具合修正
