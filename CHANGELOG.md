@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.9 - 2019-05-08
+### Fixed
+- パスワードリセットの際のユーザーネームの文言変更
+
 ## v1.1.8 - 2019-05-08
 ### Added
 - パスワード入力注意の文言を追加
