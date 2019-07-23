@@ -1,11 +1,13 @@
-$(function(){
-    $('button[type="submit"]').on('click', showLoading);
+$(function () {
+    $('form').on('submit', function(){
+        $(this).prop('disabled', true);
+    });
 });
 
 /**
  * ローディング表示
  */
-function showLoading () {
+function showLoading() {
     if ($('#username').val().length > 0 && $('#password').val().length > 0)
         $('.loading-cover, .loading').addClass('active');
 }
