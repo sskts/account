@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.10 - 2019-07-23
+### Fixed
+- サブミット2度押し不具合修正
+
 ## v1.1.9 - 2019-05-08
 ### Fixed
 - パスワードリセットの際のユーザーネームの文言変更
