@@ -105,11 +105,17 @@ function authorizationCode2token(clientId, clientSecret, code, redirectUri) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             const authorizationData = yield authorizationCodeRepo.findOne(code);
             debug('authorizationData found.', authorizationData);
+            if (authorizationData === undefined || authorizationData === null) {
+                reject(new Error('invalid_request'));
+                return;
+            }
             if (authorizationData.clientId !== clientId) {
-                throw new Error('invalid_request');
+                reject(new Error('invalid_request'));
+                return;
             }
             if (authorizationData.redirectUri !== redirectUri) {
-                throw new Error('invalid_request');
+                reject(new Error('invalid_request'));
+                return;
             }
             const hash = crypto.createHmac('sha256', clientSecret)
                 .update(`${authorizationData.username}${clientId}`)

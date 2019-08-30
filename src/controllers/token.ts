@@ -122,12 +122,20 @@ function authorizationCode2token(
         return new Promise<IAuthorizeResult>(async (resolve, reject) => {
             const authorizationData = await authorizationCodeRepo.findOne(code);
             debug('authorizationData found.', authorizationData);
-            if (authorizationData.clientId !== clientId) {
-                throw new Error('invalid_request');
-            }
+            if (authorizationData === undefined || authorizationData === null) {
+                reject(new Error('invalid_request'));
 
+                return;
+            }
+            if (authorizationData.clientId !== clientId) {
+                reject(new Error('invalid_request'));
+
+                return;
+            }
             if (authorizationData.redirectUri !== redirectUri) {
-                throw new Error('invalid_request');
+                reject(new Error('invalid_request'));
+
+                return;
             }
 
             const hash = crypto.createHmac('sha256', clientSecret)
