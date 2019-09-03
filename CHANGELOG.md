@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.12 - 2019-09-03
+### Fixed
+- 複数リクエスト防止
+
 ## v1.1.11 - 2019-08-30
 ### Fixed
 - 認可コードから認証情報を発行時エラーハンドリング修正
