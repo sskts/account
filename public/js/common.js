@@ -1,8 +1,13 @@
 $(function () {
-    $('form').on('submit', function(){
-        $(this).prop('disabled', true);
-    });
+    $(document).on('submit', 'form', submitDisabled);
 });
+
+/**
+ * 複数リクエスト防止
+ */
+function submitDisabled() {
+    $('button[type=submit]').prop('disabled', true);
+}
 
 /**
  * ローディング表示
