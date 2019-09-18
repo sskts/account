@@ -2,6 +2,7 @@
  * ユーザーコントローラー
  */
 
+import { CognitoIdentityServiceProvider } from 'aws-sdk';
 import * as  crypto from 'crypto';
 import * as  createDebug from 'debug';
 import * as express from 'express';
@@ -66,41 +67,23 @@ export async function signup(req: express.Request, res: express.Response) {
             const hash = crypto.createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
                 .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
                 .digest('base64');
-            const params = {
+            const params: CognitoIdentityServiceProvider.Types.SignUpRequest = {
                 ClientId: <string>COGNITO_CLIENT_ID,
                 SecretHash: hash,
                 Password: req.body.password,
                 Username: req.body.username,
                 UserAttributes: [
-                    {
-                        Name: 'family_name',
-                        Value: req.body.family_name
-                    },
-                    {
-                        Name: 'given_name',
-                        Value: req.body.given_name
-                    },
-                    {
-                        Name: 'email',
-                        Value: req.body.email
-                    },
-                    {
-                        Name: 'phone_number',
-                        Value: phoneNumberFormat(req.body.phone_number)
-                    },
-                    {
-                        Name: 'gender',
-                        Value: req.body.gender
-                    },
-                    {
-                        Name: 'birthdate',
-                        Value: req.body.birthdate
-                    },
-                    {
-                        Name: 'custom:postalCode',
-                        Value: req.body.postalCode
-                    }
-                ]
+                    { Name: 'family_name', Value: req.body.family_name },
+                    { Name: 'given_name', Value: req.body.given_name },
+                    { Name: 'email', Value: req.body.email },
+                    { Name: 'phone_number', Value: phoneNumberFormat(req.body.phone_number) },
+                    { Name: 'gender', Value: req.body.gender },
+                    { Name: 'birthdate', Value: req.body.birthdate },
+                    { Name: 'custom:postalCode', Value: req.body.postalCode }
+                ],
+                ValidationData: (req.body.verificationCode === '1')
+                    ? [{ Name: 'phone_number', Value: phoneNumberFormat(req.body.phone_number) }]
+                    : [{ Name: 'email', Value: req.body.email }]
             };
 
             const confirmParams = await new Promise<IConfirmParams>((resolve, reject) => {
@@ -212,7 +195,7 @@ function signupValidation(req: express.Request) {
 /**
  * 日付確認
  */
-function validDate(date : string) : boolean {
+function validDate(date: string): boolean {
     const YEAR_INDEX = 0;
     const MONTH_INDEX = 1;
     const DAY_INDEX = 2;
@@ -285,6 +268,43 @@ export async function confirm(req: express.Request, res: express.Response) {
         } catch (error) {
             res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
         }
+    }
+}
+
+/**
+ * 検証コード再送信
+ */
+export async function resendcode(req: express.Request, res: express.Response) {
+    try {
+        const hash = crypto.createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
+            .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+            .digest('base64');
+        const resendParams: CognitoIdentityServiceProvider.Types.ResendConfirmationCodeRequest = {
+            ClientId: <string>COGNITO_CLIENT_ID,
+            SecretHash: hash,
+            Username: req.body.username
+        };
+        await new Promise<void>((resolve, reject) => {
+            req.cognitoidentityserviceprovider.resendConfirmationCode(resendParams, (err, data) => {
+                debug('resendConfirmationCode response:', err, data);
+                if (err instanceof Error) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+        const confirmParams: IConfirmParams = {
+            username: req.body.username,
+            sub: req.body.sub,
+            destination: req.body.destination,
+            deliveryMedium: req.body.deliveryMedium
+        };
+        // 確認コード入力へ
+        req.flash('confirmParams', <any>confirmParams);
+        res.redirect(`/confirm?${querystring.stringify(req.query)}`);
+    } catch (error) {
+        res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
     }
 }
 

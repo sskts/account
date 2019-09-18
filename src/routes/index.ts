@@ -16,6 +16,7 @@ router.get('/logout', AuthController.logout);
 router.post('/token', TokenController.generate);
 router.all('/signup', UserController.signup);
 router.all('/confirm', UserController.confirm);
+router.post('/resendcode', UserController.resendcode);
 router.all('/forgotPassword', UserController.forgotPassword);
 router.all('/confirmForgotPassword', UserController.confirmForgotPassword);
 router.get('/error', (req, res) => {

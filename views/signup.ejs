@@ -201,7 +201,20 @@
                     </div>
                 </dd>
             </dl>
-
+            <dl class="mb-large">
+                <dt class="mb-small">
+                    <strong>ワンタイムパスワード送信先</strong>
+                    <span class="text-red small-text">必須</span>
+                </dt>
+                <dd>
+                    <div class="flex-select">
+                        <select id="verificationCode" name="verificationCode" class="select-form" placeholder="" value="<%= form.verificationCode %>">
+                            <option <%=(form.verificationCode === '1' ) ? 'selected' : '' %> value="1">メールアドレス</option>
+                            <option <%=(form.verificationCode === '2' ) ? 'selected' : '' %> value="2">電話番号（SMS）</option>
+                        </select>
+                    </div>
+                </dd>
+            </dl>
             <button id="signupButton-mobile" type="submit" name="signUpButton" class="button button-primary button-block mb-middle">次へ</button>
         </form>
         <div class="text-center">

@@ -67,35 +67,17 @@ function signup(req, res) {
                     Password: req.body.password,
                     Username: req.body.username,
                     UserAttributes: [
-                        {
-                            Name: 'family_name',
-                            Value: req.body.family_name
-                        },
-                        {
-                            Name: 'given_name',
-                            Value: req.body.given_name
-                        },
-                        {
-                            Name: 'email',
-                            Value: req.body.email
-                        },
-                        {
-                            Name: 'phone_number',
-                            Value: phoneNumberFormat(req.body.phone_number)
-                        },
-                        {
-                            Name: 'gender',
-                            Value: req.body.gender
-                        },
-                        {
-                            Name: 'birthdate',
-                            Value: req.body.birthdate
-                        },
-                        {
-                            Name: 'custom:postalCode',
-                            Value: req.body.postalCode
-                        }
-                    ]
+                        { Name: 'family_name', Value: req.body.family_name },
+                        { Name: 'given_name', Value: req.body.given_name },
+                        { Name: 'email', Value: req.body.email },
+                        { Name: 'phone_number', Value: phoneNumberFormat(req.body.phone_number) },
+                        { Name: 'gender', Value: req.body.gender },
+                        { Name: 'birthdate', Value: req.body.birthdate },
+                        { Name: 'custom:postalCode', Value: req.body.postalCode }
+                    ],
+                    ValidationData: (req.body.verificationCode === '1')
+                        ? [{ Name: 'phone_number', Value: phoneNumberFormat(req.body.phone_number) }]
+                        : [{ Name: 'email', Value: req.body.email }]
                 };
                 const confirmParams = yield new Promise((resolve, reject) => {
                     req.cognitoidentityserviceprovider.signUp(params, (err, data) => {
@@ -284,6 +266,47 @@ function confirm(req, res) {
     });
 }
 exports.confirm = confirm;
+/**
+ * 検証コード再送信
+ */
+function resendcode(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const hash = crypto.createHmac('sha256', COGNITO_CLIENT_SECRET)
+                .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                .digest('base64');
+            const resendParams = {
+                ClientId: COGNITO_CLIENT_ID,
+                SecretHash: hash,
+                Username: req.body.username
+            };
+            yield new Promise((resolve, reject) => {
+                req.cognitoidentityserviceprovider.resendConfirmationCode(resendParams, (err, data) => {
+                    debug('resendConfirmationCode response:', err, data);
+                    if (err instanceof Error) {
+                        reject(err);
+                    }
+                    else {
+                        resolve();
+                    }
+                });
+            });
+            const confirmParams = {
+                username: req.body.username,
+                sub: req.body.sub,
+                destination: req.body.destination,
+                deliveryMedium: req.body.deliveryMedium
+            };
+            // 確認コード入力へ
+            req.flash('confirmParams', confirmParams);
+            res.redirect(`/confirm?${querystring.stringify(req.query)}`);
+        }
+        catch (error) {
+            res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
+        }
+    });
+}
+exports.resendcode = resendcode;
 /**
  * パスワード忘れフロー
  */
