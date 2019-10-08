@@ -266,9 +266,12 @@ header {
 
 .button-primary {
   background-color: #0074A9;
-  color: #FFF; }
+  color: #FFF;
+  transition: background-color 0.3s; }
   .button-primary:hover {
     background-color: #0074A9; }
+    .button-primary:disabled {
+      background-color: #888; }
 
 .button-info {
   background-color: transparent;
