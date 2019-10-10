@@ -128,13 +128,23 @@ function checkPasswordMatch(screenSize) {
             requireLength = true;
         }
     }
-    // if (requireLowerletter && requireUpperletter && requireNumber && requireSymbol && requireLength && username_input) {
-    //     document.getElementById("signupButton-" + screenSize).disabled = false;
-    //     return true;
-    // } else {
-    //     document.getElementById("signupButton-" + screenSize).disabled = true;
-    //     return false;
-    // }
+    // console.log('requireLowerletter' , requireLowerletter);
+    // console.log('requireUpperletter', requireUpperletter);
+    // console.log('requireNumber', requireNumber);
+    // console.log('requireSymbol', requireSymbol);
+    // console.log('requireLength', requireLength);
+    // console.log('username_input', username_input)
+    if (requireLowerletter 
+        && requireUpperletter 
+        && requireNumber 
+        && requireSymbol 
+        && requireLength) {
+        document.getElementById("signupButton-" + screenSize).disabled = false;
+        return true;
+    } else {
+        document.getElementById("signupButton-" + screenSize).disabled = true;
+        return false;
+    }
 }
 
 function checkConfirmPasswordMatch(screenSize) {
