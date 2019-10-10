@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.13 - 2019-10-10
+### Changed
+ - パスワードバリデーション変更
+
 ## v1.1.12 - 2019-09-03
 ### Fixed
 - 複数リクエスト防止
