@@ -205,6 +205,10 @@ header {
     color: #FFF;
 }
 
+.w-100 {
+    width: 100%;
+}
+
 .text-white {
     color: #FFF;
 }
@@ -306,6 +310,7 @@ header {
         &.modal-dialog-centered {
             display: flex;
             align-items: center;
+            justify-content: center;
             min-height: calc(100% - 1rem);
         }
         &.modal-dialog-centered::before {
@@ -318,6 +323,7 @@ header {
             display: flex;
             flex-direction: column;
             width: 100%;
+            max-width: 375px;
             pointer-events: auto;
             background-color: #fff;
             background-clip: padding-box;

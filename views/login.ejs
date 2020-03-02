@@ -16,7 +16,7 @@
                     value="<%= userName %>">
             </div>
             <div class="mb-middle">
-                <a class="text-underline" href="#" id="usernameTrigger">ユーザーネームを忘れた方</a>
+                <a href="#" id="usernameTrigger"><i class="icon icon-small left-icon arrow-white"></i>ユーザーネームを忘れた方</a>
             </div>
             <div class="mb-small">
                 <input id="password" name="password" type="password" class="form-control" placeholder="パスワード"
@@ -24,7 +24,7 @@
             </div>
             <p class="small-x-text mb-small">※ パスワードは小文字、大文字、数字、特殊文字（!、#、$、%、^、&、*、_）を含む8文字以上で入力してください</p>
             <div class="mb-middle">
-                <a class="text-underline" href="<%= forgotPasswordUrl %>">パスワードを忘れた方はこちら</a>
+                <a href="<%= forgotPasswordUrl %>"><i class="icon icon-small left-icon arrow-white"></i>パスワードを忘れた方はこちら</a>
             </div>
             <input type="hidden" class="form-control" id="cognito-asf-data" name="cognitoAsfData">
             <button name="signInSubmitButton" type="submit"
@@ -57,7 +57,7 @@
                     <span class="font-weight-bold select-text">【シネマサンシャイン公式アプリ】ワンタイムパスワード発行</span>
                 </p>
                 <div class="mb-middle">
-                    イメージ画像
+                    <img class="w-100" src="/images/login/username.svg">
                 </div>
                 <div class="text-center">
                     <a class="close text-light-blue" href="#">閉じる</a>

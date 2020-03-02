@@ -8,10 +8,18 @@
     vertical-align: middle;
 }
 
+.icon-small {
+    width: 10px;
+    height: 10px;
+}
+
 .left-icon {
     margin-right: 5px;
 }
 
 .prev-circle-white {
-    background-image: url(/images/prev_circle_white.svg);
+    background-image: url(/images/icon/prev_circle_white.svg);
+}
+.arrow-white {
+    background-image: url(/images/icon/arrow_white.svg);
 }
