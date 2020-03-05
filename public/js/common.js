@@ -32,7 +32,6 @@ var Modal = /** @class */ (function () {
         $('body').append('<div class="modal-backdrop fade show"></div>')
             .addClass('show');
         this.getElement().one('click', function () {
-            console.log('modal')
             _this.hide();
         });
         this.getElement().find('.modal-content').on('click', function (event) {
