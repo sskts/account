@@ -338,6 +338,15 @@ header {
             padding: 1rem;
         }
     }
+    .close {
+        position: absolute;
+        top: -30px;
+        right: 0;
+        display: block;
+        background-image: url(/images/icon/close_white.svg);
+        width: 25px;
+        height: 25px;
+    }
 }
 
 .modal-backdrop {
