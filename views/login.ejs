@@ -15,23 +15,72 @@
                 <input id="username" name="username" type="text" class="form-control" placeholder="ユーザーネーム" required=""
                     value="<%= userName %>">
             </div>
+            <div class="mb-middle">
+                <a href="#" id="usernameTrigger"><i class="icon icon-small left-icon arrow-white"></i>ユーザーネームを忘れた方</a>
+            </div>
             <div class="mb-small">
                 <input id="password" name="password" type="password" class="form-control" placeholder="パスワード"
                     required="">
             </div>
+            <p class="small-x-text mb-small">※ パスワードは小文字、大文字、数字、特殊文字（!、#、$、%、^、&、*、_）を含む8文字以上で入力してください</p>
             <div class="mb-middle">
-                <div class="small-x-text">※ パスワードは小文字、大文字、数字、特殊文字（!、#、$、%、^、&、*、_）を含む8文字以上で入力してください</div>
+                <a href="<%= forgotPasswordUrl %>"><i
+                        class="icon icon-small left-icon arrow-white"></i>パスワードを忘れた方はこちら</a>
             </div>
             <input type="hidden" class="form-control" id="cognito-asf-data" name="cognitoAsfData">
             <button name="signInSubmitButton" type="submit"
                 class="button button-primary button-block mb-middle">ログイン</button>
 
         </form>
-        <p class="text-center mb-small">
-            <a href="<%= forgotPasswordUrl %>">パスワードを忘れた方はこちら</a>
-        </p>
+
         <div class="text-center">
             <a href="javascript:history.back();"><i class="icon left-icon prev-circle-white"></i>戻る</a>
         </div>
     </div>
 </div>
+
+
+<div id="usernameModal" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-black">
+            <a class="close" href="#"></a>
+            <div class="modal-scroll-vertical">
+                <p class="text-center large-text mb-small">ユーザーネームをお忘れの方</p>
+                <p class="mb-small">
+                    ユーザーネームをお忘れのお客様は、ご登録時に送られてきたワンタイムパスワードの一行目にユーザーネームが記載されております。<br>
+                    または、ログインした状態でチケットを購入された際の購入完了メールの［ユーザーID］部分にユーザーネームが記載されておりますので受信フォルダなどを検索していただきご確認ください。
+                </p>
+                <p class="mb-small">
+                    メール件名：<br>
+                    <span class="font-weight-bold select-text">【シネマサンシャイン公式アプリ】ワンタイムパスワード発行</span>
+                </p>
+                <p class="mb-small">
+                    送信元メールアドレス：<br>
+                    <span class="font-weight-bold select-text">rewards@ticket-cinemasunshine.com</span>
+                </p>
+                <div class="mb-small">
+                    <img class="w-100" src="/images/login/rewards.svg">
+                </div>
+                <p class="mb-small">
+                    メール件名：<br>
+                    <span class="font-weight-bold select-text">&lt;&lt;劇場名&gt;&gt;ご注文商品のお届け完了</span>
+                </p>
+                <p class="mb-small">
+                    送信元メールアドレス：<br>
+                    <span class="font-weight-bold select-text">noreplay@ticket-cinemasunshine.com</span>
+                </p>
+                <div class="mb-small">
+                    <img class="w-100" src="/images/login/purchase-completed.svg">
+                </div>
+                <p>
+                    メールが見つからずユーザーネームが不明な場合は下記のお問い合わせ先までご連絡ください。<br>
+                    <br>
+                    ［お問い合わせ先］<br>
+                    <span class="font-weight-bold select-text">cin-sun_mail@cinemasunshine.co.jp</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/login.js"></script>
