@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.1.14 - 2020-03-11
+### Added
+ - ユーザーネーム忘れモーダル追加
+
 ## v1.1.13 - 2019-10-10
 ### Changed
  - パスワードバリデーション変更
