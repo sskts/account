@@ -1,56 +1,49 @@
-<div id="div-forms" class="contents center confirm">
-    <div class="inner">
-        <div class="text-center mb-small large-text">ワンタイムパスワード入力</div>
-        <form name="confirmform" id="confirm" method="post">
-                
-            <input type="hidden" class="form-control inputField-customizable" id="username" name="username" value="<%= confirmParams.username %>">
-            <input type="hidden" class="form-control inputField-customizable" id="destination" name="destination" value="<%= confirmParams.destination %>">
-            <input type="hidden" class="form-control inputField-customizable" id="deliveryMedium" name="deliveryMedium" value="<%= confirmParams.deliveryMedium %>">
-            <input type="hidden" class="form-control inputField-customizable" id="sub" name="sub" value="<%= confirmParams.sub %>">
-            <% if (messages.errorMessage) { %>
-                <p id="errorMessage" class="error text-red mb-small">
-                    <%= messages.errorMessage %>
-                </p>
-                <% } %>
+<div id="div-forms" class="py-4 px-3">
 
-                    <br>
-                    <div id="div-confirm-msg">
-                        <p id="text-code" class="mb-small">
-                            ご登録いただいた
-                            <%= confirmParams.destination %>までワンタイムパスワードを送信しました。 ワンタイムパスワードを入力して「登録」ボタンを押してください。
-                        </p>
-                        <p class="text-red mb-small">
-                            アプリを閉じたり戻ったりすると個人情報の入力からやり直しになりますのでご注意ください。<br>
-                            またその際同じユーザーネームを使用する事は出来ません。
-                        </p>
+    <h2 class="text-center mb-3 text-large font-weight-bold">ワンタイムパスワード入力</h2>
+    <p class="text-md-center">
+        ご登録いただいた<%= confirmParams.destination %>までワンタイムパスワードを送信しました。<br>
+        ワンタイムパスワードを入力して「登録」ボタンを押してください。
+    </p>
+    <p class="mb-3 text-danger text-md-center">
+        &#9679;アプリを閉じると基本情報入力からやり直しになりますのでご注意ください。<br>
+        &#9679;基本情報入力に戻った際、同じユーザーネームを使用する事は出来ませんのでご注意ください。
+    </p>
+
+
+    <form name="confirmform" id="confirm" method="post">
+
+        <input type="hidden" class="form-control inputField-customizable" id="username" name="username"
+            value="<%= confirmParams.username %>">
+        <input type="hidden" class="form-control inputField-customizable" id="destination" name="destination"
+            value="<%= confirmParams.destination %>">
+        <input type="hidden" class="form-control inputField-customizable" id="deliveryMedium" name="deliveryMedium"
+            value="<%= confirmParams.deliveryMedium %>">
+        <input type="hidden" class="form-control inputField-customizable" id="sub" name="sub"
+            value="<%= confirmParams.sub %>">
+        <% if (messages.errorMessage) { %>
+        <p id="errorMessage" class="error text-danger mb-2">
+            <%= messages.errorMessage %>
+        </p>
+        <% } %>
+
+        <div class="mb-4">
+            <div class="form-group">
+                <div class="row align-items-center">
+                    <p class="col-md-4 py-2 text-md-right">ワンタイムパスワード</p>
+                    <div class="col-md-8">
+                        <p class="text-small mb-2 text-dark-gray">半角数字で入力してください</p>
+                        <input id="verification_code" class="form-control" type="text" name="code" required=""
+                            placeholder="（例）ワンタイムパスワード">
                     </div>
-
-                    <dl class="mb-middle">
-                        <dt class="mb-x-small">
-                            <strong>ワンタイムパスワード</strong>
-                        </dt>
-                        <dd>
-                            <input id="verification_code" class="form-control" type="password" name="code" required="" placeholder="ワンタイムパスワードを入力してください">
-                        </dd>
-                    </dl>
-
-                    <button name="confirm" type="submit" class="button button-primary button-block mb-middle">登録</button>
-        </form>
-
-        <!-- <form name="resendcodeform" id="resend" action="<%= resendcodeUrl %>" method="post">
-
-            <input type="hidden" class="form-control inputField-customizable" name="username" value="<%= confirmParams.username %>">
-            <input type="hidden" class="form-control inputField-customizable" name="destination" value="<%= confirmParams.destination %>">
-            <input type="hidden" class="form-control inputField-customizable" name="deliveryMedium" value="<%= confirmParams.deliveryMedium %>">
-            <input type="hidden" class="form-control inputField-customizable" name="sub" value="<%= confirmParams.sub %>">
-
-            <p class="text-center mb-middle">
-                <button name="resend" type="submit" class="link">ワンタイムパスワードを再送信する</button>
-            </p>
-        </form> -->
-        <div class="text-center">
-            <a href="javascript:history.back();"><i class="icon left-icon prev-circle-white"></i>戻る</a>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <div class="buttons mx-auto text-center">
+            <button name="confirm" type="submit" class="btn btn-primary btn-block py-3 mb-3">認証</button>
+            <a type="button" class="btn btn-outline-secondary btn-block py-3" href="javascript:history.back();">戻る</a>
+        </div>
+    </form>
 
 </div>

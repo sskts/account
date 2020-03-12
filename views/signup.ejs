@@ -1,213 +1,194 @@
-<div id="div-forms" class="contents center signup">
-    <div class="inner">
-        <div class="text-center mb-small large-text">基本情報入力</div>
-        <p class="mb-middle">
-            必須項目を入力し「次へ」ボタンを押してください
+<div id="div-forms" class="py-4 px-3">
+    <h2 class="text-center mb-3 text-large font-weight-bold">基本情報入力</h2>
+    <p class="mb-3 text-md-center">必須項目を入力し「次へ」ボタンを押してください</p>
+
+    <form name="signupform" method="post" class="cognito-asf">
+        <% if (messages.validationErrorMessage) { %>
+        <p id="validationErrorMessage" class="error text-danger mb-2">
+            <%- messages.validationErrorMessage %>
         </p>
-        <form name="signupform" method="post" class="cognito-asf">
-            <% if (messages.validationErrorMessage) { %>
-            <p id="validationErrorMessage" class="error text-red mb-small">
-                <%- messages.validationErrorMessage %>
-            </p>
-            <% } %>
-            <% if (messages.errorMessage) { %>
-            <p id="errorMessage" class="error text-red mb-small">
-                <%= messages.errorMessage %>
-            </p>
-            <% } %>
+        <% } %>
+        <% if (messages.errorMessage) { %>
+        <p id="errorMessage" class="error text-danger mb-2">
+            <%= messages.errorMessage %>
+        </p>
+        <% } %>
 
-            <dl class="mb-large">
-                <dt>
-                    <strong>ユーザーネーム</strong>
-                    <span class="text-red small-text">必須</span>
-                </dt>
-                <dd>
-                    <div class="mb-x-small">
-                        <input id="username-input-mobile" type="text" autocapitalize="none" class="form-control"
-                        placeholder="ユーザーネームを入力してください" name="username" value="<%= form.username %>">
+
+        
+        <div class="mb-4">
+            <div class="form-group">
+                <div class="row align-items-center">
+                    <p class="col-md-4 py-2 text-md-right">姓（カタカナ）<span class="text-danger ml-2">必須</span></p>
+                    <div class="col-md-8">
+                        <p class="text-small mb-2 text-dark-gray">全角カタカナで入力してください</p>
+                        <input type="text" class="form-control" id="family_name" name="family_name" value="<%= form.family_name %>" placeholder="（例）セイ">
                     </div>
-                    <p class="small-x-text text-light-gray">
-                        ※ 半角英数字6文字以上30文字以内で入力してください
-                    </p>
-                </dd>
-            </dl>
+                </div>
+            </div>
 
-            <dl class="mb-large">
-                <dt class="mb-small">
-                    <strong>お名前（カタカナ）</strong>
-                    <span class="text-red small-text">必須</span>
-                </dt>
-                <dd class="mb-small">
-                    <div>セイ</div>
-                    <input type="text" class="form-control" id="family_name" name="family_name" value="<%= form.family_name %>" placeholder="全角カタカナで入力してください">
-                </dd>
-                <dd>
-                    <div>メイ</div>
-                    <input type="text" class="form-control" id="given_name" name="given_name" value="<%= form.given_name %>" placeholder="全角カタカナで入力してください">
-                </dd>
-            </dl>
+            <div class="form-group">
+                <div class="row align-items-center">
+                    <p class="col-md-4 py-2 text-md-right">名（カタカナ）<span class="text-danger ml-2">必須</span></p>
+                    <div class="col-md-8">
+                        <p class="text-small mb-2 text-dark-gray">全角カタカナで入力してください</p>
+                        <input type="text" class="form-control" id="given_name" name="given_name" value="<%= form.given_name %>" placeholder="（例）メイ">
+                    </div>
+                </div>
+            </div>
 
-            <dl class="mb-large">
-                <dt>
-                    <strong>メールアドレス</strong>
-                    <span class="text-red small-text">必須</span>
-                </dt>
-                <dd>
-                    <div class="mb-x-small">
-                        <input type="email" class="form-control" placeholder="メールアドレスを入力してください" id="email" name="email"
+            <div class="form-group">
+                <div class="row align-items-center">
+                    <p class="col-md-4 py-2 text-md-right">メールアドレス<span class="text-danger ml-2">必須</span></p>
+                    <div class="col-md-8">
+                        <p class="text-small mb-2 text-dark-gray">
+                            【ドメイン指定受信をご利用の場合について】>
+                            <br> 携帯電話のドメイン指定受信をされている場合、「@ticket-cinemasunshine.com」を追加設定してください。
+                            <br> au(@ezweb.ne.jp)をご利用の場合、上記に加え「なりすまし規制回避リスト」にも「@ticket-cinemasunshine.com」の追加設定をしてください。
+                        </p>
+                        <input type="email" class="form-control mb-2" placeholder="（例）メールアドレス" id="email" name="email"
                             value="<%= form.email %>">
+                        <p><a href="#">メール受信設定について</a></p>
                     </div>
-                    <div class="mb-x-small">
-                        <p class="small-x-text text-light-gray">
-                            <strong>【ドメイン指定受信をご利用の場合について】</strong>
-                            <br>※ 携帯電話のドメイン指定受信をされている場合、「@ticket-cinemasunshine.com」を追加設定してください。
-                            <br>※ au(@ezweb.ne.jp)をご利用の場合、上記に加え「なりすまし規制回避リスト」にも「@ticket-cinemasunshine.com」の追加設定をしてください。
-                        </p>
-                    </div>
-                    <div class="mb-x-small">
-                        <p class="small-text text-light-blue">
-                            下記のボタンから受信許可していただくドメインをコピーしていただけます。
-                        </p>
-                    </div>
-                    <div class="mb-x-small">
-                        <p class="large-text text-center text-light-blue">
-                            <strong id="cinemasunshine-domain">@ticket-cinemasunshine.com</strong>
-                        </p>
-                    </div>
-                    <div class="mb-x-small text-center">
-                        <div id="copy-to-clipboard" class="button-copy large-text" onclick='clickCopyToClipboard();' type="button">
-                            <strong>ドメインをコピーする</strong>
-                        </div>
-                    </div>
-                </dd>
-            </dl>
-            <dl class="mb-large">
-                <dt>
-                    <strong>電話番号</strong>
-                    <span class="text-red small-text">必須</span>
-                </dt>
-                <dd>
-                    <div class="mb-x-small">
-                        <input type="tel" class="form-control" placeholder="電話番号を入力してください" id="phone_number" name="phone_number"
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row align-items-center">
+                    <p class="col-md-4 py-2 text-md-right">電話番号<span class="text-danger ml-2">必須</span></p>
+                    <div class="col-md-8">
+                        <p class="text-small mb-2 text-dark-gray">半角数字、ハイフン「-」なしで入力してください</p>
+                        <input type="tel" class="form-control" placeholder="（例）電話番号" id="phone_number" name="phone_number"
                             value="<%= form.phone_number %>">
                     </div>
-                    <p class="small-x-text text-light-gray">※ 半角数字、ハイフン「-」なしで入力してください</p>
-                </dd>
-            </dl>
+                </div>
+            </div>
 
-            <dl class="mb-middle">
-                <dt class="mb-small">
-                    <strong>生年月日</strong>
-                    <span class="text-red small-text">必須</span>
-                </dt>
-                <dd>
-                    <div class="flex-select">
-                        <select name="birthdate_year" id="birthdate_year" class="select-form margin5px">
-                            <% 
-                            var year = (new Date()).getFullYear();
-                            const yearsAgo = year - 100;
-                            for (; year > yearsAgo;year--) { %>
-                            <option <%=(year===parseInt(form.birthdate_year)) ? 'selected' : '' %> value="<%= year %>">
-                                <%= year %>年</option>
-                            <% } %>
-                        </select>
-                        <select name="birthdate_month" id="birthdate_month" class="select-form margin5px">
-                            <% 
-                            for(var i = 1; i <= 12; i++) {
-                                let no = ('0' + i).slice(-2);
-                            %>
-                            <option <%=(form.birthdate_month===no) ? 'selected' : '' %> value="<%= no %>">
-                                <%= i %>月</option>
-                            <% } %>
-                        </select>
-                        <select name="birthdate_day" id="birthdate_day" class="select-form">
-                            <% 
-                            for(var i = 1; i <= 31; i++) {
-                                let no = ('0' + i).slice(-2);
-                            %>
-                            <option <%=(form.birthdate_day===no) ? 'selected' : '' %> value="<%= no %>">
-                                <%= i %>日</option>
-                            <% } %>
-                        </select>
+            <div class="form-group">
+                <div class="row align-items-center">
+                    <p class="col-md-4 py-2 text-md-right">生年月日<span class="text-danger ml-2">必須</span></p>
+                    <div class="col-md-8">
+                        <div class="d-flex">
+                            <select name="birthdate_year" id="birthdate_year" class="form-control mr-2">
+                                <% 
+                                var year = (new Date()).getFullYear();
+                                const yearsAgo = year - 100;
+                                for (; year > yearsAgo;year--) { %>
+                                <option <%=(year===parseInt(form.birthdate_year)) ? 'selected' : '' %> value="<%= year %>">
+                                    <%= year %>年</option>
+                                <% } %>
+                            </select>
+                            <select name="birthdate_month" id="birthdate_month" class="form-control mr-2">
+                                <% 
+                                for(var i = 1; i <= 12; i++) {
+                                    let no = ('0' + i).slice(-2);
+                                %>
+                                <option <%=(form.birthdate_month===no) ? 'selected' : '' %> value="<%= no %>">
+                                    <%= i %>月</option>
+                                <% } %>
+                            </select>
+                            <select name="birthdate_day" id="birthdate_day" class="form-control">
+                                <% 
+                                for(var i = 1; i <= 31; i++) {
+                                    let no = ('0' + i).slice(-2);
+                                %>
+                                <option <%=(form.birthdate_day===no) ? 'selected' : '' %> value="<%= no %>">
+                                    <%= i %>日</option>
+                                <% } %>
+                            </select>
+                        </div>
                     </div>
-                </dd>
-            </dl>
-            <dl class="mb-large">
-                <dt class="mb-small">
-                    <strong>性別</strong>
-                    <span class="text-red small-text">必須</span>
-                </dt>
-                <dd>
-                    <div class="flex-select">
-                        <select id="gender" name="gender" class="select-form" placeholder="性別を選択してください" value="<%= form.gender %>">
-                            <option <%=(form.gender==='0' ) ? 'selected' : '' %> value="0">---</option>
-                            <option <%=(form.gender==='1' ) ? 'selected' : '' %> value="1">男性</option>
-                            <option <%=(form.gender==='2' ) ? 'selected' : '' %> value="2">女性</option>
-                        </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row align-items-center">
+                    <p class="col-md-4 py-2 text-md-right">性別<span class="text-danger ml-2">必須</span></p>
+                    <div class="col-md-8">
+                        <div class="d-flex">
+                            <select id="gender" name="gender" class="form-control" placeholder="" value="<%= form.gender %>">
+                                <option <%=(form.gender==='0' ) ? 'selected' : '' %> value="0">---</option>
+                                <option <%=(form.gender==='1' ) ? 'selected' : '' %> value="1">男性</option>
+                                <option <%=(form.gender==='2' ) ? 'selected' : '' %> value="2">女性</option>
+                            </select>
+                        </div>
                     </div>
-                </dd>
-            </dl>
-            <dl class="mb-large">
-                <dt>
-                    <strong>郵便番号</strong>
-                    <span class="text-red small-text">必須</span>
-                </dt>
-                <dd>
-                    <div class="mb-x-small">
-                        <input type="number" class="form-control" placeholder="郵便番号を入力してください" id="postalCode" name="postalCode"
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row align-items-center">
+                    <p class="col-md-4 py-2 text-md-right">郵便番号<span class="text-danger ml-2">必須</span></p>
+                    <div class="col-md-8">
+                        <p class="text-small mb-2 text-dark-gray">半角数字、ハイフン「-」なしで入力してください</p>
+                        <input type="number" class="form-control" placeholder="（例）郵便番号" id="postalCode" name="postalCode"
                             value="<%= form.postalCode %>">
                     </div>
-                    <p class="small-x-text text-light-gray">※ 半角数字、ハイフン「-」なしで入力してください</p>
-                </dd>
-            </dl>
-            <dl class="mb-large">
-                <dt>
-                    <strong>パスワード</strong>
-                    <span class="text-red small-text">必須</span>
-                </dt>
-                <dd>
-                    <div class="mb-x-small position-relative">
-                        <a class="eye active" href="#"><i class="far fa-eye"></i></a>
-                        <a class="eye-slash" href="#"><i class="far fa-eye-slash"></i></a>
-                        <input id="password-mobile" onkeyup="checkPasswordMatch('mobile');" type="password" class="form-control" placeholder="パスワードを入力してください"
-                            name="password" value="">
-                    </div>
+                </div>
+            </div>
+            
 
-                    <p class="small-x-text mb-x-small text-light-gray">※ 小文字、大文字、数字、特殊文字（!、#、$、%、^、&、*、_）を含む8文字以上で入力してください</p>
-
-                    <div id="checkPassword-lowerletter-mobile" class="mb-x-small small-text">
-                        <span aria-hidden="true" id="check-lowerletter-mobile"></span>
-                        <span id="checkPasswordText-lowerletter-mobile"></span>
+            <div class="form-group">
+                <div class="row align-items-center">
+                    <p class="col-md-4 py-2 text-md-right">ユーザーネーム<span class="text-danger ml-2">必須</span></p>
+                    <div class="col-md-8">
+                        <p class="text-small mb-2 text-dark-gray">半角英数字6文字以上30文字以内で入力してください</p>
+                        <input id="username-input-mobile" type="text" autocapitalize="none" class="form-control"
+                        placeholder="（例）ユーザーネーム" name="username" value="<%= form.username %>">
                     </div>
+                </div>
+            </div>
 
-                    <div id="checkPassword-upperletter-mobile" class="mb-x-small small-text">
-                        <span aria-hidden="true" id="check-upperletter-mobile"></span>
-                        <span id="checkPasswordText-upperletter-mobile"></span>
+            <div class="form-group">
+                <div class="row align-items-center">
+                    <p class="col-md-4 py-2 text-md-right">パスワード<span class="text-danger ml-2">必須</span></p>
+                    <div class="col-md-8">
+                        <p class="text-small mb-2 text-dark-gray">小文字、大文字、数字、特殊文字（!、#、$、%、^、&、*、_）を含む8文字以上で入力してください</p>
+                        <div class="position-relative">
+                            <a class="password-eye active text-black" href="#"><i class="far fa-eye"></i></a>
+                            <a class="password-eye-slash text-black" href="#"><i class="far fa-eye-slash"></i></a>
+                            <input id="password-mobile" onkeyup="checkPasswordMatch('mobile');" type="password" class="form-control" placeholder="（例）パスワード"
+                                name="password" value="">
+                        </div>
+                        <div>
+                            <div class="mt-2">
+                                <p id="checkPassword-lowerletter-mobile" class="">
+                                    <span aria-hidden="true" id="check-lowerletter-mobile"></span>
+                                    <span id="checkPasswordText-lowerletter-mobile"></span>
+                                </p>
+                
+                                <p id="checkPassword-upperletter-mobile" class="">
+                                    <span aria-hidden="true" id="check-upperletter-mobile"></span>
+                                    <span id="checkPasswordText-upperletter-mobile"></span>
+                                </p>
+                
+                                <p id="checkPassword-length-mobile" class="">
+                                    <span aria-hidden="true" id="check-length-mobile"></span>
+                                    <span id="checkPasswordText-length-mobile"></span>
+                                </p>
+                
+                                <p id="checkPassword-symbols-mobile" class="">
+                                    <span aria-hidden="true" id="check-symbols-mobile"></span>
+                                    <span id="checkPasswordText-symbols-mobile"></span>
+                                </p>
+                
+                                <p id="checkPassword-numbers-mobile" class="">
+                                    <span aria-hidden="true" id="check-numbers-mobile"></span>
+                                    <span id="checkPasswordText-numbers-mobile"></span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-
-                    <div id="checkPassword-length-mobile" class="mb-x-small small-text">
-                        <span aria-hidden="true" id="check-length-mobile"></span>
-                        <span id="checkPasswordText-length-mobile"></span>
-                    </div>
-    
-                    <div id="checkPassword-symbols-mobile" class="mb-x-small small-text">
-                        <span aria-hidden="true" id="check-symbols-mobile"></span>
-                        <span id="checkPasswordText-symbols-mobile"></span>
-                    </div>
-
-                    <div id="checkPassword-numbers-mobile" class="mb-x-small small-text">
-                        <span aria-hidden="true" id="check-numbers-mobile"></span>
-                        <span id="checkPasswordText-numbers-mobile"></span>
-                    </div>
-                </dd>
-            </dl>
-
-            <button id="signupButton-mobile" type="submit" name="signUpButton" disabled class="button button-primary button-block mb-middle">次へ</button>
-        </form>
-        <div class="text-center">
-            <a href="javascript:history.back();"><i class="icon left-icon prev-circle-white"></i>戻る</a>
+                </div>
+            </div>
         </div>
-    </div>
+        
+        <div class="buttons mx-auto text-center">
+            <button id="signupButton-mobile" name="signUpButton" type="submit" disabled class="btn btn-primary btn-block py-3 mb-3">次へ</button>
+            <a type="button" class="btn btn-outline-secondary btn-block py-3" href="javascript:history.back();">戻る</a>
+        </div>
+    </form>
+
 </div>
 
 

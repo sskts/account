@@ -1,5 +1,5 @@
 $(function(){
-    $(document).on('click', '.eye, .eye-slash', visualizationPasswordToggle);
+    $(document).on('click', '.password-eye, .password-eye-slash', visualizationPasswordToggle);
 });
 
 /**
@@ -8,15 +8,15 @@ $(function(){
  */
 function visualizationPasswordToggle(event) {
     event.preventDefault();
-    var isVisible = $(this).hasClass('eye-slash');
+    var isVisible = $(this).hasClass('password-eye-slash');
     var target = $('input[name=password]');
     if (isVisible) {
-        $('.eye-slash').removeClass('active');
-        $('.eye').addClass('active');
+        $('.password-eye-slash').removeClass('active');
+        $('.password-eye').addClass('active');
         target.attr('type', 'password');
     } else {
-        $('.eye').removeClass('active');
-        $('.eye-slash').addClass('active');
+        $('.password-eye').removeClass('active');
+        $('.password-eye-slash').addClass('active');
         target.attr('type', 'text');
     }
 }
@@ -43,17 +43,20 @@ function checkPasswordMatch(screenSize) {
     var requireSymbol = false;
     var requireLength = false;
 
+    var success = '&#9675;';
+    var danger = '&#10006;'
+
     if (password) {
 
         if (true) {
             if (/[a-z]/.test(password)) {
-                $("#check-lowerletter-" + screenSize).html("&#10003;");
+                $("#check-lowerletter-" + screenSize).html(success);
                 $("#checkPasswordText-lowerletter-" + screenSize).html(passwordPolicy.lowercase);
                 $("#checkPassword-lowerletter-" + screenSize).addClass("passwordCheck-valid-customizable").removeClass(
                     "passwordCheck-notValid-customizable");
                 requireLowerletter = true;
             } else {
-                $("#check-lowerletter-" + screenSize).html("&#10006;");
+                $("#check-lowerletter-" + screenSize).html(danger);
                 $("#checkPasswordText-lowerletter-" + screenSize).html(passwordPolicy.lowercase);
                 $("#checkPassword-lowerletter-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
                     "passwordCheck-valid-customizable");
@@ -64,13 +67,13 @@ function checkPasswordMatch(screenSize) {
         }
         if (true) {
             if (/[A-Z]/.test(password)) {
-                $("#check-upperletter-" + screenSize).html("&#10003;");
+                $("#check-upperletter-" + screenSize).html(success);
                 $("#checkPasswordText-upperletter-" + screenSize).html(passwordPolicy.uppercase);
                 $("#checkPassword-upperletter-" + screenSize).addClass("passwordCheck-valid-customizable").removeClass(
                     "passwordCheck-notValid-customizable");
                 requireUpperletter = true;
             } else {
-                $("#check-upperletter-" + screenSize).html("&#10006;");
+                $("#check-upperletter-" + screenSize).html(danger);
                 $("#checkPasswordText-upperletter-" + screenSize).html(passwordPolicy.uppercase);
                 $("#checkPassword-upperletter-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
                     "passwordCheck-valid-customizable");
@@ -81,13 +84,13 @@ function checkPasswordMatch(screenSize) {
         }
         if (true) {
             if (/[!|#|$|%|^|&|*|_]/.test(password)) {
-                $("#check-symbols-" + screenSize).html("&#10003;");
+                $("#check-symbols-" + screenSize).html(success);
                 $("#checkPasswordText-symbols-" + screenSize).html(passwordPolicy.special);
                 $("#checkPassword-symbols-" + screenSize).addClass("passwordCheck-valid-customizable").removeClass(
                     "passwordCheck-notValid-customizable");
                 requireSymbol = true;
             } else {
-                $("#check-symbols-" + screenSize).html("&#10006;");
+                $("#check-symbols-" + screenSize).html(danger);
                 $("#checkPasswordText-symbols-" + screenSize).html(passwordPolicy.special);
                 $("#checkPassword-symbols-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
                     "passwordCheck-valid-customizable");
@@ -98,13 +101,13 @@ function checkPasswordMatch(screenSize) {
         }
         if (true) {
             if (/[0-9]/.test(password)) {
-                $("#check-numbers-" + screenSize).html("&#10003;");
+                $("#check-numbers-" + screenSize).html(success);
                 $("#checkPasswordText-numbers-" + screenSize).html(passwordPolicy.number);
                 $("#checkPassword-numbers-" + screenSize).addClass("passwordCheck-valid-customizable").removeClass(
                     "passwordCheck-notValid-customizable")
                 requireNumber = true;
             } else {
-                $("#check-numbers-" + screenSize).html("&#10006;");
+                $("#check-numbers-" + screenSize).html(danger);
                 $("#checkPasswordText-numbers-" + screenSize).html(passwordPolicy.number);
                 $("#checkPassword-numbers-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
                     "passwordCheck-valid-customizable");
@@ -115,13 +118,13 @@ function checkPasswordMatch(screenSize) {
         }
 
         if (password.length < passwordLength) {
-            $("#check-length-" + screenSize).html("&#10006;");
+            $("#check-length-" + screenSize).html(danger);
             $("#checkPasswordText-length-" + screenSize).html(passwordPolicy.lengthCheck);
             $("#checkPassword-length-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
                 "passwordCheck-valid-customizable");
             requireLength = false;
         } else {
-            $("#check-length-" + screenSize).html("&#10003;");
+            $("#check-length-" + screenSize).html(success);
             $("#checkPasswordText-length-" + screenSize).html(passwordPolicy.lengthCheck);
             $("#checkPassword-length-" + screenSize).addClass("passwordCheck-valid-customizable").removeClass(
                 "passwordCheck-notValid-customizable");
@@ -155,13 +158,13 @@ function checkConfirmPasswordMatch(screenSize) {
     var confirmPassword = $("#confirm_password-" + screenSize).val();
     var confirmCheck = "パスワードを同じにする必要があります";
     if (password === confirmPassword) {
-        $("#check-confirm-" + screenSize).html("&#10003;");
+        $("#check-confirm-" + screenSize).html(success);
         $("#checkPasswordText-confirm-" + screenSize).html(confirmCheck);
         $("#checkPassword-confirm-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
             "passwordCheck-valid-customizable");
         document.getElementById("signupButton-" + screenSize).disabled = false;
     } else {
-        $("#check-confirm-" + screenSize).html("&#10006;");
+        $("#check-confirm-" + screenSize).html(danger);
         $("#checkPasswordText-confirm-" + screenSize).html(confirmCheck);
         $("#checkPassword-confirm-" + screenSize).addClass("passwordCheck-notValid-customizable").removeClass(
             "passwordCheck-valid-customizable");
