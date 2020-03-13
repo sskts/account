@@ -11,6 +11,7 @@
 
 html, body {
     height: 100%;
+    font-size: $body-font-size;
 }
 body {
     text-size-adjust: 100%;
@@ -18,7 +19,6 @@ body {
     user-select: none;
     background-attachment: fixed;
     font-family: $font-family;
-    font-size: $body-font-size;
 }
 
 ::placeholder {

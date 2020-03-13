@@ -1,6 +1,6 @@
 <div id="div-forms" class="py-4 px-3 login">
     <h2 class="text-center mb-3 text-large font-weight-bold">ログイン</h2>
-    <p class="mb-3 text-md-center">ユーザーネームとパスワードを入力してログインボタンを押してください</p>
+    <p class="mb-3 text-md-center">ユーザーネームとパスワードを入力してください</p>
     <form method="POST" name="cognitoSignInForm" class="cognito-asf">
         <% if (messages.errorMessage) { %>
         <p id="loginErrorMessage" class="error text-danger mb-2">
@@ -39,7 +39,7 @@
         <div class="buttons mx-auto text-center">
             <input type="hidden" class="form-control" id="cognito-asf-data" name="cognitoAsfData">
             <button name="signInSubmitButton" type="submit" class="btn btn-primary btn-block py-3 mb-3">ログイン</button>
-            <a type="button" class="btn btn-outline-secondary btn-block py-3" href="javascript:history.back();">戻る</a>
+            <a class="btn btn-outline-secondary btn-block py-3" href="javascript:history.back();">戻る</a>
         </div>
     </form>
 </div>
