@@ -1,5 +1,6 @@
 $(function(){
     $(document).on('click', '.password-eye, .password-eye-slash', visualizationPasswordToggle);
+    $(document).on('click', '#copy-to-clipboard', clickCopyToClipboard);
 });
 
 /**
@@ -175,11 +176,11 @@ function checkConfirmPasswordMatch(screenSize) {
 function clickCopyToClipboard() {
     setTimeout(function(){
         if (copyTextToClipboard("@ticket-cinemasunshine.com")) {
-            $("#copy-to-clipboard>strong").html("✔　コピーしました")
-            $("#copy-to-clipboard").addClass("active");
+            $("#copy-to-clipboard>strong").html("コピーしました")
+            $("#copy-to-clipboard").prop('disabled', true);
             setTimeout(function () {
                 $("#copy-to-clipboard>strong").html("ドメインをコピーする")
-                $("#copy-to-clipboard").removeClass("active");
+                $("#copy-to-clipboard").prop('disabled', false);
             }, 10000);
         }
     }, 200);
