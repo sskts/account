@@ -5,23 +5,23 @@
 
 
         <% if (messages.validationErrorMessage) { %>
-        <p id="validationErrorMessage" class="error text-danger mb-2">
+        <p id="validationErrorMessage" class="error text-danger mb-3">
             <%- messages.validationErrorMessage %>
         </p>
         <% } %>
         <% if (messages.errorMessage) { %>
-        <p id="errorMessage" class="error text-danger mb-2">
+        <p id="errorMessage" class="error text-danger mb-3">
             <%= messages.errorMessage %>
         </p>
         <% } %>
     </div>
-    <h3 class="bg-gray py-2 px-3 mb-2">お客様情報</h3>
+    <h3 class="bg-dark-gray text-white py-2 px-3 mb-2">お客様情報</h3>
     <div class="px-3 mb-4">
         <div class="form-group">
             <div class="row align-items-center">
                 <p class="col-md-4 py-2 text-md-right">姓（カタカナ）<span class="text-danger ml-2">必須</span></p>
                 <div class="col-md-8">
-                    <p class="text-small mb-2 text-dark-gray">全角カタカナで入力してください</p>
+                    <p class="text-small mb-2">全角カタカナで入力してください</p>
                     <input type="text" class="form-control" id="family_name" name="family_name"
                         value="<%= form.family_name %>" placeholder="（例）セイ">
                 </div>
@@ -32,7 +32,7 @@
             <div class="row align-items-center">
                 <p class="col-md-4 py-2 text-md-right">名（カタカナ）<span class="text-danger ml-2">必須</span></p>
                 <div class="col-md-8">
-                    <p class="text-small mb-2 text-dark-gray">全角カタカナで入力してください</p>
+                    <p class="text-small mb-2">全角カタカナで入力してください</p>
                     <input type="text" class="form-control" id="given_name" name="given_name"
                         value="<%= form.given_name %>" placeholder="（例）メイ">
                 </div>
@@ -55,7 +55,7 @@
             <div class="row align-items-center">
                 <p class="col-md-4 py-2 text-md-right">電話番号<span class="text-danger ml-2">必須</span></p>
                 <div class="col-md-8">
-                    <p class="text-small mb-2 text-dark-gray">半角数字、ハイフン「-」なしで入力してください</p>
+                    <p class="text-small mb-2">半角数字、ハイフン「-」なしで入力してください</p>
                     <input type="tel" class="form-control" placeholder="（例）電話番号" id="phone_number" name="phone_number"
                         value="<%= form.phone_number %>">
                 </div>
@@ -119,20 +119,20 @@
             <div class="row align-items-center">
                 <p class="col-md-4 py-2 text-md-right">郵便番号<span class="text-danger ml-2">必須</span></p>
                 <div class="col-md-8">
-                    <p class="text-small mb-2 text-dark-gray">半角数字、ハイフン「-」なしで入力してください</p>
+                    <p class="text-small mb-2">半角数字、ハイフン「-」なしで入力してください</p>
                     <input type="number" class="form-control" placeholder="（例）郵便番号" id="postalCode" name="postalCode"
                         value="<%= form.postalCode %>">
                 </div>
             </div>
         </div>
     </div>
-    <h3 class="bg-gray py-2 px-3 mb-2">会員情報</h3>
+    <h3 class="bg-dark-gray text-white py-2 px-3 mb-2">会員情報</h3>
     <div class="px-3 mb-4">
         <div class="form-group">
             <div class="row align-items-center">
                 <p class="col-md-4 py-2 text-md-right">ユーザーネーム<span class="text-danger ml-2">必須</span></p>
                 <div class="col-md-8">
-                    <p class="text-small text-dark-gray">半角英数字6文字以上30文字以内で入力してください</p>
+                    <p class="text-small">半角英数字6文字以上30文字以内で入力してください</p>
                     <p class="text-small mb-2 text-danger">※一度ワンタイムパスワードを発行したユーザーネームは再度使用できません</p>
                     <input id="username-input-mobile" type="text" autocapitalize="none" class="form-control"
                         placeholder="（例）ユーザーネーム" name="username" value="<%= form.username %>">
@@ -144,7 +144,7 @@
             <div class="row align-items-center">
                 <p class="col-md-4 py-2 text-md-right">パスワード<span class="text-danger ml-2">必須</span></p>
                 <div class="col-md-8">
-                    <p class="text-small mb-2 text-dark-gray">小文字、大文字、数字、特殊文字（!、#、$、%、^、&、*、_）を含む8文字以上で入力してください</p>
+                    <p class="text-small mb-2">小文字、大文字、数字、特殊文字（!、#、$、%、^、&、*、_）を含む8文字以上で入力してください</p>
                     <div class="position-relative">
                         <a class="password-eye active text-black" href="#"><i class="far fa-eye"></i></a>
                         <a class="password-eye-slash text-black" href="#"><i class="far fa-eye-slash"></i></a>
@@ -198,7 +198,7 @@
             <div class="scroll-vertical">
                 <div class="p-3">
                     <div class="mb-4">
-                        <p class="text-large text-center mb-2">ユーザーネームをお忘れの方</p>
+                        <p class="text-large text-center mb-3">メール受信設定について</p>
                         <p class="mb-3">
                             各キャリアメールの設定やプロバイダの設定により、迷惑メールフォルダなどに受信されている場合があります。ご利用のメールソフトの全てのフォルダをご確認ください。<br>
                             <br>

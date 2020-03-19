@@ -4,9 +4,17 @@
 
 $font-family: -apple-system, "Lucida Grande", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "游ゴシック", "メイリオ", Meiryo, Helvetica, Arial, sans-serif;
 
+$dark-gray: #555;
+$gray: #aaa;
+$light-gray: #ddd;
+
+$body-bg: $light-gray;
+$body-color: #333;
+$body-font-size: 16px;
+
 $theme-colors: (
     primary: #0662bf, 
-    secondary: $secondary, 
+    secondary: $dark-gray, 
     success: #1dacce, 
     info: $info, 
     warning: #F29600, 
@@ -14,12 +22,3 @@ $theme-colors: (
     light: $gray-100, 
     dark: $gray-800
 );
-
-$dark-gray: #8e8c8c;
-$gray: #dbdbdb;
-$light-gray: #EEE;
-
-$body-bg: #EEE;
-$body-color: #333;
-$body-font-size: 16px;
-

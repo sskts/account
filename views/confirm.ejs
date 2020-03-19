@@ -22,7 +22,7 @@
         <input type="hidden" class="form-control inputField-customizable" id="sub" name="sub"
             value="<%= confirmParams.sub %>">
         <% if (messages.errorMessage) { %>
-        <p id="errorMessage" class="error text-danger mb-2">
+        <p id="errorMessage" class="error text-danger mb-3">
             <%= messages.errorMessage %>
         </p>
         <% } %>
@@ -32,7 +32,7 @@
                 <div class="row align-items-center">
                     <p class="col-md-4 py-2 text-md-right">ワンタイムパスワード</p>
                     <div class="col-md-8">
-                        <p class="text-small mb-2 text-dark-gray">半角英数字で入力してください</p>
+                        <p class="text-small mb-2">半角英数字で入力してください</p>
                         <input id="verification_code" class="form-control" type="text" name="code" required=""
                             placeholder="（例）ワンタイムパスワード">
                     </div>
