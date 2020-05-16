@@ -1,6 +1,34 @@
 $(function () {
     $(document).on('submit', 'form', submitDisabled);
+    $(document).on('DOMFocusIn', onDOMFocusIn);
+    $(document).on('DOMFocusOut', onDOMFocusOut);
 });
+
+function onDOMFocusIn(event) {
+    if (event.target === null) {
+        return;
+    }
+    const element = event.target;
+    const tagName = element.tagName;
+    const type = element.type;
+    if (tagName === undefined || tagName !== 'INPUT') {
+        return;
+    }
+    if (type === undefined) {
+        return;
+    }
+    if (type === 'text'
+        || type === 'number'
+        || type === 'password'
+        || type === 'email'
+        || type === 'tel') {
+        $('#keybordSpace').removeClass('d-none');
+    }
+};
+
+function onDOMFocusOut(_event) {
+    $('#keybordSpace').addClass('d-none');
+};
 
 /**
  * 複数リクエスト防止
