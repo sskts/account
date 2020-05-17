@@ -95,6 +95,7 @@ img[src=''] {
     left: 0;
     right: 0;
     > .scroll {
+        -webkit-overflow-scrolling: touch;
         overflow-x: hidden;
         overflow-y: auto;
         height: 100%;
