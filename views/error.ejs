@@ -1,18 +1,22 @@
-<div class="contents center error-page">
-    <p class="mb-middle">
-        要求されたページでエラーが発生しました。
-    </p>
-    <button name="confirm" type="button" class="button button-info button-block mb-middle" onclick="displayErrorMessage();">エラー詳細を見る</button>
-    <div id="errorMsg" class="hidden">
-        <p id="errorMessage" class="error text-red mb-middle">
-            <%= message %>
-        </p>
+<div class="py-4 px-3 error-page">
+    <h2 class="text-center mb-3 text-large font-weight-bold">エラー</h2>
+    <p class="mb-4 text-md-center">要求されたページでエラーが発生しました。</p>
+
+
+
+    <div class="buttons mx-auto text-center mb-3">
+        <button name="confirm" type="button" class="btn btn-danger btn-block py-3 mb-3" onclick="displayErrorMessage();">エラー詳細を見る</button>
+        <div id="errorMsg" class="hidden">
+            <p id="errorMessage" class="error text-danger mb-3 p-3 border border-danger bg-white">
+                <%= message %>
+            </p>
+        </div>
+        
+        <% if (REDIRECT_URI !== undefined) { %>
+            <a class="btn btn-outline-secondary btn-block py-3" href="<%= REDIRECT_URI %>">戻る</a>
+        <% } %>
     </div>
-    <% if (REDIRECT_URI !== undefined) { %>
-    <div class="text-center">
-        <a href="<%= REDIRECT_URI %>"><i class="icon left-icon prev-circle-white"></i>戻る</a>
-    </div>
-    <% } %>
+    
     <style>
         .hidden {
             display: none;
@@ -35,4 +39,6 @@
             }
         }
     </script>
+
 </div>
+

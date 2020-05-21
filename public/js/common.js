@@ -1,6 +1,34 @@
 $(function () {
     $(document).on('submit', 'form', submitDisabled);
+    $(document).on('DOMFocusIn', onDOMFocusIn);
+    $(document).on('DOMFocusOut', onDOMFocusOut);
 });
+
+function onDOMFocusIn(event) {
+    if (event.target === null) {
+        return;
+    }
+    const element = event.target;
+    const tagName = element.tagName;
+    const type = element.type;
+    if (tagName === undefined || tagName !== 'INPUT') {
+        return;
+    }
+    if (type === undefined) {
+        return;
+    }
+    if (type === 'text'
+        || type === 'number'
+        || type === 'password'
+        || type === 'email'
+        || type === 'tel') {
+        $('#keybordSpace').removeClass('d-none');
+    }
+};
+
+function onDOMFocusOut(_event) {
+    $('#keybordSpace').addClass('d-none');
+};
 
 /**
  * 複数リクエスト防止
@@ -18,34 +46,11 @@ function showLoading() {
 }
 
 /**
- * モーダル
+ * URLパラメータ取得
  */
-var Modal = /** @class */ (function () {
-    function Modal(id) {
-        this.id = id;
-    }
-    Modal.prototype.getElement = function () {
-        return $('#' + this.id);
-    };
-    Modal.prototype.show = function () {
-        var _this = this;
-        $('body').append('<div class="modal-backdrop fade show"></div>')
-            .addClass('show');
-        this.getElement().one('click', function () {
-            _this.hide();
-        });
-        this.getElement().find('.modal-content').on('click', function (event) {
-            if ($(event.target).hasClass('close')) {
-                return;
-            }
-            event.stopPropagation();
-        });
-        this.getElement().addClass('show');
-    };
-    Modal.prototype.hide = function () {
-        this.getElement().removeClass('show');
-        $('.modal-backdrop').remove();
-        this.getElement().find('.modal-content').off();
-    };
-    return Modal;
-}());
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};

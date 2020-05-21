@@ -9,24 +9,22 @@
     <link href="/css/style.css" rel="stylesheet" media="screen">
 
     <title>Signin</title>
-
-    <script>
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        };
-    </script>
-    <script src="https://d3vhah7crmmd43.cloudfront.net/20171117230139/js/jquery-3.2.1.min.js"></script>
-    <script src="/js/common.js"></script>
-
     <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1">
+    <script src="/js/lib/jquery.min.js"></script>
+    <script src="/js/lib/bootstrap.min.js"></script>
+    <script src="/js/common.js"></script>
 </head>
 
 <body>
     <div class="wrapper">
-        <%- body %>
+        <div id="contents" class="contents">
+            <div class="scroll">
+                <div class="contents-width mx-auto">
+                <%- body %>
+                </div>
+                <div id="keybordSpace" class="keybord-space d-none"></div>
+            </div>
+        </div>
     </div>
     <%- include loading %>
 </body>
