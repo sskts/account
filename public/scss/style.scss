@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
-@import "reset";
-@import "common";
-@import "icon";
-@import "signup";
+
+@import "./theme";
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "./reset";
+@import "./common";
