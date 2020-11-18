@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v1.2.2 - 2020-11-17
+### Added
+ - 問い合わせフォーム説明追加
+
 ## v1.2.1 - 2020-05-27
 ### Fixed
  - モーダル不具合修正
