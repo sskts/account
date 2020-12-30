@@ -203,7 +203,7 @@ const errors = [
         code: 'UsernameExistsException',
         message: {
             en: 'User already exists',
-            ja: 'このユーザーは既に存在します'
+            ja: '入力したユーザーネームは既に使用されています'
         },
         description: {
             en: '',
