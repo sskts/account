@@ -52,3 +52,6 @@ iisnode/*
 docs/
 .vscode/
 npm-debug*
+
+*gcp.yaml
+deployment.txt

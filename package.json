@@ -15,7 +15,10 @@
     "tslint": "tslint --project tsconfig.json -c tslint.json --exclude \"**/*.spec.ts\" \"src/**/*.ts\"",
     "preversion": "npm run clean && npm run build && npm test",
     "version": "git add -A",
-    "postversion": "git push origin --tags"
+    "postversion": "git push origin --tags",
+    "deploy-development": "gcloud app deploy ./app.development.gcp.yaml --project sskts-dev",
+    "deploy-test": "gcloud app deploy ./app.test.gcp.yaml --project sskts-test",
+    "deploy-production": "gcloud app deploy ./app.production.gcp.yaml --project sskts-prod-account --no-promote --version staging"
   },
   "dependencies": {
     "@types/express-flash": "0.0.0",
@@ -63,7 +66,7 @@
     "@types/uuid": "^3.4.3",
     "autoprefixer": "^8.3.0",
     "mocha": "^5.1.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^6.0.1",
     "nsp": "^3.2.1",
     "nyc": "^11.6.0",
     "postcss": "^6.0.21",
