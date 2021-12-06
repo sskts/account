@@ -11,14 +11,6 @@ import { CognitoError } from '../models/CognitoError';
 
 const debug = createDebug('sskts-account:controllers:user');
 
-const COGNITO_AUTHORIZE_SERVER_ENDPOINT = process.env.COGNITO_AUTHORIZE_SERVER_ENDPOINT;
-if (COGNITO_AUTHORIZE_SERVER_ENDPOINT === undefined) {
-    throw new Error('Environment variable `COGNITO_AUTHORIZE_SERVER_ENDPOINT` required.');
-}
-const COGNITO_USER_POOL_ID = process.env.COGNITO_USER_POOL_ID;
-if (COGNITO_USER_POOL_ID === undefined) {
-    throw new Error('Environment variable `COGNITO_USER_POOL_ID` required.');
-}
 const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID;
 if (COGNITO_CLIENT_ID === undefined) {
     throw new Error('Environment variable `COGNITO_CLIENT_ID` required.');
@@ -212,7 +204,7 @@ function signupValidation(req: express.Request) {
 /**
  * 日付確認
  */
-function validDate(date : string) : boolean {
+function validDate(date: string): boolean {
     const YEAR_INDEX = 0;
     const MONTH_INDEX = 1;
     const DAY_INDEX = 2;

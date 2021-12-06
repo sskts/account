@@ -17,14 +17,6 @@ const libphonenumber = require("google-libphonenumber");
 const querystring = require("querystring");
 const CognitoError_1 = require("../models/CognitoError");
 const debug = createDebug('sskts-account:controllers:user');
-const COGNITO_AUTHORIZE_SERVER_ENDPOINT = process.env.COGNITO_AUTHORIZE_SERVER_ENDPOINT;
-if (COGNITO_AUTHORIZE_SERVER_ENDPOINT === undefined) {
-    throw new Error('Environment variable `COGNITO_AUTHORIZE_SERVER_ENDPOINT` required.');
-}
-const COGNITO_USER_POOL_ID = process.env.COGNITO_USER_POOL_ID;
-if (COGNITO_USER_POOL_ID === undefined) {
-    throw new Error('Environment variable `COGNITO_USER_POOL_ID` required.');
-}
 const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID;
 if (COGNITO_CLIENT_ID === undefined) {
     throw new Error('Environment variable `COGNITO_CLIENT_ID` required.');
