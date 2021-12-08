@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 - USERINFOエンドポイントを追加
+- openid設定エンドポイントを追加
 
 ### Changed
 
