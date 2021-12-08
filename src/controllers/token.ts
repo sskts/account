@@ -53,6 +53,10 @@ export async function generate(req: express.Request, res: express.Response) {
 
     try {
         const basicUser = basicAuth(req);
+        // tslint:disable-next-line:no-console
+        console.log('getting token...req.body:', req.body);
+        // tslint:disable-next-line:no-console
+        console.log('getting token...basicUser.name:', (basicUser !== undefined) ? basicUser.name : 'undefined');
 
         switch (req.body.grant_type) {
             case 'authorization_code':
