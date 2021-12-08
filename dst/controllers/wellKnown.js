@@ -25,7 +25,8 @@ function openidConfiguration(req, res) {
                 scopes_supported: ['openid', 'email', 'phone', 'profile'],
                 subject_types_supported: ['public'],
                 token_endpoint: `${OPENID_ENDPOINT}/token`,
-                token_endpoint_auth_methods_supported: ['client_secret_basic', 'client_secret_post'],
+                // token_endpoint_auth_methods_supported: ['client_secret_basic', 'client_secret_post'],
+                token_endpoint_auth_methods_supported: ['client_secret_basic'],
                 userinfo_endpoint: `${OPENID_ENDPOINT}/userInfo`
             });
         }
