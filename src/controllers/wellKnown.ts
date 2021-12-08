@@ -8,13 +8,14 @@ const OPENID_KID1 = String(process.env.OPENID_KID1);
 const OPENID_N1 = String(process.env.OPENID_N1);
 const OPENID_KID2 = String(process.env.OPENID_KID2);
 const OPENID_N2 = String(process.env.OPENID_N2);
+const OPENID_ISSUER = String(process.env.OPENID_ISSUER);
 
 export async function openidConfiguration(req: express.Request, res: express.Response) {
     try {
         res.json({
             authorization_endpoint: `${OPENID_ENDPOINT}/authorize`,
             id_token_signing_alg_values_supported: ['RS256'],
-            issuer: `${OPENID_ENDPOINT}`,
+            issuer: OPENID_ISSUER,
             jwks_uri: `${OPENID_ENDPOINT}/.well-known/jwks.json`,
             response_types_supported: ['code', 'token'],
             scopes_supported: ['openid', 'email', 'phone', 'profile'],
