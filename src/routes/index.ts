@@ -9,11 +9,11 @@ const router = express.Router();
 import * as AuthController from '../controllers/auth';
 import * as TokenController from '../controllers/token';
 import * as UserController from '../controllers/user';
-import * as WellKnownController from '../controllers/wellKnown';
+// import * as WellKnownController from '../controllers/wellKnown';
 
-router.get('/.well-known/openid-configuration', WellKnownController.openidConfiguration);
-router.get('/.well-known/jwks.json', WellKnownController.jwks);
-router.get('/userInfo', AuthController.userInfo);
+// router.get('/.well-known/openid-configuration', WellKnownController.openidConfiguration);
+// router.get('/.well-known/jwks.json', WellKnownController.jwks);
+// router.get('/userInfo', AuthController.userInfo);
 router.get('/authorize', AuthController.authorize);
 router.all('/login', AuthController.login);
 router.get('/logout', AuthController.logout);
