@@ -60,13 +60,25 @@ export async function generate(req: express.Request, res: express.Response) {
 
         switch (req.body.grant_type) {
             case 'authorization_code':
-                if (basicUser === undefined) {
+                let clientId: string | undefined;
+                let clientSecret: string | undefined;
+                if (basicUser !== undefined) {
+                    clientId = basicUser.name;
+                    clientSecret = basicUser.pass;
+                } else {
+                    // req.bodyでの指定に対応
+                    clientId = req.body.client_id;
+                    clientSecret = req.body.client_secret;
+                }
+
+                if (typeof clientId !== 'string' || clientId.length === 0
+                    || typeof clientSecret !== 'string' || clientSecret.length === 0) {
                     throw new Error('invalid_request');
                 }
 
                 // 認可コードから認証情報を発行する
                 const authorizationCodeRepo = new AuthorizationCodeRepo(req.redisClient);
-                const result = await authorizationCode2token(basicUser.name, basicUser.pass, req.body.code, req.body.redirect_uri)(
+                const result = await authorizationCode2token(clientId, clientSecret, req.body.code, req.body.redirect_uri)(
                     authorizationCodeRepo, req.cognitoidentityserviceprovider
                 );
 
