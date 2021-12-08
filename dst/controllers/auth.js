@@ -259,3 +259,36 @@ function logout(req, res) {
     });
 }
 exports.logout = logout;
+function userInfo(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let token;
+            // トークン検出方法の指定がなければ、ヘッダーからBearerトークンを取り出す
+            if (typeof req.headers.authorization === 'string' && req.headers.authorization.split(' ')[0] === 'Bearer') {
+                token = req.headers.authorization.split(' ')[1];
+            }
+            if (typeof token !== 'string' || token.length === 0) {
+                throw new Error('invalid_request');
+            }
+            const userInfoResult = yield new Promise((resolve, reject) => {
+                req.cognitoidentityserviceprovider.getUser({ AccessToken: String(token) }, (err, data) => __awaiter(this, void 0, void 0, function* () {
+                    if (err instanceof Error) {
+                        reject(err);
+                    }
+                    else {
+                        const result = {};
+                        data.UserAttributes.forEach((a) => {
+                            result[a.Name] = a.Value;
+                        });
+                        resolve(result);
+                    }
+                }));
+            });
+            res.json(userInfoResult);
+        }
+        catch (error) {
+            res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
+        }
+    });
+}
+exports.userInfo = userInfo;

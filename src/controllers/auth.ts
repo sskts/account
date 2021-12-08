@@ -269,3 +269,38 @@ export async function logout(req: express.Request, res: express.Response) {
         res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
     }
 }
+
+export async function userInfo(req: express.Request, res: express.Response) {
+    try {
+        let token: string | undefined;
+        // トークン検出方法の指定がなければ、ヘッダーからBearerトークンを取り出す
+        if (typeof req.headers.authorization === 'string' && req.headers.authorization.split(' ')[0] === 'Bearer') {
+            token = req.headers.authorization.split(' ')[1];
+        }
+
+        if (typeof token !== 'string' || token.length === 0) {
+            throw new Error('invalid_request');
+        }
+
+        const userInfoResult = await new Promise((resolve, reject) => {
+            req.cognitoidentityserviceprovider.getUser(
+                { AccessToken: String(token) },
+                async (err, data) => {
+                    if (err instanceof Error) {
+                        reject(err);
+                    } else {
+                        const result: any = {};
+                        data.UserAttributes.forEach((a) => {
+                            result[a.Name] = a.Value;
+                        });
+
+                        resolve(result);
+                    }
+                });
+        });
+
+        res.json(userInfoResult);
+    } catch (error) {
+        res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
+    }
+}

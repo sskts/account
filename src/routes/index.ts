@@ -10,6 +10,7 @@ import * as AuthController from '../controllers/auth';
 import * as TokenController from '../controllers/token';
 import * as UserController from '../controllers/user';
 
+router.get('/userInfo', AuthController.userInfo);
 router.get('/authorize', AuthController.authorize);
 router.all('/login', AuthController.login);
 router.get('/logout', AuthController.logout);

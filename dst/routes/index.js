@@ -9,6 +9,7 @@ const router = express.Router();
 const AuthController = require("../controllers/auth");
 const TokenController = require("../controllers/token");
 const UserController = require("../controllers/user");
+router.get('/userInfo', AuthController.userInfo);
 router.get('/authorize', AuthController.authorize);
 router.all('/login', AuthController.login);
 router.get('/logout', AuthController.logout);
