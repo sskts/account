@@ -58,10 +58,6 @@ function generate(req, res) {
         debug('getting token...', req.body);
         try {
             const basicUser = basicAuth(req);
-            // tslint:disable-next-line:no-console
-            console.log('getting token...req.body:', req.body);
-            // tslint:disable-next-line:no-console
-            console.log('getting token...basicUser.name:', (basicUser !== undefined) ? basicUser.name : 'undefined');
             switch (req.body.grant_type) {
                 case 'authorization_code':
                     let clientId;
