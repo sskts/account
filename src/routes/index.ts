@@ -23,10 +23,11 @@ router.all('/confirm', UserController.confirm);
 router.all('/forgotPassword', UserController.forgotPassword);
 router.all('/confirmForgotPassword', UserController.confirmForgotPassword);
 router.get('/error', (req, res) => {
-    res.status(BAD_REQUEST).render('error', {
-        message: req.query.error,
-        REDIRECT_URI: req.query.redirect_uri
-    });
+    res.status(BAD_REQUEST)
+        .render('error', {
+            message: req.query.error,
+            REDIRECT_URI: req.query.redirect_uri
+        });
 });
 
 export default router;

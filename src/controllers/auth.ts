@@ -73,8 +73,10 @@ export async function authorize(req: express.Request, res: express.Response) {
         }
         if (req.query.isReSignIn === '1') {
             // チケットページのドメイン取得
-            // tslint:disable-next-line:no-magic-numbers
-            const baseUrl = (<string>(req.query.redirect_uri)).split('/').splice(0, 3).join('/');
+            const baseUrl = (<string>(req.query.redirect_uri)).split('/')
+                // tslint:disable-next-line:no-magic-numbers
+                .splice(0, 3)
+                .join('/');
             res.redirect(`${baseUrl}/#/auth/select`);
         } else {
             // ログインページへリダイレクト
@@ -105,7 +107,7 @@ export async function login(req: express.Request, res: express.Response) {
             const hash = crypto.createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
                 .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
                 .digest('base64');
-            await new Promise<string>((resolve, reject) => {
+            await new Promise<void>((resolve, reject) => {
                 const params = {
                     UserPoolId: <string>COGNITO_USER_POOL_ID,
                     ClientId: <string>COGNITO_CLIENT_ID,
@@ -176,7 +178,7 @@ async function validateRequest(req: express.Request) {
     }
 
     // redirect_uriが許可リストにあるかどうか確認
-    await new Promise((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
         req.cognitoidentityserviceprovider.describeUserPoolClient(
             {
                 UserPoolId: <string>COGNITO_USER_POOL_ID,
@@ -232,7 +234,7 @@ export async function logout(req: express.Request, res: express.Response) {
         }
 
         // redirect_uriが許可リストにあるかどうか確認
-        await new Promise((resolve, reject) => {
+        await new Promise<void>((resolve, reject) => {
             req.cognitoidentityserviceprovider.describeUserPoolClient(
                 {
                     UserPoolId: <string>COGNITO_USER_POOL_ID,

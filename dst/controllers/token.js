@@ -3,14 +3,16 @@
  * トークンコントローラー
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.generate = void 0;
 const basicAuth = require("basic-auth");
 const crypto = require("crypto");
 const createDebug = require("debug");
@@ -96,9 +98,11 @@ function generate(req, res) {
                             pass: basicUser.pass
                         },
                         form: req.body
-                    }).then((response) => {
+                    })
+                        .then((response) => {
                         debug('response recieved.', response.statusCode, response.body);
-                        res.status(response.statusCode).json(response.body);
+                        res.status(response.statusCode)
+                            .json(response.body);
                     });
                     break;
                 case 'client_credentials':
@@ -109,7 +113,8 @@ function generate(req, res) {
             }
         }
         catch (error) {
-            res.status(http_status_1.BAD_REQUEST).json({
+            res.status(http_status_1.BAD_REQUEST)
+                .json({
                 error: error.message
             });
         }

@@ -3,14 +3,16 @@
  * ユーザーコントローラー
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.confirmForgotPassword = exports.forgotPassword = exports.confirm = exports.signup = void 0;
 const crypto = require("crypto");
 const createDebug = require("debug");
 const libphonenumber = require("google-libphonenumber");
@@ -152,32 +154,44 @@ function signupValidation(req) {
     const USER_NAME_MAX_LENGTH = 30;
     const USER_NAME_MIN_LENGTH = 6;
     // ユーザーネーム
-    req.checkBody('username', 'ユーザーネームが未入力です').notEmpty();
-    req.checkBody('username', 'ユーザーネームは英数字で入力してください').matches(/^[A-Za-z0-9]*$/);
-    req.checkBody('username', `ユーザーネームは${USER_NAME_MIN_LENGTH}文字以上${USER_NAME_MAX_LENGTH}文字以内で入力してください`).isLength({
+    req.checkBody('username', 'ユーザーネームが未入力です')
+        .notEmpty();
+    req.checkBody('username', 'ユーザーネームは英数字で入力してください')
+        .matches(/^[A-Za-z0-9]*$/);
+    req.checkBody('username', `ユーザーネームは${USER_NAME_MIN_LENGTH}文字以上${USER_NAME_MAX_LENGTH}文字以内で入力してください`)
+        .isLength({
         min: USER_NAME_MIN_LENGTH,
         max: USER_NAME_MAX_LENGTH
     });
     // req.checkBody('username', 'ユーザーネームが未入力です').notEmpty();
     // セイ
-    req.checkBody('family_name', 'セイが未入力です').notEmpty();
-    req.checkBody('family_name', 'セイは全角カタカナで入力してください').matches(/^[ァ-ヶー]+$/);
-    req.checkBody('family_name', `セイは${NAME_MAX_LENGTH}文字以内で入力してください`).isLength({
+    req.checkBody('family_name', 'セイが未入力です')
+        .notEmpty();
+    req.checkBody('family_name', 'セイは全角カタカナで入力してください')
+        .matches(/^[ァ-ヶー]+$/);
+    req.checkBody('family_name', `セイは${NAME_MAX_LENGTH}文字以内で入力してください`)
+        .isLength({
         min: 0,
         max: NAME_MAX_LENGTH
     });
     // メイ
-    req.checkBody('given_name', 'メイが未入力です').notEmpty();
-    req.checkBody('given_name', 'メイは全角カタカナで入力してください').matches(/^[ァ-ヶー]+$/);
-    req.checkBody('family_name', `メイは${NAME_MAX_LENGTH}文字以内で入力してください`).isLength({
+    req.checkBody('given_name', 'メイが未入力です')
+        .notEmpty();
+    req.checkBody('given_name', 'メイは全角カタカナで入力してください')
+        .matches(/^[ァ-ヶー]+$/);
+    req.checkBody('family_name', `メイは${NAME_MAX_LENGTH}文字以内で入力してください`)
+        .isLength({
         min: 0,
         max: NAME_MAX_LENGTH
     });
     // メールアドレス
-    req.checkBody('email', 'メールアドレスが未入力です').notEmpty();
-    req.checkBody('email', 'メールアドレスの形式が正しくありません').isEmail();
+    req.checkBody('email', 'メールアドレスが未入力です')
+        .notEmpty();
+    req.checkBody('email', 'メールアドレスの形式が正しくありません')
+        .isEmail();
     // 電話番号
-    req.checkBody('phone_number', '電話番号が未入力です').notEmpty();
+    req.checkBody('phone_number', '電話番号が未入力です')
+        .notEmpty();
     req.checkBody('phone_number', '電話番号の形式が正しくありません').custom((value) => {
         if (value === '') {
             return false;
@@ -187,8 +201,10 @@ function signupValidation(req) {
         return phoneUtil.isValidNumber(parsePhoneNumber);
     });
     // 郵便番号
-    req.checkBody('postalCode', '郵便番号が未入力です').notEmpty();
-    req.checkBody('postalCode', '郵便番号の形式が正しくありません').matches(/^\d{7}$/);
+    req.checkBody('postalCode', '郵便番号が未入力です')
+        .notEmpty();
+    req.checkBody('postalCode', '郵便番号の形式が正しくありません')
+        .matches(/^\d{7}$/);
     // 性別
     // req.checkBody('gender', '性別が未選択です').notEmpty();
     // 生年月日

@@ -101,11 +101,13 @@ export async function generate(req: express.Request, res: express.Response) {
                         pass: basicUser.pass
                     },
                     form: req.body
-                }).then((response: any) => {
-                    debug('response recieved.', response.statusCode, response.body);
+                })
+                    .then((response: any) => {
+                        debug('response recieved.', response.statusCode, response.body);
 
-                    res.status(response.statusCode).json(response.body);
-                });
+                        res.status(response.statusCode)
+                            .json(response.body);
+                    });
 
                 break;
 
@@ -117,9 +119,10 @@ export async function generate(req: express.Request, res: express.Response) {
                 throw new Error('unsupported_grant_type');
         }
     } catch (error) {
-        res.status(BAD_REQUEST).json({
-            error: error.message
-        });
+        res.status(BAD_REQUEST)
+            .json({
+                error: error.message
+            });
     }
 }
 

@@ -1,15 +1,15 @@
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const createDebug = require("debug");
-const debug = createDebug('sskts-account:repository:authorizationCode');
+exports.RedisRepository = void 0;
 const REDIS_KEY_PREFIX = 'sskts-account.authorizationCode.';
 const AUTHORIZATION_CODE_EXPIRES_IN_SECONDS = 600;
 /**
@@ -28,7 +28,7 @@ class RedisRepository {
                         reject();
                         return;
                     }
-                    resolve((value === null) ? null : JSON.parse(value));
+                    resolve((value === null) ? undefined : JSON.parse(value));
                 });
             });
         });
@@ -39,7 +39,7 @@ class RedisRepository {
             yield new Promise((resolve, reject) => {
                 this.redisClient.multi()
                     .set(key, JSON.stringify(data))
-                    .expire(key, AUTHORIZATION_CODE_EXPIRES_IN_SECONDS, debug)
+                    .expire(key, AUTHORIZATION_CODE_EXPIRES_IN_SECONDS)
                     .exec((err) => {
                     if (err instanceof Error) {
                         reject(err);

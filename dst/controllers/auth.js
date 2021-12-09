@@ -3,14 +3,16 @@
  * 認証コントローラー
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.userInfo = exports.logout = exports.login = exports.authorize = void 0;
 const crypto = require("crypto");
 const createDebug = require("debug");
 const querystring = require("querystring");
@@ -74,8 +76,10 @@ function authorize(req, res) {
             }
             if (req.query.isReSignIn === '1') {
                 // チケットページのドメイン取得
-                // tslint:disable-next-line:no-magic-numbers
-                const baseUrl = (req.query.redirect_uri).split('/').splice(0, 3).join('/');
+                const baseUrl = (req.query.redirect_uri).split('/')
+                    // tslint:disable-next-line:no-magic-numbers
+                    .splice(0, 3)
+                    .join('/');
                 res.redirect(`${baseUrl}/#/auth/select`);
             }
             else {
