@@ -180,29 +180,32 @@ function validateRequest(req) {
             throw new Error('Invalid response_type');
         }
         // redirect_uriが許可リストにあるかどうか確認
-        yield new Promise((resolve, reject) => {
-            req.cognitoidentityserviceprovider.describeUserPoolClient({
-                UserPoolId: COGNITO_USER_POOL_ID,
-                ClientId: req.query.client_id
-            }, (err, data) => {
-                debug('describeUserPoolClient result:', err, data);
-                if (err instanceof Error) {
-                    reject(err);
-                    return;
-                }
-                const userPoolClient = data.UserPoolClient;
-                if (userPoolClient === undefined) {
-                    reject(new Error(`User pool client ${req.query.client_id} does not exist.`));
-                    return;
-                }
-                if (Array.isArray(userPoolClient.CallbackURLs) && userPoolClient.CallbackURLs.indexOf(req.query.redirect_uri) >= 0) {
-                    resolve();
-                }
-                else {
-                    reject(new Error('redirect_mismatch'));
-                }
-            });
-        });
+        // ↓一時的に保留
+        // await new Promise<void>((resolve, reject) => {
+        //     req.cognitoidentityserviceprovider.describeUserPoolClient(
+        //         {
+        //             UserPoolId: <string>COGNITO_USER_POOL_ID,
+        //             ClientId: req.query.client_id
+        //         },
+        //         (err, data) => {
+        //             debug('describeUserPoolClient result:', err, data);
+        //             if (err instanceof Error) {
+        //                 reject(err);
+        //                 return;
+        //             }
+        //             const userPoolClient = data.UserPoolClient;
+        //             if (userPoolClient === undefined) {
+        //                 reject(new Error(`User pool client ${req.query.client_id} does not exist.`));
+        //                 return;
+        //             }
+        //             if (Array.isArray(userPoolClient.CallbackURLs) && userPoolClient.CallbackURLs.indexOf(req.query.redirect_uri) >= 0) {
+        //                 resolve();
+        //             } else {
+        //                 reject(new Error('redirect_mismatch'));
+        //             }
+        //         }
+        //     );
+        // });
     });
 }
 /**
@@ -230,32 +233,29 @@ function logout(req, res) {
                 throw new Error('Required String parameter \'logout_uri\' is not present');
             }
             // redirect_uriが許可リストにあるかどうか確認
-            // ↓一時的に保留
-            // await new Promise<void>((resolve, reject) => {
-            //     req.cognitoidentityserviceprovider.describeUserPoolClient(
-            //         {
-            //             UserPoolId: <string>COGNITO_USER_POOL_ID,
-            //             ClientId: req.query.client_id
-            //         },
-            //         (err, data) => {
-            //             debug('describeUserPoolClient result:', err, data);
-            //             if (err instanceof Error) {
-            //                 reject(err);
-            //                 return;
-            //             }
-            //             const userPoolClient = data.UserPoolClient;
-            //             if (userPoolClient === undefined) {
-            //                 reject(new Error(`User pool client ${req.query.client_id} does not exist.`));
-            //                 return;
-            //             }
-            //             if (Array.isArray(userPoolClient.LogoutURLs) && userPoolClient.LogoutURLs.indexOf(req.query.logout_uri) >= 0) {
-            //                 resolve();
-            //             } else {
-            //                 reject(new Error('redirect_mismatch'));
-            //             }
-            //         }
-            //     );
-            // });
+            yield new Promise((resolve, reject) => {
+                req.cognitoidentityserviceprovider.describeUserPoolClient({
+                    UserPoolId: COGNITO_USER_POOL_ID,
+                    ClientId: req.query.client_id
+                }, (err, data) => {
+                    debug('describeUserPoolClient result:', err, data);
+                    if (err instanceof Error) {
+                        reject(err);
+                        return;
+                    }
+                    const userPoolClient = data.UserPoolClient;
+                    if (userPoolClient === undefined) {
+                        reject(new Error(`User pool client ${req.query.client_id} does not exist.`));
+                        return;
+                    }
+                    if (Array.isArray(userPoolClient.LogoutURLs) && userPoolClient.LogoutURLs.indexOf(req.query.logout_uri) >= 0) {
+                        resolve();
+                    }
+                    else {
+                        reject(new Error('redirect_mismatch'));
+                    }
+                });
+            });
             // ログアウトしてクライアントにリダイレクトして戻る
             delete req.session.user;
             res.redirect(req.query.logout_uri);
