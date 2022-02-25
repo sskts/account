@@ -5,6 +5,7 @@
 import * as  crypto from 'crypto';
 import * as  createDebug from 'debug';
 import * as express from 'express';
+import { BAD_REQUEST } from 'http-status';
 import * as querystring from 'querystring';
 import * as uuid from 'uuid';
 
@@ -147,6 +148,57 @@ export async function login(req: express.Request, res: express.Response) {
             forgotPasswordUrl: `/forgotPassword?${querystring.stringify(req.query)}`,
             signupUrl: `/signup?${querystring.stringify(req.query)}`,
             userName: req.query.userName
+        });
+    }
+}
+
+/**
+ * ログイン確認
+ * @param req Request
+ * @param res Response
+ */
+export async function checkLogin(req: express.Request, res: express.Response) {
+    try {
+        // usernameとpasswordを確認して認可コード生成
+        const hash = crypto
+            .createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
+            .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+            .digest('base64');
+        await new Promise<void>((resolve, reject) => {
+            const params = {
+                UserPoolId: <string>COGNITO_USER_POOL_ID,
+                ClientId: <string>COGNITO_CLIENT_ID,
+                AuthFlow: 'ADMIN_NO_SRP_AUTH',
+                AuthParameters: {
+                    USERNAME: req.body.username,
+                    SECRET_HASH: hash,
+                    PASSWORD: req.body.password
+                }
+            };
+
+            req.cognitoidentityserviceprovider.adminInitiateAuth(
+                params,
+                async (err, data) => {
+                    debug('adminInitiateAuth result:', err, data);
+                    if (err instanceof Error) {
+                        reject(err);
+                    } else {
+                        if (data.AuthenticationResult === undefined) {
+                            reject(new Error('Unexpected.'));
+                        } else {
+                            resolve();
+                        }
+                    }
+                }
+            );
+        });
+        res.json({
+            username: req.body.username
+        });
+    } catch (error) {
+        res.status(BAD_REQUEST);
+        res.json({
+            message: new CognitoError(error).message
         });
     }
 }

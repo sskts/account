@@ -15,6 +15,7 @@ const UserController = require("../controllers/user");
 // router.get('/userInfo', AuthController.userInfo);
 router.get('/authorize', AuthController.authorize);
 router.all('/login', AuthController.login);
+router.post('/checkLogin', AuthController.checkLogin);
 router.get('/logout', AuthController.logout);
 router.post('/token', TokenController.generate);
 router.all('/signup', UserController.signup);
