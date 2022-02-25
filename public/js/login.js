@@ -11,6 +11,7 @@ $(document).on('submit', 'form[name=cognitoSignInForm]', function (event) {
     $.ajax({
         type: 'POST',
         url: '/checkLogin',
+        data: { username : $('#username').val(), password: $('#password').val() },
     })
         .done(function (data) {
             localStorage.setItem('username', data.username);
