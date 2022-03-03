@@ -207,7 +207,6 @@ function checkLogin(req, res) {
         catch (error) {
             res.status(http_status_1.BAD_REQUEST);
             res.json({
-                error: error,
                 message: new CognitoError_1.CognitoError(error).message
             });
         }
