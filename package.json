@@ -21,7 +21,7 @@
     "deploy:production": "gcloud app deploy ./app.production.gcp.yaml --project sskts-prod-account --no-promote --version staging"
   },
   "dependencies": {
-    "aws-sdk": "^2.220.1",
+    "aws-sdk": "^2.814.0",
     "basic-auth": "^2.0.0",
     "bootstrap": "^4.4.1",
     "connect-redis": "^3.3.3",
