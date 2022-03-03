@@ -7,8 +7,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ## Unreleased
 
 ### Added
+- USERINFOエンドポイントを追加
+- openid設定エンドポイントを追加
 
 ### Changed
+- パッケージを最適化
 
 ### Deprecated
 
@@ -17,6 +20,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+
+## v1.3.0 - 2020-03-03
+### Added
+- 前回ログインに成功したユーザーネームを表示
 
 ## v1.2.3 - 2020-02-12
 ### Changed

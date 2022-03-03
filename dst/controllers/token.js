@@ -3,14 +3,16 @@
  * トークンコントローラー
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.generate = void 0;
 const basicAuth = require("basic-auth");
 const crypto = require("crypto");
 const createDebug = require("debug");
@@ -58,12 +60,24 @@ function generate(req, res) {
             const basicUser = basicAuth(req);
             switch (req.body.grant_type) {
                 case 'authorization_code':
-                    if (basicUser === undefined) {
+                    let clientId;
+                    let clientSecret;
+                    if (basicUser !== undefined) {
+                        clientId = basicUser.name;
+                        clientSecret = basicUser.pass;
+                    }
+                    else {
+                        // req.bodyでの指定に対応
+                        clientId = req.body.client_id;
+                        clientSecret = req.body.client_secret;
+                    }
+                    if (typeof clientId !== 'string' || clientId.length === 0
+                        || typeof clientSecret !== 'string' || clientSecret.length === 0) {
                         throw new Error('invalid_request');
                     }
                     // 認可コードから認証情報を発行する
                     const authorizationCodeRepo = new authorizationCode_1.RedisRepository(req.redisClient);
-                    const result = yield authorizationCode2token(basicUser.name, basicUser.pass, req.body.code, req.body.redirect_uri)(authorizationCodeRepo, req.cognitoidentityserviceprovider);
+                    const result = yield authorizationCode2token(clientId, clientSecret, req.body.code, req.body.redirect_uri)(authorizationCodeRepo, req.cognitoidentityserviceprovider);
                     res.json(result.credentials);
                     break;
                 case 'refresh_token':
@@ -80,9 +94,11 @@ function generate(req, res) {
                             pass: basicUser.pass
                         },
                         form: req.body
-                    }).then((response) => {
+                    })
+                        .then((response) => {
                         debug('response recieved.', response.statusCode, response.body);
-                        res.status(response.statusCode).json(response.body);
+                        res.status(response.statusCode)
+                            .json(response.body);
                     });
                     break;
                 case 'client_credentials':
@@ -93,7 +109,8 @@ function generate(req, res) {
             }
         }
         catch (error) {
-            res.status(http_status_1.BAD_REQUEST).json({
+            res.status(http_status_1.BAD_REQUEST)
+                .json({
                 error: error.message
             });
         }

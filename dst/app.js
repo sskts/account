@@ -8,7 +8,6 @@ const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 // tslint:disable-next-line:no-require-imports no-var-requires
 const flash = require('express-flash');
-// import * as flash from 'express-flash';
 const expressValidator = require("express-validator");
 const createError = require("http-errors");
 const http_status_1 = require("http-status");

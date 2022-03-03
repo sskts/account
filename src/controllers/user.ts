@@ -11,14 +11,6 @@ import { CognitoError } from '../models/CognitoError';
 
 const debug = createDebug('sskts-account:controllers:user');
 
-const COGNITO_AUTHORIZE_SERVER_ENDPOINT = process.env.COGNITO_AUTHORIZE_SERVER_ENDPOINT;
-if (COGNITO_AUTHORIZE_SERVER_ENDPOINT === undefined) {
-    throw new Error('Environment variable `COGNITO_AUTHORIZE_SERVER_ENDPOINT` required.');
-}
-const COGNITO_USER_POOL_ID = process.env.COGNITO_USER_POOL_ID;
-if (COGNITO_USER_POOL_ID === undefined) {
-    throw new Error('Environment variable `COGNITO_USER_POOL_ID` required.');
-}
 const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID;
 if (COGNITO_CLIENT_ID === undefined) {
     throw new Error('Environment variable `COGNITO_CLIENT_ID` required.');
@@ -163,32 +155,44 @@ function signupValidation(req: express.Request) {
     const USER_NAME_MAX_LENGTH = 30;
     const USER_NAME_MIN_LENGTH = 6;
     // ユーザーネーム
-    req.checkBody('username', 'ユーザーネームが未入力です').notEmpty();
-    req.checkBody('username', 'ユーザーネームは英数字で入力してください').matches(/^[A-Za-z0-9]*$/);
-    req.checkBody('username', `ユーザーネームは${USER_NAME_MIN_LENGTH}文字以上${USER_NAME_MAX_LENGTH}文字以内で入力してください`).isLength({
-        min: USER_NAME_MIN_LENGTH,
-        max: USER_NAME_MAX_LENGTH
-    });
+    req.checkBody('username', 'ユーザーネームが未入力です')
+        .notEmpty();
+    req.checkBody('username', 'ユーザーネームは英数字で入力してください')
+        .matches(/^[A-Za-z0-9]*$/);
+    req.checkBody('username', `ユーザーネームは${USER_NAME_MIN_LENGTH}文字以上${USER_NAME_MAX_LENGTH}文字以内で入力してください`)
+        .isLength({
+            min: USER_NAME_MIN_LENGTH,
+            max: USER_NAME_MAX_LENGTH
+        });
     // req.checkBody('username', 'ユーザーネームが未入力です').notEmpty();
     // セイ
-    req.checkBody('family_name', 'セイが未入力です').notEmpty();
-    req.checkBody('family_name', 'セイは全角カタカナで入力してください').matches(/^[ァ-ヶー]+$/);
-    req.checkBody('family_name', `セイは${NAME_MAX_LENGTH}文字以内で入力してください`).isLength({
-        min: 0,
-        max: NAME_MAX_LENGTH
-    });
+    req.checkBody('family_name', 'セイが未入力です')
+        .notEmpty();
+    req.checkBody('family_name', 'セイは全角カタカナで入力してください')
+        .matches(/^[ァ-ヶー]+$/);
+    req.checkBody('family_name', `セイは${NAME_MAX_LENGTH}文字以内で入力してください`)
+        .isLength({
+            min: 0,
+            max: NAME_MAX_LENGTH
+        });
     // メイ
-    req.checkBody('given_name', 'メイが未入力です').notEmpty();
-    req.checkBody('given_name', 'メイは全角カタカナで入力してください').matches(/^[ァ-ヶー]+$/);
-    req.checkBody('family_name', `メイは${NAME_MAX_LENGTH}文字以内で入力してください`).isLength({
-        min: 0,
-        max: NAME_MAX_LENGTH
-    });
+    req.checkBody('given_name', 'メイが未入力です')
+        .notEmpty();
+    req.checkBody('given_name', 'メイは全角カタカナで入力してください')
+        .matches(/^[ァ-ヶー]+$/);
+    req.checkBody('family_name', `メイは${NAME_MAX_LENGTH}文字以内で入力してください`)
+        .isLength({
+            min: 0,
+            max: NAME_MAX_LENGTH
+        });
     // メールアドレス
-    req.checkBody('email', 'メールアドレスが未入力です').notEmpty();
-    req.checkBody('email', 'メールアドレスの形式が正しくありません').isEmail();
+    req.checkBody('email', 'メールアドレスが未入力です')
+        .notEmpty();
+    req.checkBody('email', 'メールアドレスの形式が正しくありません')
+        .isEmail();
     // 電話番号
-    req.checkBody('phone_number', '電話番号が未入力です').notEmpty();
+    req.checkBody('phone_number', '電話番号が未入力です')
+        .notEmpty();
     (<any>req.checkBody('phone_number', '電話番号の形式が正しくありません')).custom((value: string) => {
         if (value === '') {
             return false;
@@ -199,8 +203,10 @@ function signupValidation(req: express.Request) {
         return phoneUtil.isValidNumber(parsePhoneNumber);
     });
     // 郵便番号
-    req.checkBody('postalCode', '郵便番号が未入力です').notEmpty();
-    req.checkBody('postalCode', '郵便番号の形式が正しくありません').matches(/^\d{7}$/);
+    req.checkBody('postalCode', '郵便番号が未入力です')
+        .notEmpty();
+    req.checkBody('postalCode', '郵便番号の形式が正しくありません')
+        .matches(/^\d{7}$/);
     // 性別
     // req.checkBody('gender', '性別が未選択です').notEmpty();
     // 生年月日
@@ -212,7 +218,7 @@ function signupValidation(req: express.Request) {
 /**
  * 日付確認
  */
-function validDate(date : string) : boolean {
+function validDate(date: string): boolean {
     const YEAR_INDEX = 0;
     const MONTH_INDEX = 1;
     const DAY_INDEX = 2;
@@ -277,7 +283,7 @@ export async function confirm(req: express.Request, res: express.Response) {
         }
     } else {
         try {
-            const confirmParams = <IConfirmParams>req.flash('confirmParams')[0];
+            const confirmParams = <IConfirmParams><unknown>req.flash('confirmParams')[0];
             res.render('confirm', {
                 confirmParams: confirmParams,
                 resendcodeUrl: `/resendcode?${querystring.stringify(req.query)}`
@@ -383,7 +389,7 @@ export async function confirmForgotPassword(req: express.Request, res: express.R
         }
     } else {
         try {
-            const confirmForgotPasswordParams = <IConfirmParams>req.flash('confirmForgotPasswordParams')[0];
+            const confirmForgotPasswordParams = <IConfirmParams><unknown>req.flash('confirmForgotPasswordParams')[0];
             res.render('confirmForgotPassword', {
                 confirmForgotPasswordParams: confirmForgotPasswordParams,
                 confirmUrl: `/confirm?${querystring.stringify(req.query)}`,

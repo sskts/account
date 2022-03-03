@@ -3,16 +3,19 @@
  * 認証コントローラー
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.userInfo = exports.logout = exports.checkLogin = exports.login = exports.authorize = void 0;
 const crypto = require("crypto");
 const createDebug = require("debug");
+const http_status_1 = require("http-status");
 const querystring = require("querystring");
 const uuid = require("uuid");
 const CognitoError_1 = require("../models/CognitoError");
@@ -74,8 +77,10 @@ function authorize(req, res) {
             }
             if (req.query.isReSignIn === '1') {
                 // チケットページのドメイン取得
-                // tslint:disable-next-line:no-magic-numbers
-                const baseUrl = (req.query.redirect_uri).split('/').splice(0, 3).join('/');
+                const baseUrl = (req.query.redirect_uri).split('/')
+                    // tslint:disable-next-line:no-magic-numbers
+                    .splice(0, 3)
+                    .join('/');
                 res.redirect(`${baseUrl}/#/auth/select`);
             }
             else {
@@ -156,6 +161,58 @@ function login(req, res) {
     });
 }
 exports.login = login;
+/**
+ * ログイン確認
+ * @param req Request
+ * @param res Response
+ */
+function checkLogin(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            // usernameとpasswordを確認して認可コード生成
+            const hash = crypto
+                .createHmac('sha256', COGNITO_CLIENT_SECRET)
+                .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                .digest('base64');
+            yield new Promise((resolve, reject) => {
+                const params = {
+                    UserPoolId: COGNITO_USER_POOL_ID,
+                    ClientId: COGNITO_CLIENT_ID,
+                    AuthFlow: 'ADMIN_NO_SRP_AUTH',
+                    AuthParameters: {
+                        USERNAME: req.body.username,
+                        SECRET_HASH: hash,
+                        PASSWORD: req.body.password
+                    }
+                };
+                req.cognitoidentityserviceprovider.adminInitiateAuth(params, (err, data) => __awaiter(this, void 0, void 0, function* () {
+                    debug('adminInitiateAuth result:', err, data);
+                    if (err instanceof Error) {
+                        reject(err);
+                    }
+                    else {
+                        if (data.AuthenticationResult === undefined) {
+                            reject(new Error('Unexpected.'));
+                        }
+                        else {
+                            resolve();
+                        }
+                    }
+                }));
+            });
+            res.json({
+                username: req.body.username
+            });
+        }
+        catch (error) {
+            res.status(http_status_1.BAD_REQUEST);
+            res.json({
+                message: new CognitoError_1.CognitoError(error).message
+            });
+        }
+    });
+}
+exports.checkLogin = checkLogin;
 function returnAuthorizationCode(req, res, username, clientId, redirectUri, state) {
     return __awaiter(this, void 0, void 0, function* () {
         // 認可コードに保管すべき値は、ユーザーネーム、パスワード、クライアントID
@@ -259,3 +316,36 @@ function logout(req, res) {
     });
 }
 exports.logout = logout;
+function userInfo(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let token;
+            // トークン検出方法の指定がなければ、ヘッダーからBearerトークンを取り出す
+            if (typeof req.headers.authorization === 'string' && req.headers.authorization.split(' ')[0] === 'Bearer') {
+                token = req.headers.authorization.split(' ')[1];
+            }
+            if (typeof token !== 'string' || token.length === 0) {
+                throw new Error('invalid_request');
+            }
+            const userInfoResult = yield new Promise((resolve, reject) => {
+                req.cognitoidentityserviceprovider.getUser({ AccessToken: String(token) }, (err, data) => __awaiter(this, void 0, void 0, function* () {
+                    if (err instanceof Error) {
+                        reject(err);
+                    }
+                    else {
+                        const result = {};
+                        data.UserAttributes.forEach((a) => {
+                            result[a.Name] = a.Value;
+                        });
+                        resolve(result);
+                    }
+                }));
+            });
+            res.json(userInfoResult);
+        }
+        catch (error) {
+            res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
+        }
+    });
+}
+exports.userInfo = userInfo;

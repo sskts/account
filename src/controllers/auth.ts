@@ -5,6 +5,7 @@
 import * as  crypto from 'crypto';
 import * as  createDebug from 'debug';
 import * as express from 'express';
+import { BAD_REQUEST } from 'http-status';
 import * as querystring from 'querystring';
 import * as uuid from 'uuid';
 
@@ -73,8 +74,10 @@ export async function authorize(req: express.Request, res: express.Response) {
         }
         if (req.query.isReSignIn === '1') {
             // チケットページのドメイン取得
-            // tslint:disable-next-line:no-magic-numbers
-            const baseUrl = (<string>(req.query.redirect_uri)).split('/').splice(0, 3).join('/');
+            const baseUrl = (<string>(req.query.redirect_uri)).split('/')
+                // tslint:disable-next-line:no-magic-numbers
+                .splice(0, 3)
+                .join('/');
             res.redirect(`${baseUrl}/#/auth/select`);
         } else {
             // ログインページへリダイレクト
@@ -105,7 +108,7 @@ export async function login(req: express.Request, res: express.Response) {
             const hash = crypto.createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
                 .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
                 .digest('base64');
-            await new Promise<string>((resolve, reject) => {
+            await new Promise<void>((resolve, reject) => {
                 const params = {
                     UserPoolId: <string>COGNITO_USER_POOL_ID,
                     ClientId: <string>COGNITO_CLIENT_ID,
@@ -149,6 +152,57 @@ export async function login(req: express.Request, res: express.Response) {
     }
 }
 
+/**
+ * ログイン確認
+ * @param req Request
+ * @param res Response
+ */
+export async function checkLogin(req: express.Request, res: express.Response) {
+    try {
+        // usernameとpasswordを確認して認可コード生成
+        const hash = crypto
+            .createHmac('sha256', <string>COGNITO_CLIENT_SECRET)
+            .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+            .digest('base64');
+        await new Promise<void>((resolve, reject) => {
+            const params = {
+                UserPoolId: <string>COGNITO_USER_POOL_ID,
+                ClientId: <string>COGNITO_CLIENT_ID,
+                AuthFlow: 'ADMIN_NO_SRP_AUTH',
+                AuthParameters: {
+                    USERNAME: req.body.username,
+                    SECRET_HASH: hash,
+                    PASSWORD: req.body.password
+                }
+            };
+
+            req.cognitoidentityserviceprovider.adminInitiateAuth(
+                params,
+                async (err, data) => {
+                    debug('adminInitiateAuth result:', err, data);
+                    if (err instanceof Error) {
+                        reject(err);
+                    } else {
+                        if (data.AuthenticationResult === undefined) {
+                            reject(new Error('Unexpected.'));
+                        } else {
+                            resolve();
+                        }
+                    }
+                }
+            );
+        });
+        res.json({
+            username: req.body.username
+        });
+    } catch (error) {
+        res.status(BAD_REQUEST);
+        res.json({
+            message: new CognitoError(error).message
+        });
+    }
+}
+
 async function returnAuthorizationCode(
     req: express.Request,
     res: express.Response,
@@ -176,7 +230,7 @@ async function validateRequest(req: express.Request) {
     }
 
     // redirect_uriが許可リストにあるかどうか確認
-    await new Promise((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
         req.cognitoidentityserviceprovider.describeUserPoolClient(
             {
                 UserPoolId: <string>COGNITO_USER_POOL_ID,
@@ -232,7 +286,7 @@ export async function logout(req: express.Request, res: express.Response) {
         }
 
         // redirect_uriが許可リストにあるかどうか確認
-        await new Promise((resolve, reject) => {
+        await new Promise<void>((resolve, reject) => {
             req.cognitoidentityserviceprovider.describeUserPoolClient(
                 {
                     UserPoolId: <string>COGNITO_USER_POOL_ID,
@@ -265,6 +319,41 @@ export async function logout(req: express.Request, res: express.Response) {
         // ログアウトしてクライアントにリダイレクトして戻る
         delete (<Express.Session>req.session).user;
         res.redirect(req.query.logout_uri);
+    } catch (error) {
+        res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
+    }
+}
+
+export async function userInfo(req: express.Request, res: express.Response) {
+    try {
+        let token: string | undefined;
+        // トークン検出方法の指定がなければ、ヘッダーからBearerトークンを取り出す
+        if (typeof req.headers.authorization === 'string' && req.headers.authorization.split(' ')[0] === 'Bearer') {
+            token = req.headers.authorization.split(' ')[1];
+        }
+
+        if (typeof token !== 'string' || token.length === 0) {
+            throw new Error('invalid_request');
+        }
+
+        const userInfoResult = await new Promise((resolve, reject) => {
+            req.cognitoidentityserviceprovider.getUser(
+                { AccessToken: String(token) },
+                async (err, data) => {
+                    if (err instanceof Error) {
+                        reject(err);
+                    } else {
+                        const result: any = {};
+                        data.UserAttributes.forEach((a) => {
+                            result[a.Name] = a.Value;
+                        });
+
+                        resolve(result);
+                    }
+                });
+        });
+
+        res.json(userInfoResult);
     } catch (error) {
         res.redirect(`/error?error=${error.message}&redirect_uri=${req.query.redirect_uri}`);
     }

@@ -8,7 +8,6 @@ import * as express from 'express';
 import * as expressLayouts from 'express-ejs-layouts';
 // tslint:disable-next-line:no-require-imports no-var-requires
 const flash = require('express-flash');
-// import * as flash from 'express-flash';
 import * as expressValidator from 'express-validator';
 import * as createError from 'http-errors';
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from 'http-status';

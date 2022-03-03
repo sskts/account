@@ -1,9 +1,7 @@
 /**
  * アプリケーション固有の型を定義
- * @ignore
  */
 import { CognitoIdentityServiceProvider } from 'aws-sdk';
-import * as express from 'express';
 import { RedisClient } from 'redis';
 
 declare global {

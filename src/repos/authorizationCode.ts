@@ -1,7 +1,5 @@
-import * as createDebug from 'debug';
 import { RedisClient } from 'redis';
 
-const debug = createDebug('sskts-account:repository:authorizationCode');
 const REDIS_KEY_PREFIX = 'sskts-account.authorizationCode.';
 const AUTHORIZATION_CODE_EXPIRES_IN_SECONDS = 600;
 
@@ -21,7 +19,7 @@ export class RedisRepository {
         this.redisClient = redisClient;
     }
 
-    public async findOne(code: string): Promise<IData> {
+    public async findOne(code: string): Promise<IData | undefined> {
         const key = `${REDIS_KEY_PREFIX}${code}`;
 
         return new Promise<any>((resolve, reject) => {
@@ -32,7 +30,7 @@ export class RedisRepository {
                     return;
                 }
 
-                resolve((value === null) ? null : JSON.parse(value));
+                resolve((value === null) ? undefined : JSON.parse(value));
             });
         });
     }
@@ -42,7 +40,7 @@ export class RedisRepository {
         await new Promise<void>((resolve, reject) => {
             this.redisClient.multi()
                 .set(key, JSON.stringify(data))
-                .expire(key, AUTHORIZATION_CODE_EXPIRES_IN_SECONDS, debug)
+                .expire(key, AUTHORIZATION_CODE_EXPIRES_IN_SECONDS)
                 .exec((err) => {
                     if (err instanceof Error) {
                         reject(err);

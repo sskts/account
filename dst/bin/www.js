@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 "use strict";
+/**
+ * Module dependencies.
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 const createDebug = require("debug");
 const http = require("http");
@@ -48,13 +51,13 @@ function onError(error) {
     // handle specific listen errors with friendly messages
     switch (error.code) {
         case 'EACCES':
+            // tslint:disable-next-line:no-console
             console.error(`${bind} requires elevated privileges`);
             process.exit(1);
-            break;
         case 'EADDRINUSE':
+            // tslint:disable-next-line:no-console
             console.error(`${bind} is already in use`);
             process.exit(1);
-            break;
         default:
             throw error;
     }
