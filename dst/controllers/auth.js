@@ -12,9 +12,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userInfo = exports.logout = exports.login = exports.authorize = void 0;
+exports.userInfo = exports.logout = exports.checkLogin = exports.login = exports.authorize = void 0;
 const crypto = require("crypto");
 const createDebug = require("debug");
+const http_status_1 = require("http-status");
 const querystring = require("querystring");
 const uuid = require("uuid");
 const CognitoError_1 = require("../models/CognitoError");
@@ -160,6 +161,59 @@ function login(req, res) {
     });
 }
 exports.login = login;
+/**
+ * ログイン確認
+ * @param req Request
+ * @param res Response
+ */
+function checkLogin(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            // usernameとpasswordを確認して認可コード生成
+            const hash = crypto
+                .createHmac('sha256', COGNITO_CLIENT_SECRET)
+                .update(`${req.body.username}${COGNITO_CLIENT_ID}`)
+                .digest('base64');
+            yield new Promise((resolve, reject) => {
+                const params = {
+                    UserPoolId: COGNITO_USER_POOL_ID,
+                    ClientId: COGNITO_CLIENT_ID,
+                    AuthFlow: 'ADMIN_NO_SRP_AUTH',
+                    AuthParameters: {
+                        USERNAME: req.body.username,
+                        SECRET_HASH: hash,
+                        PASSWORD: req.body.password
+                    }
+                };
+                req.cognitoidentityserviceprovider.adminInitiateAuth(params, (err, data) => __awaiter(this, void 0, void 0, function* () {
+                    debug('adminInitiateAuth result:', err, data);
+                    if (err instanceof Error) {
+                        reject(err);
+                    }
+                    else {
+                        if (data.AuthenticationResult === undefined) {
+                            reject(new Error('Unexpected.'));
+                        }
+                        else {
+                            resolve();
+                        }
+                    }
+                }));
+            });
+            res.json({
+                username: req.body.username
+            });
+        }
+        catch (error) {
+            res.status(http_status_1.BAD_REQUEST);
+            res.json({
+                error: error,
+                message: new CognitoError_1.CognitoError(error).message
+            });
+        }
+    });
+}
+exports.checkLogin = checkLogin;
 function returnAuthorizationCode(req, res, username, clientId, redirectUri, state) {
     return __awaiter(this, void 0, void 0, function* () {
         // 認可コードに保管すべき値は、ユーザーネーム、パスワード、クライアントID
